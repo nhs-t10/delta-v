@@ -1,0 +1,80 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.Gamepad;
+import java.util.ArrayList;
+/**
+ * Handle input (button combos, keybinds, etc.) for gamepads.
+ */
+public class InputManager extends FeatureManager {
+    public InputMode currentMode;
+    public Gamepad gamepad;
+
+    public InputManager(Gamepad _gamepad) {
+        this.gamepad = _gamepad;
+
+        this.currentMode = InputMode.DRIVING;
+    }
+    public InputManager() {}
+
+    /**
+     * @return Array of control powers; vertical, horizontal, rotational.
+     * @see MovementManager
+     */
+    public float[] getMovementControls() {
+        float[] res;
+
+        if(currentMode == InputMode.DRIVING) {
+            res = new float[] {gamepad.left_stick_x, gamepad.left_stick_y, gamepad.right_stick_x};
+        }
+        else if(currentMode == InputMode.DRIVE_FINETUNE) {
+            res = new float[] {gamepad.left_stick_x / INPUT_FINETUNE_SCALE,
+                               gamepad.left_stick_y / INPUT_FINETUNE_SCALE,
+                               gamepad.right_stick_x / INPUT_FINETUNE_SCALE};
+        }
+        else {
+            res = new float[] {0f, 0f, 0f};
+        }
+
+        return res;
+    }
+
+    /**
+     * Change the current driving mode.
+     * @param newMode Mode to switch to.
+     */
+    public void setCurrentMode(InputMode newMode) {
+        currentMode = newMode;
+    }
+
+    /**
+     * Switch from fine-tuning to non-fine-tuning
+     */
+    public void toggleFinetune() {
+        if(currentMode == InputMode.DRIVE_FINETUNE) currentMode = InputMode.DRIVING;
+        else if(currentMode == InputMode.DRIVING) currentMode = InputMode.DRIVE_FINETUNE;
+    }
+
+    /**
+     * Test for a given button combo (A/B/X/Y)
+     * @param buttons Button letters.
+     * @return Whether the combo is currently active or not.
+     */
+    public boolean combo(String buttons) {
+        char[] buttonLetters = buttons.toCharArray();
+        boolean result = true;
+        for(int i = 0; i < buttonLetters.length; i++) {
+            char letter = buttonLetters[i];
+            if(letter == 'A' && !gamepad.a) result = false;
+            if(letter == 'B' && !gamepad.b) result = false;
+            if(letter == 'X' && !gamepad.x) result = false;
+            if(letter == 'Y' && !gamepad.y) result = false;
+        }
+        if(gamepad.timestamp > INPUT_DOUBLECLICK_TIME) result = false;
+
+        return result;
+    }
+
+ }
+ enum InputMode {
+    DRIVING, DRIVE_FINETUNE
+}

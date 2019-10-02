@@ -41,13 +41,12 @@ public class AutoOne extends OpMode {
        switch(step){
         case(step.START):
         if(timer.milliseconds() == 0) currentStep = step.MOVE1;
-
         break;
         case step.MOVE1:
-        if(timer.milliseconds() == 0) currentStep = step.MOVE1;    
+        if(timer.milliseconds() == 0) currentStep = step.MOVE2;    
         break;
         case step.MOVE2:
-    if(timer.milliseconds() == 0) currentStep = step.MOVE1;     
+    if(timer.milliseconds() == 0) currentStep = step.MOVE3;     
         break;
 
        }

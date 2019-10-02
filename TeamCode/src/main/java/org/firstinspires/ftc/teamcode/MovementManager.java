@@ -14,7 +14,7 @@ public class MovementManager extends FeatureManager {
     private EncodedMotor backLeft;
     private EncodedMotor backRight;
 
-    private Point3d currentLocation;
+    private PointNd currentLocation;
     private TrigCache cache;
 
     /**
@@ -31,7 +31,7 @@ public class MovementManager extends FeatureManager {
         this.backLeft = new EncodedMotor(bl);
 
         this.cache = new TrigCache();
-        this.currentLocation = new Point3d(0f,0f,0f);
+        this.currentLocation = new PointNd(0f,0f,0f);
     }
     public MovementManager(){ }
 

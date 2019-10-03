@@ -17,12 +17,18 @@ public class ImuManager extends FeatureManager {
     private BNO055IMU imu;
     Orientation angle = new Orientation();
     Velocity timeSpeed = new Velocity();
+    public static String status;
 
+    public ImuManager(){
+        this.imu = null;
+    }
     public ImuManager(BNO055IMU imu_) {
         this.imu = imu_;
     }
     public void calabrate(){
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
+
+        //defining 
         params.mode = BNO055IMU.SensorMode.IMU;
         params.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         params.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -35,17 +41,38 @@ public class ImuManager extends FeatureManager {
             try{
                 Thread.sleep(50);
             } catch(InterruptedException e){}
-            Telemetry.addData("INITIALIZING: ", this.imu.getCalibrationStatus());
+            status = imu.getCalibrationStatus().toString();
         }
     }
-    public float getVelocity(){
+    public double getVelocityX(){
         timeSpeed = this.imu.getVelocity();
-        return timeSpeed //need to be turned into float/int/double
+        return timeSpeed.xVeloc;
     }
-    public Acceleration getAccelertation(){
-        return this.imu.getAcceleration(); //need to be turned into float/int/double
+    public double getVelocityY(){
+        timeSpeed = this.imu.getVelocity();
+        return timeSpeed.yVeloc;
     }
-    public float getAngle(){
-        this.imu.getAngularOrientation(); //need to be turned into float/int/double
+    public double getVelocityZ(){
+        timeSpeed = this.imu.getVelocity();
+        return timeSpeed.zVeloc;
+    }
+    public double  getAccelertationX(){
+        return this.imu.getAcceleration().xAccel;
+    }
+    public double  getAccelertationY(){
+        return this.imu.getAcceleration().yAccel;
+    }
+    public double  getAccelertationZ(){
+        return this.imu.getAcceleration().zAccel;
+    }
+
+    public float getAngleOne(){
+       return this.imu.getAngularOrientation().firstAngle;
+    }
+    public float getAngleTwo(){
+        return this.imu.getAngularOrientation().secondAngle;
+    }
+    public float getAngleThree(){
+        return this.imu.getAngularOrientation().thirdAngle;
     }
 }

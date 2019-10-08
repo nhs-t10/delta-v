@@ -1,21 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 
-@Autonomous
-public class AutoMiming extends OpMode {
-    ArrayList<String> instructions;
+@TeleOp
+public class TeleMiming extends OpMode {
     MovementManager driver;
     ElapsedTime timer;
+    FileSaver file;
+    InputManager controller;
     int currentMimeIndex = 0;
 
     public void init() {
-        instructions = (new FileSaver(FeatureManager.MIMING_FILENAME)).readLines();
+        controller = new InputManager(gamepad1);
+        file = new FileSaver(FeatureManager.MIMING_FILENAME);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
@@ -23,15 +25,9 @@ public class AutoMiming extends OpMode {
         timer = new ElapsedTime();
     }
     public void loop() {
+        driver.driveOmni(controller.getMovementControls());
         if(timer.milliseconds() % FeatureManager.MIMING_MS_PER_SAMPLE == 0) {
-            float[] drivable = new float[3];
-            String temp = instructions.get(currentMimeIndex);
-            String[] splitInstructions = temp.substring(1, temp.length() - 1).split(",");
-            currentMimeIndex++;
-            for(int i = 0; i < splitInstructions.length; i++) {
-                drivable[i] = Float.parseFloat(splitInstructions[i]);
-            }
-            driver.driveOmni(drivable);
+            file.appendLine(controller.getMovementControls().toString());
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
@@ -16,7 +17,8 @@ public class MovementManager extends FeatureManager {
 
     private PointNd currentLocation;
     private TrigCache cache;
-
+    private ElapsedTime timer;
+    private double lastRecordTime;
     /**
      * Create a MovementManager with four motors.
      * @param fl Front Left motor
@@ -32,6 +34,8 @@ public class MovementManager extends FeatureManager {
 
         this.cache = new TrigCache();
         this.currentLocation = new PointNd(0f,0f,0f);
+        this.timer = new ElapsedTime();
+        this.lastRecordTime = timer.milliseconds();
     }
     public MovementManager(){ }
 
@@ -42,7 +46,7 @@ public class MovementManager extends FeatureManager {
      * @param br Back right motor power
      * @param bl Back left motor power
      */
-    public void driveRaw(float fl, float fr, float br, float bl) {
+    private void driveRaw(float fl, float fr, float br, float bl) {
         frontLeft.setPower(Range.clip(-fl, -1, 1)*SPEED);
         backRight.setPower(Range.clip(br, -1, 1)*SPEED);
         frontRight.setPower(Range.clip(fr, -1, 1)*SPEED);
@@ -77,6 +81,14 @@ public class MovementManager extends FeatureManager {
 
 
         }
+
+        //record current position
+        double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;
+        float diffHor = horizontalPower * (float)timeSinceLastRecordTime;
+        float diffVer = verticalPower * (float)timeSinceLastRecordTime;
+        float diffRot = horizontalPower * (float)timeSinceLastRecordTime;
+
+        currentLocation.transform(new PointNd(diffHor, diffVer, 0f));
 
         /* makes it go vroom*/
         driveRaw(sum[0], sum[1], sum[2], sum[3]);

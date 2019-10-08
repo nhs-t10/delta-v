@@ -8,7 +8,7 @@ public class FeatureManager {
     public final static int MIMING_MS_PER_SAMPLE = 10;
     public final static String MIMING_FILENAME = "miming.txt";
 
-    public bool isInputType;
+    public boolean isInputType;
     public FeatureManager() {
 
     }

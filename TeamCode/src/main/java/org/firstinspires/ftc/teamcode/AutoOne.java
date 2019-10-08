@@ -29,26 +29,30 @@ public class AutoOne extends OpMode {
     
 
     public step getNext() {
-     step[] x = step.value(); 
-     int i = 0;
-     for (; x[i] != this; i++);
-    i++;
-    i %= x.length;
-    return x[i];
+        step[] x = step.values();
+        int i = 0;
+        for (; x[i] != currentStep; i++);
+        i++;
+        i %= x.length;
+        return x[i];
     }
     
     public void loop() {
-       switch(step){
-        case(step.START):
-        if(timer.milliseconds() == 0) currentStep = step.MOVE1;
+       switch(currentStep){
+        case START:
+            driver.driveOmni(1f, 0f, 0f);
+        if(timer.milliseconds() >= 1000) currentStep = step.MOVE1;
         break;
-        case step.MOVE1:
-        if(timer.milliseconds() == 0) currentStep = step.MOVE2;    
+        case MOVE1:
+        if(timer.milliseconds() >= 20000) currentStep = step.MOVE2;
+            driver.driveOmni(-1f, 0f, 0f);
         break;
-        case step.MOVE2:
-    if(timer.milliseconds() == 0) currentStep = step.MOVE3;     
+        case MOVE2:
+            driver.driveOmni(0f, 0f, 1f);
+    if(timer.milliseconds() >= 3000) currentStep = step.MOVE3;
         break;
-
+        default:
+            driver.driveOmni(0f,0f,0f);
        }
 
 

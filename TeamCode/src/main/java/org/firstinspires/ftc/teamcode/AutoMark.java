@@ -6,12 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
-enum step {
-    START, MOVE1, MOVE2, MOVE3; 
-}
-
 @Autonomous
-public class AutoOne extends OpMode {
+public class AutoMark extends OpMode {
     MovementManager driver;
     ElapsedTime timer;
     step currentStep;
@@ -29,29 +25,29 @@ public class AutoOne extends OpMode {
     
 
     public step getNext() {
-     step[] x = step.value(); 
+     step[] x = step.values();
      int i = 0;
-     for (; x[i] != this; i++);
+     for (; x[i] != currentStep; i++);
     i++;
     i %= x.length;
     return x[i];
     }
     
-int drivelength = [4000,6000,-2000,-4000] //lengths that the bot drives
-String direction = ["horizontal","vertical","horizontal","vertical"] //directions that the bot drives
+int[] drivelength = {4000,6000,-2000,-4000}; //lengths that the bot drives
+String[] direction = {"horizontal","vertical","horizontal","vertical"}; //directions that the bot drives
 
     public void loop() {
-       switch(step){
-        case(step.START):
-           for (int s = 0; s < 4; i++) {
-                driver.omnidrive(direction[s])
-                nextStep(drivelength[s]);
+       switch(currentStep){
+        case START:
+           for (int s = 0; s < 4; s++) {
+                //driver.driveOmni(direction[s]);
+                //nextStep(drivelength[s]);
            } //autonomous that moves fondation into building zo
         break;
-        case step.MOVE1:
+        case MOVE1:
         if(timer.milliseconds() == 0) currentStep = step.MOVE2;    
         break;
-        case step.MOVE2:
+        case MOVE2:
     if(timer.milliseconds() == 0) currentStep = step.MOVE3;     
         break;
 

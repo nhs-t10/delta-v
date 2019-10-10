@@ -56,7 +56,7 @@ public class InputManager extends FeatureManager {
 
     /**
      * Test for a given button combo (A/B/X/Y)
-     * @param buttons Button letters.
+     * @param buttons Button letters -- e.g. "YA" for [Y] + [A]
      * @return Whether the combo is currently active or not.
      */
     public boolean combo(String buttons) {

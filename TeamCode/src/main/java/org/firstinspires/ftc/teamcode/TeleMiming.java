@@ -26,6 +26,7 @@ public class TeleMiming extends OpMode {
     }
     public void loop() {
         driver.driveOmni(controller.getMovementControls());
+
         if(timer.milliseconds() % FeatureManager.MIMING_MS_PER_SAMPLE == 0) {
             file.appendLine(controller.getMovementControls().toString());
         }

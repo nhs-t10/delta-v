@@ -7,7 +7,7 @@ public class EncodedMotor {
     private DcMotor motor;
     private int lastTickCount;
     public EncodedMotor(DcMotor _motor) {
-        this.motor = motor;
+        this.motor = _motor;
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.lastTickCount = 0;
 

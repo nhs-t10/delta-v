@@ -35,6 +35,14 @@ public class PaulMath {
         return location;
 
     }
-
+    /**
+     * Round a given number to a decimal place.
+     * @param input Number to round.
+     * @param place Place to round to-- e.g. 10 will round to 10ths
+     * @return Rounded number
+     */ 
+    public static float roundToPoint(float input, int place) {
+        return Math.round(input * (float)place) / place;
+    }
 
 }

@@ -10,10 +10,10 @@ import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
  * Handle all movement of the chassis.
  */
 public class MovementManager extends FeatureManager {
-    private EncodedMotor frontLeft;
-    private EncodedMotor frontRight;
-    private EncodedMotor backLeft;
-    private EncodedMotor backRight;
+    public EncodedMotor frontLeft;
+    public EncodedMotor frontRight;
+    public EncodedMotor backLeft;
+    public EncodedMotor backRight;
 
     private PointNd currentLocation;
     private TrigCache cache;
@@ -101,5 +101,50 @@ public class MovementManager extends FeatureManager {
      */
     public void driveOmni(float[] powers) {
         this.driveOmni(powers[0], powers[1], powers[2]);
+    }
+
+    public void moveDriftingRational(float horizontalPower, float verticalPower, float rotationalPower) {
+        float stopFl = (float)frontLeft.getPower();
+        float stopFr = (float)frontRight.getPower();
+        float stopBl = (float)backLeft.getPower();
+        float stopBr = (float)backRight.getPower();
+        int counter = 1;
+        if (horizontalPower == 0 && verticalPower == 0 ) {
+            while(Math.abs(frontLeft.getPower()) < 0.0001 && Math.abs(frontRight.getPower()) < 0.0001 && Math.abs(backLeft.getPower()) < 0.0001 && backRight.getPower() < 0.0001) {
+                frontLeft.setPower(stopFl/counter);
+                frontRight.setPower(stopFr/counter);
+                backLeft.setPower(stopBl/counter);
+                backRight.setPower(stopBr/counter);
+                counter++;
+            }
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+
+        }
+
+    }
+    public void moveDriftingExponential(float horizontalPower, float verticalPower, float rotationalPower) {
+        float stopFl = (float)frontLeft.getPower();
+        float stopFr = (float)frontRight.getPower();
+        float stopBl = (float)backLeft.getPower();
+        float stopBr = (float)backRight.getPower();
+        int counter = 1;
+        if (horizontalPower == 0 && verticalPower == 0 ) {
+            while(Math.abs(frontLeft.getPower()) < 0.0001 && Math.abs(frontRight.getPower()) < 0.0001 && Math.abs(backLeft.getPower()) < 0.0001 && backRight.getPower() < 0.0001) {
+                frontLeft.setPower(Math.pow(stopFl, counter));
+                frontRight.setPower(Math.pow(stopFr, counter));
+                backLeft.setPower(Math.pow(stopBl, counter));
+                backRight.setPower(Math.pow(stopBr, counter));
+                counter++;
+            }
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+
+        }
+
     }
 }

@@ -36,6 +36,11 @@ public class TeleopTest extends OpMode {
         
         telemetry.addData("Velocity X: " , velocity.getVelocityX());
         telemetry.addData("Velocity Y: " , velocity.getVelocityY());
+        telemetry.addData("Velocity Z: " , velocity.getVelocityZ());
         telemetry.addData("Location: " , location);
+        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BR Power: ", driver.backRight.getPower());
     }
 }

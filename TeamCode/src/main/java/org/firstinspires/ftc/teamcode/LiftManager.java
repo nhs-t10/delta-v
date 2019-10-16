@@ -13,6 +13,7 @@ public class LiftManager extends FeatureManager {
     
     private int currentLiftLevel;
 
+
     public LiftManager(DcMotor _downMotor) {
         this.downMotor = new EncodedMotor(_downMotor);
     }

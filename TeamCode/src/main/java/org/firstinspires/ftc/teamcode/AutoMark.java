@@ -41,7 +41,6 @@ String[] direction = {"horizontal","vertical","horizontal","vertical"}; //direct
         case START:
            for (int s = 0; s < 4; s++) {
                 //driver.driveOmni(direction[s]);
-                //nextStep(drivelength[s]);
            } //autonomous that moves fondation into building zo
         break;
         case MOVE1:

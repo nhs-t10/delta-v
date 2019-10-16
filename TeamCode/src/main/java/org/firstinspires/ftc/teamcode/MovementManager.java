@@ -59,7 +59,7 @@ public class MovementManager extends FeatureManager {
      * @param verticalPower Verticl input
      * @param rotationalPower Rotational input
      */
-    public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
+    public float[] omniCalc(float horizontalPower, float verticalPower, float rotationalPower) {
         float lX = Range.clip(horizontalPower, -1, 1);
         float lY = Range.clip(verticalPower, -1, 1);
         float rX = Range.clip(rotationalPower, -1, 1);
@@ -79,8 +79,13 @@ public class MovementManager extends FeatureManager {
                 sum[i] = sum[i] / highest;
             }
 
-
+        
         }
+        return sum;
+    }
+
+    public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
+        float [] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
 
         //record current position
         double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;
@@ -92,6 +97,7 @@ public class MovementManager extends FeatureManager {
 
         /* makes it go vroom*/
         driveRaw(sum[0], sum[1], sum[2], sum[3]);
+
     }
 
     /**
@@ -146,5 +152,30 @@ public class MovementManager extends FeatureManager {
 
         }
 
+    }
+    /**
+     * Creates a hashmap of all the motors powers and lines them up by time. 
+     * Key = time
+     * Value = sum array
+     */
+    public HashMap<int,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
+        float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        HashMap<Time, Power> powersHashMap = new HashMap<int, float[]>;
+        powersHashMap.put(timer.milliseconds(), sum);
+        return powersHashMap;
+    }
+    /**
+     * Calls sum array from 100 miliseconds ago
+     * Takes the average of the current sum array and the past sum array 
+     * Applies average sum to motor powers
+     */
+    public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
+        HashMap<Time, Power> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
+        float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        float[] pastSum = powersHashMap.get(timer.milliseconds()-100);
+        for (int i = 0; i < 4; i++) {
+            currentSum[i] = (currentSum[i] + pastSum[i])/2;
+        }
+        driveRaw(currentSum[0], currentSum[1], currentSum[2], currentSum[3]);
     }
 }

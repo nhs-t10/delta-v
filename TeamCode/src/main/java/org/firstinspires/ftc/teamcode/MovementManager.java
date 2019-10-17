@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 
+import java.util.HashMap;
+
 /**
  * Handle all movement of the chassis.
  */
 public class MovementManager extends FeatureManager {
-    PaulMath PaulMath = new PaulMath();
     public EncodedMotor frontLeft;
     public EncodedMotor frontRight;
     public EncodedMotor backLeft;
@@ -109,12 +110,7 @@ public class MovementManager extends FeatureManager {
     public void driveOmni(float[] powers) {
         this.driveOmni(powers[0], powers[1], powers[2]);
     }
-    /**
-     * @param same as driveOmni
-     * Activates if all readings are = 0
-     * Records motor values
-     * Decreases motor values with a rational function
-     */
+
     public void moveDriftingRational(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
@@ -138,7 +134,6 @@ public class MovementManager extends FeatureManager {
 
     }
     /**
-     * @param same as driveOmni
      * Activates if all readings are = 0
      * Records motor values
      * Decreases motor values with an exponential function
@@ -170,17 +165,10 @@ public class MovementManager extends FeatureManager {
      * Key = time
      * Value = sum array
      */
-<<<<<<< HEAD
-    public HashMap< Integer , float[] > powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
-        float[] sum = {frontLeft.getPower(), frontRight.getPower(), backRight.getPower(), backLeft.getPower()};
-        HashMap<Time, Power> powersHashMap = new HashMap<Integer, float[]>();
-        powersHashMap.put(PaulMath.roundToPoint(timer.milliseconds(),10), sum);
-=======
-    public HashMap<int,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
+    public HashMap<String,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
         float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
-        HashMap<Time, Power> powersHashMap = new HashMap<int, float[]>;
-        powersHashMap.put(timer.milliseconds(), sum);
->>>>>>> 96c8a0f442fb96861107574753060ebbc3d8a859
+        HashMap<String, float[]> powersHashMap = new HashMap<String, float[]>();
+        powersHashMap.put(timer.milliseconds() + "", sum);
         return powersHashMap;
     }
     /**
@@ -189,13 +177,9 @@ public class MovementManager extends FeatureManager {
      * Applies average sum to motor powers
      */
     public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
-        HashMap<Time, Power> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
+        HashMap<String, float[]> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
         float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
-<<<<<<< HEAD
-        float[] pastSum = powersHashMap.get(PaulMath.roundToPoint(timer.milliseconds()-100, 10.0));
-=======
-        float[] pastSum = powersHashMap.get(timer.milliseconds()-100);
->>>>>>> 96c8a0f442fb96861107574753060ebbc3d8a859
+        float[] pastSum = powersHashMap.get(timer.milliseconds()-100 + "");
         for (int i = 0; i < 4; i++) {
             currentSum[i] = (currentSum[i] + pastSum[i])/2;
         }

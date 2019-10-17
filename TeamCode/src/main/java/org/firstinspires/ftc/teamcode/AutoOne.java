@@ -41,15 +41,15 @@ public class AutoOne extends OpMode {
        switch(currentStep){
         case START:
             driver.driveOmni(1f, 0f, 0f);
-        if(timer.milliseconds() >= 1000) currentStep = step.MOVE1;
+            nextStep(1000);
         break;
         case MOVE1:
-        if(timer.milliseconds() >= 20000) currentStep = step.MOVE2;
             driver.driveOmni(-1f, 0f, 0f);
+            nextStep(2000);
         break;
         case MOVE2:
             driver.driveOmni(0f, 0f, 1f);
-    if(timer.milliseconds() >= 3000) currentStep = step.MOVE3;
+            nextStep(3000);
         break;
         default:
             driver.driveOmni(0f,0f,0f);

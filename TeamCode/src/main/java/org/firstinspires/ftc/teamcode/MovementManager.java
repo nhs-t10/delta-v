@@ -170,10 +170,17 @@ public class MovementManager extends FeatureManager {
      * Key = time
      * Value = sum array
      */
+<<<<<<< HEAD
     public HashMap< Integer , float[] > powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
         float[] sum = {frontLeft.getPower(), frontRight.getPower(), backRight.getPower(), backLeft.getPower()};
         HashMap<Time, Power> powersHashMap = new HashMap<Integer, float[]>();
         powersHashMap.put(PaulMath.roundToPoint(timer.milliseconds(),10), sum);
+=======
+    public HashMap<int,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
+        float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        HashMap<Time, Power> powersHashMap = new HashMap<int, float[]>;
+        powersHashMap.put(timer.milliseconds(), sum);
+>>>>>>> 96c8a0f442fb96861107574753060ebbc3d8a859
         return powersHashMap;
     }
     /**
@@ -184,7 +191,11 @@ public class MovementManager extends FeatureManager {
     public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
         HashMap<Time, Power> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
         float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+<<<<<<< HEAD
         float[] pastSum = powersHashMap.get(PaulMath.roundToPoint(timer.milliseconds()-100, 10.0));
+=======
+        float[] pastSum = powersHashMap.get(timer.milliseconds()-100);
+>>>>>>> 96c8a0f442fb96861107574753060ebbc3d8a859
         for (int i = 0; i < 4; i++) {
             currentSum[i] = (currentSum[i] + pastSum[i])/2;
         }

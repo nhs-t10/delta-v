@@ -14,6 +14,7 @@ public class InputManager extends FeatureManager {
 
         this.currentMode = InputMode.DRIVING;
     }
+    public Gamepad getGamepad() {return this.gamepad;}
     public InputManager() {}
 
     /**

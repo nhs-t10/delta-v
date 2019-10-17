@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
  * Handle all movement of the chassis.
  */
 public class MovementManager extends FeatureManager {
+    PaulMath PaulMath = new PaulMath();
     public EncodedMotor frontLeft;
     public EncodedMotor frontRight;
     public EncodedMotor backLeft;
@@ -59,7 +60,7 @@ public class MovementManager extends FeatureManager {
      * @param verticalPower Verticl input
      * @param rotationalPower Rotational input
      */
-    public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
+    public float[] omniCalc(float horizontalPower, float verticalPower, float rotationalPower) {
         float lX = Range.clip(horizontalPower, -1, 1);
         float lY = Range.clip(verticalPower, -1, 1);
         float rX = Range.clip(rotationalPower, -1, 1);
@@ -79,8 +80,13 @@ public class MovementManager extends FeatureManager {
                 sum[i] = sum[i] / highest;
             }
 
-
+        
         }
+        return sum;
+    }
+
+    public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
+        float [] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
 
         //record current position
         double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;
@@ -92,6 +98,7 @@ public class MovementManager extends FeatureManager {
 
         /* makes it go vroom*/
         driveRaw(sum[0], sum[1], sum[2], sum[3]);
+
     }
 
     /**
@@ -102,7 +109,12 @@ public class MovementManager extends FeatureManager {
     public void driveOmni(float[] powers) {
         this.driveOmni(powers[0], powers[1], powers[2]);
     }
-
+    /**
+     * @param same as driveOmni
+     * Activates if all readings are = 0
+     * Records motor values
+     * Decreases motor values with a rational function
+     */
     public void moveDriftingRational(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
@@ -125,6 +137,12 @@ public class MovementManager extends FeatureManager {
         }
 
     }
+    /**
+     * @param same as driveOmni
+     * Activates if all readings are = 0
+     * Records motor values
+     * Decreases motor values with an exponential function
+     */
     public void moveDriftingExponential(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
@@ -146,5 +164,30 @@ public class MovementManager extends FeatureManager {
 
         }
 
+    }
+    /**
+     * Creates a hashmap of all the motors powers and lines them up by time. 
+     * Key = time
+     * Value = sum array
+     */
+    public HashMap< Integer , float[] > powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
+        float[] sum = {frontLeft.getPower(), frontRight.getPower(), backRight.getPower(), backLeft.getPower()};
+        HashMap<Time, Power> powersHashMap = new HashMap<Integer, float[]>();
+        powersHashMap.put(PaulMath.roundToPoint(timer.milliseconds(),10), sum);
+        return powersHashMap;
+    }
+    /**
+     * Calls sum array from 100 miliseconds ago
+     * Takes the average of the current sum array and the past sum array 
+     * Applies average sum to motor powers
+     */
+    public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
+        HashMap<Time, Power> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
+        float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        float[] pastSum = powersHashMap.get(PaulMath.roundToPoint(timer.milliseconds()-100, 10.0));
+        for (int i = 0; i < 4; i++) {
+            currentSum[i] = (currentSum[i] + pastSum[i])/2;
+        }
+        driveRaw(currentSum[0], currentSum[1], currentSum[2], currentSum[3]);
     }
 }

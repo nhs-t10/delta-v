@@ -36,6 +36,11 @@ public class AutoOne extends OpMode {
         i %= x.length;
         return x[i];
     }
+
+    //TODO: Implement nextStep
+    void nextStep(int milliseconds) {
+
+    }
     
     public void loop() {
        switch(currentStep){

@@ -10,6 +10,6 @@ public class FeatureManager {
 
     public boolean isInputType;
     public FeatureManager() {
-
+    
     }
 }

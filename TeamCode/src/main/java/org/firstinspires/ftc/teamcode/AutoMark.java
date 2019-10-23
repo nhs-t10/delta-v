@@ -12,7 +12,6 @@ public class AutoMark extends OpMode {
     ElapsedTime timer;
     step currentStep;
     
-
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
@@ -21,8 +20,6 @@ public class AutoMark extends OpMode {
         timer = new ElapsedTime(); 
     currentStep = step.START;    
     }  
-
-    
 
     public step getNext() {
      step[] x = step.values();

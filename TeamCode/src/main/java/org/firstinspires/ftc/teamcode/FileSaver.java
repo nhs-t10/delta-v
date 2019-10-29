@@ -45,6 +45,9 @@ public class FileSaver {
 
     }
 
+    public String getDirectory() {
+        return context.getFilesDir().getPath();
+    }
     public void appendLine(String line) {
         try {
             BufferedWriter output = new BufferedWriter(new FileWriter(context.getFilesDir().getPath() + "/" + fileName, true));

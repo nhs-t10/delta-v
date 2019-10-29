@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 enum step {
-    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5; 
+    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5, MOVE6, MOVE7, MOVE8, MOVE9, MOVE10; 
 }
 
 @Autonomous
@@ -50,22 +50,44 @@ public class AutoFL extends OpMode {
             ge
         break;
         case MOVE1:
-            //Drop bar thing
+            driver.driveOmni(0f, -1f, 0f)
             nextStep(1500)
         case MOVE2:
-            driver.driveOmni(-1f, 0f, 0f);
+            //sampling
             nextStep(2500);
         break;
         case MOVE3:
-            driver.driveOmni(0f, 1f, 0f);
+            //picking up a sky stone
             nextStep(3000);
         break;
         case MOVE4:
             driver.driveOmni(-1f, 0f, 0f);
             nextStep(3500);
-        break:
+        break;
         case MOVE5:
+            driver.driveOmni(0f, 1f, 0f);
+            nextStep(4500);
+        break;
+        case MOVE6:
             driver.driveOmni(0f, -1f, 0f);
+            nextStep(5500);
+        break;
+        case MOVE7:
+            driver.driveOmni(1f, 0f, 0f);
+            nextStep(6000);
+        break;
+        case MOVE8:
+            //finding last skystone
+            nextStep(7000);
+        break;
+        case MOVE9:
+        driver.driveOmni(-1f, 0f, 0f);
+        nextStep(7500);
+        break;
+        case MOVE10:
+        driver.driveOmni(0f, 1f, 0f);
+        nextStep(8500);
+    break;
         default:
             driver.driveOmni(0f, 0f, 0f);
        }

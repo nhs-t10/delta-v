@@ -67,7 +67,7 @@ public class MovementManager extends FeatureManager {
         float rX = Range.clip(rotationalPower, -1, 1);
 
         float[] vertical = {0.7f * lY, 0.7f * lY, 0.7f * lY, 0.7f * lY};
-        float[] horizontal = {lX, -lX, lX, -lX};
+        float[] horizontal = {-lX, lX, -lX, lX};
         float[] rotational = {-0.7f * rX, -0.7f * rX, 0.7f * rX, 0.7f * rX};
 
         float[] sum = new float[4];
@@ -80,8 +80,6 @@ public class MovementManager extends FeatureManager {
             for (int i = 0; i < 4; i++) {
                 sum[i] = sum[i] / highest;
             }
-
-        
         }
         return sum;
     }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 enum step {
-    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5; 
+    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5, MOVE6, MOVE7, MOVE8, MOVE9, MOVE10; 
 }
 
 @Autonomous
@@ -63,9 +63,11 @@ public class AutoBL extends OpMode {
         case MOVE4:
             driver.driveOmni(-1f, 0f, 0f);
             nextStep(3500);
-        break:
+        break;
         case MOVE5:
             driver.driveOmni(0f, -1f, 0f);
+            nextStep(4000);
+        break;
         default:
             driver.driveOmni(0f, 0f, 0f);
        }

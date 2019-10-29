@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -7,12 +6,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
+enum step {
+    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5; 
+}
+
 @Autonomous
-public class AutoMark extends OpMode {
+public class AutoFR extends OpMode {
     MovementManager driver;
     ElapsedTime timer;
     step currentStep;
     
+
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
@@ -22,32 +26,48 @@ public class AutoMark extends OpMode {
     currentStep = step.START;    
     }  
 
+    
+
     public step getNext() {
-     step[] x = step.values();
-     int i = 0;
-     for (; x[i] != currentStep; i++);
-    i++;
-    i %= x.length;
-    return x[i];
+        step[] x = step.values();
+        int i = 0;
+        for (; x[i] != currentStep; i++);
+        i++;
+        i %= x.length;
+        return x[i];
+    }
+
+    //TODO: Implement nextStep
+    void nextStep(int milliseconds) {
+        
     }
     
-int[] drivelength = {4000,6000,-2000,-4000}; //lengths that the bot drives
-String[] direction = {"horizontal","vertical","horizontal","vertical"}; //directions that the bot drives
-
     public void loop() {
        switch(currentStep){
         case START:
-           for (int s = 0; s < 4; s++) {
-                //driver.driveOmni(direction[s]);
-           } //autonomous that moves fondation into building zo
+            driver.driveOmni(1f, 0f, 0f);
+            nextStep(1000)
+            ge
         break;
         case MOVE1:
-        if(timer.milliseconds() == 0) currentStep = step.MOVE2;    
-        break;
+            //Drop bar thing
+            nextStep(1500)
         case MOVE2:
-    if(timer.milliseconds() == 0) currentStep = step.MOVE3;     
+            driver.driveOmni(-1f, 0f, 0f);
+            nextStep(2500);
         break;
-
+        case MOVE3:
+            driver.driveOmni(0f, 1f, 0f);
+            nextStep(3000);
+        break;
+        case MOVE4:
+            driver.driveOmni(-1f, 0f, 0f);
+            nextStep(3500);
+        break:
+        case MOVE5:
+            driver.driveOmni(0f, -1f, 0f);
+        default:
+            driver.driveOmni(0f, 0f, 0f);
        }
 
 

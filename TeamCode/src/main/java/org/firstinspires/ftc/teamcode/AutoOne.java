@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.ArrayList;
 enum step {
-    START, MOVE1, MOVE2, MOVE3; 
+    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5; 
 }
 
 @Autonomous
@@ -39,25 +39,35 @@ public class AutoOne extends OpMode {
 
     //TODO: Implement nextStep
     void nextStep(int milliseconds) {
-
+        
     }
     
     public void loop() {
        switch(currentStep){
         case START:
             driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
+            nextStep(1000)
+            ge
         break;
         case MOVE1:
-            driver.driveOmni(-1f, 0f, 0f);
-            nextStep(2000);
-        break;
+            //Drop bar thing
+            nextStep(1500)
         case MOVE2:
-            driver.driveOmni(0f, 0f, 1f);
+            driver.driveOmni(-1f, 0f, 0f);
+            nextStep(2500);
+        break;
+        case MOVE3:
+            driver.driveOmni(0f, 1f, 0f);
             nextStep(3000);
         break;
+        case MOVE4:
+            driver.driveOmni(-1f, 0f, 0f);
+            nextStep(3500);
+        break:
+        case MOVE5:
+            driver.driveOmni(0f, -1f, 0f);
         default:
-            driver.driveOmni(0f,0f,0f);
+            driver.driveOmni(0f, 0f, 0f);
        }
 
 

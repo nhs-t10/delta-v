@@ -9,12 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp
 public class TeleopTest extends OpMode {
-    private BNO055IMU imu;
     float[] velocity_x;
     float[] velocity_y;
     InputManager input;
     MovementManager driver;
-    ImuManager velocity;
+    ImuManager imu; 
     int counter;
     PointNd location;
     public void init() {
@@ -23,20 +22,21 @@ public class TeleopTest extends OpMode {
                                      hardwareMap.get(DcMotor.class, "fr"),
                                      hardwareMap.get(DcMotor.class, "bl"),
                                      hardwareMap.get(DcMotor.class, "br"));
-        velocity = new ImuManager(imu);
-        counter = 0;
+
+        imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
+        imu.calibrate();
 
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         //Creates an array of all previous velocities and calculates the location of the robot
-        velocity_x[counter] = (float)velocity.getVelocityX();
-        velocity_y[counter] = (float)velocity.getVelocityY();
+        velocity_x[counter] = (float)imu.getVelocityX();
+        velocity_y[counter] = (float)imu.getVelocityY();
         location = PaulMath.location(velocity_x, velocity_y);
         
-        telemetry.addData("Velocity X: " , velocity.getVelocityX());
-        telemetry.addData("Velocity Y: " , velocity.getVelocityY());
-        telemetry.addData("Velocity Z: " , velocity.getVelocityZ());
+        telemetry.addData("Velocity X: " , imu.getVelocityX());
+        telemetry.addData("Velocity Y: " , imu.getVelocityY());
+        telemetry.addData("Velocity Z: " , imu.getVelocityZ());
         telemetry.addData("Location: " , location);
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());

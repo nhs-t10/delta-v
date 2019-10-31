@@ -23,7 +23,7 @@ public class ImuManager extends FeatureManager {
     public ImuManager(BNO055IMU imu_) {
         this.imu = imu_;
     }
-    public void calabrate(){
+    public void calibrate(){
         BNO055IMU.Parameters params = new BNO055IMU.Parameters();
 
         //defining 

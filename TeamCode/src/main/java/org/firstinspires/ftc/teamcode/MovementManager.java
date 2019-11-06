@@ -61,7 +61,7 @@ public class MovementManager extends FeatureManager {
      * @param verticalPower Verticl input
      * @param rotationalPower Rotational input
      */
-    public float[] omniCalc(float verticalPower, float horizontalPower, float rotationalPower) {
+    public float[] omniCalc(float horizontalPower, float verticalPower, float rotationalPower) {
         float lX = Range.clip(horizontalPower, -1, 1);
         float lY = Range.clip(verticalPower, -1, 1);
         float rX = Range.clip(rotationalPower, -1, 1);
@@ -84,8 +84,8 @@ public class MovementManager extends FeatureManager {
         return sum;
     }
 
-    public void driveOmni(float verticalPower, float horizontalPower, float rotationalPower) {
-        float [] sum = omniCalc(verticalPower, horizontalPower, rotationalPower);
+    public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
+        float [] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
 
         //record current position
         double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;
@@ -108,8 +108,15 @@ public class MovementManager extends FeatureManager {
     public void driveOmni(float[] powers) {
         this.driveOmni(powers[0], powers[1], powers[2]);
     }
+    /**
+     * 
+     * @param move The direction to move in.
+     */
+    public void driveOmni(MovementOrder move) {
+        this.driveOmni(move.getHor(), move.getVer(), move.getRot());
+    }
 
-    public void moveDriftingRational(float verticalPower, float horizontalPower, float rotationalPower) {
+    public void moveDriftingRational(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
         float stopBl = (float)backLeft.getPower();
@@ -136,7 +143,7 @@ public class MovementManager extends FeatureManager {
      * Records motor values
      * Decreases motor values with an exponential function
      */
-    public void moveDriftingExponential(float verticalPower, float horizontalPower, float rotationalPower) {
+    public void moveDriftingExponential(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
         float stopBl = (float)backLeft.getPower();
@@ -163,8 +170,8 @@ public class MovementManager extends FeatureManager {
      * Key = time
      * Value = sum array
      */
-    public HashMap<String,float[]> powersHashMap(float verticalPower, float horizontalPower, float rotationalPower) {
-        float[] sum = omniCalc(verticalPower, horizontalPower, rotationalPower);
+    public HashMap<String,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
+        float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
         HashMap<String, float[]> powersHashMap = new HashMap<String, float[]>();
         powersHashMap.put(timer.milliseconds() + "", sum);
         return powersHashMap;
@@ -174,9 +181,9 @@ public class MovementManager extends FeatureManager {
      * Takes the average of the current sum array and the past sum array 
      * Applies average sum to motor powers
      */
-    public void moveDriftingAverage(float verticalPower, float horizontalPower, float rotationalPower) {
-        HashMap<String, float[]> powersHashMap = powersHashMap(verticalPower, horizontalPower, rotationalPower);
-        float[] currentSum = omniCalc(verticalPower, horizontalPower, rotationalPower);
+    public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
+        HashMap<String, float[]> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
+        float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
         float[] pastSum = powersHashMap.get(timer.milliseconds()-100 + "");
         for (int i = 0; i < 4; i++) {
             currentSum[i] = (currentSum[i] + pastSum[i])/2;

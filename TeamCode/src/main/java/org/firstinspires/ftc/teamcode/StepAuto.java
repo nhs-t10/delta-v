@@ -15,10 +15,10 @@ enum step {
 @Autonomous
 public class StepAuto extends OpMode {
     ElapsedTime timer;
-    step currentStep;
+    step currentStep = step.START;
 
     int numberCalled = 0;
-    double referPoint = timer.milliseconds();
+    double referPoint = 0;
 
     public step getNext() {
         step[] x = step.values();
@@ -37,6 +37,11 @@ public class StepAuto extends OpMode {
     }
 
     void nextStep(int milliseconds) {
+        if(timer == null) timer = new ElapsedTime();
+        if(currentStep == null) currentStep = step.START;
+
+        
+
         numberCalled++;
         if(numberCalled == 1) {
             referPoint = timer.milliseconds();

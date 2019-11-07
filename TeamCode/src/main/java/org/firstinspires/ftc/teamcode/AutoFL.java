@@ -23,7 +23,7 @@ public class AutoFL extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(0f, -1f, 0f);
             nextStep(1000);
         break;
         case MOVE1:
@@ -38,7 +38,7 @@ public class AutoFL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE4:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(0f, 1f, 0f);
             nextStep(1000);
         break;
         case MOVE5:
@@ -50,7 +50,7 @@ public class AutoFL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(0f, -1f, 0f);
             nextStep(500);
         break;
         case MOVE8:
@@ -58,17 +58,20 @@ public class AutoFL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE9:
-        driver.driveOmni(0f, -1f, 0f);
+        driver.driveOmni(0f, 1f, 0f);
         nextStep(1000);
         break;
         case MOVE10:
         driver.driveOmni(1f, 0f, 0f);
         nextStep(1000);
-    break;
+        break;
         default:
             driver.driveOmni(0f, 0f, 0f);
        }
-
+        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BR Power: ", driver.backRight.getPower());
 
 
     }

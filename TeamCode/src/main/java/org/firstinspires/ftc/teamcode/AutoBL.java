@@ -49,9 +49,12 @@ public class AutoBL extends StepAuto {
         break;
         default:
             driver.driveOmni(0f, 0f, 0f);
+
        }
-
-
+        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BR Power: ", driver.backRight.getPower());
 
     }
 }

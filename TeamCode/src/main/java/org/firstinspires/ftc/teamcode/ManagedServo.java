@@ -13,15 +13,16 @@ import java.util.HashMap;
 /**
  * Handles all servos
  */
-public class ServoManager extends FeatureManager {
+public class ManagedServo {
 
     private PointNd points;
     private TrigCache cache;
     private ElapsedTime timer;
+    private Servo servo;
     private double lastRecordTime;
 
-    public ServoManager(Servo servo) {
-        //this.servo = new Servo();
+    public ManagedServo(Servo _servo) {
+        this.servo = _servo;
 
         this.cache = new TrigCache();
         this.points = new PointNd(0f,0f,0f);
@@ -34,7 +35,7 @@ public class ServoManager extends FeatureManager {
     }
 
     public void setServoPosition(Servo servo, double position) {
-        //servo.setPosition(position);
+       // servo.setPosition(position);
     }
 
 }

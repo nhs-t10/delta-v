@@ -37,6 +37,8 @@ public class MovementOrder {
 
     public MovementOrder() {}
 
+    public static MovementOrder NOTHING = new MovementOrder(0f, 0f, 0f);
+
     public static MovementOrder HVR (float h, float v, float r) {
         return new MovementOrder(h, v, r);
     }

@@ -21,19 +21,25 @@ public class InputManager extends FeatureManager {
      * @return Array of control powers; vertical, horizontal, rotational.
      * @see MovementManager
      */
-    public float[] getMovementControls() {
-        float[] res;
+    public MovementOrder getMovementControls() {
+        MovementOrder res;
 
         if(currentMode == InputMode.DRIVING) {
-            res = new float[] {gamepad.left_stick_x, gamepad.left_stick_y, gamepad.right_stick_x};
+            res = MovementOrder.HVR(
+                gamepad.left_stick_x,
+                gamepad.left_stick_y,
+                gamepad.right_stick_x
+            );
         }
         else if(currentMode == InputMode.DRIVE_FINETUNE) {
-            res = new float[] {gamepad.left_stick_x / INPUT_FINETUNE_SCALE,
-                               gamepad.left_stick_y / INPUT_FINETUNE_SCALE,
-                               gamepad.right_stick_x / INPUT_FINETUNE_SCALE};
+            res = MovementOrder.HVR(
+                gamepad.left_stick_x / INPUT_FINETUNE_SCALE,
+                gamepad.left_stick_y / INPUT_FINETUNE_SCALE,
+                gamepad.right_stick_x / INPUT_FINETUNE_SCALE
+            );
         }
         else {
-            res = new float[] {0f, 0f, 0f};
+            res = MovementOrder.NOTHING;
         }
 
         return res;

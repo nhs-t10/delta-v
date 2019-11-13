@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.view.VelocityTracker;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.NaiveAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
@@ -32,6 +33,8 @@ public class ImuManager extends FeatureManager {
         params.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         params.loggingEnabled = false;
         params.calibrationDataFile = "BNO055IMUCalibration.json";
+        //params.accelerationIntegrationAlgorithm = new NaiveAccelerationIntegrator();
+
 
         this.imu.initialize(params);
         // IDK if we really ned to calibrate it or if we have to, some examples have some don't, let's play it safe

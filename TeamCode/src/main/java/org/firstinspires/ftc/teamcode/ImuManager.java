@@ -33,7 +33,7 @@ public class ImuManager extends FeatureManager {
         params.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         params.loggingEnabled = false;
         params.calibrationDataFile = "BNO055IMUCalibration.json";
-        //params.accelerationIntegrationAlgorithm = new NaiveAccelerationIntegrator();
+        params.accelerationIntegrationAlgorithm = new PositionSensorIntegrator();
 
 
         this.imu.initialize(params);

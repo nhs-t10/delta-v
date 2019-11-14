@@ -109,7 +109,7 @@ public boolean isGold() {
     // If possible, turn the light on in the beginning (it might already be on anyway,
     // we just make sure it is if we can).
     if (this.colorSensor instanceof SwitchableLight) {
-      ((SwitchableLight)this.colorSensor).enableLight(true);
+      ((SwitchableLight)this.colorSensor).enableLight(true); 
     }
 
     // Loop until we are asked to stop
@@ -124,6 +124,7 @@ public boolean isGold() {
         colors.red /= max;
         colors.green /= max;
         colors.blue /= max;
+
 
         //set the colorReturned variable so it can be used by the other methods
         this.colorReturned = colors.toColor();

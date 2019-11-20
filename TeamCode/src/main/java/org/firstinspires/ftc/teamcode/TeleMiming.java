@@ -27,8 +27,14 @@ public class TeleMiming extends OpMode {
     public void loop() {
         driver.driveOmni(controller.getMovementControls());
 
-        if(timer.milliseconds() % FeatureManager.MIMING_MS_PER_SAMPLE == 0) {
+        int realMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
+
+        if(realMimeIndex > currentMimeIndex) {
+            currentMimeIndex = realMimeIndex;
             file.appendLine(controller.getMovementControls().toString());
         }
+
+        telemetry.addData("Readdir: " , file.getDirectory());
+        telemetry.addData("Instrcount: " , currentMimeIndex);
     }
 }

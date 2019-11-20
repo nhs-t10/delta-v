@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class Teleop extends OpMode {
     InputManager input;
     MovementManager driver;
+    ColorSensor sensor;
     
     public void init() {
         input = new InputManager(gamepad1);
@@ -15,17 +16,21 @@ public class Teleop extends OpMode {
                                      hardwareMap.get(DcMotor.class, "fr"),
                                      hardwareMap.get(DcMotor.class, "bl"),
                                      hardwareMap.get(DcMotor.class, "br"));
+        sensor = new ColorSensor(hardwareMap);
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
+        sensor.runSample();
+        
+        telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
+        telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
+        telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
 
-        telemetry.addData("Input LX: " , input.getGamepad().left_stick_x);
-        telemetry.addData("Input LY: " , input.getGamepad().left_stick_y);
-        telemetry.addData("Input RX: " , input.getGamepad().right_stick_x);
+        telemetry.addData("Color Code", sensor.getHexCode());
 
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
-    }
+   }
 }

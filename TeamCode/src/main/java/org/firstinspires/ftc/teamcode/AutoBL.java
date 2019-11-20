@@ -30,21 +30,18 @@ public class AutoBL extends StepAuto {
         break;
         case MOVE1:
             //Drop bar thing
+            driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(-1f, 0f, 0f);
             nextStep(1000);
         break;
         case MOVE3:
-            driver.driveOmni(1f, 0f, 0f);
+            driver.driveOmni(0f, -1f, 0f);
             nextStep(500);
         break;
         case MOVE4:
-            driver.driveOmni(0f, -1f, 0f);
-            nextStep(1000);
-        break;
-        case MOVE5:
-            driver.driveOmni(-1f, 0f, 0f);
+            driver.driveOmni(1f, 0f, 0f);
             nextStep(1000);
         break;
         default:

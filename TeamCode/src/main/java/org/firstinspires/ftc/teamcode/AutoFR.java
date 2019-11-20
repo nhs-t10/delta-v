@@ -25,47 +25,28 @@ public class AutoFR extends StepAuto {
     public void loop() {
         switch(currentStep){
          case START:
-             driver.driveOmni(0f, -1f, 0f);
-             nextStep(1000);
-         break;
-         case MOVE1:
-             driver.driveOmni(1f, 0f, 0f);
-             nextStep(500);
-         case MOVE2:
-             //sampling
-             nextStep(1000);
-         break;
-         case MOVE3:
-             //picking up a sky stone
-             nextStep(1000);
-         break;
-         case MOVE4:
-             driver.driveOmni(0f, 1f, 0f);
-             nextStep(1000);
-         break;
-         case MOVE5:
              driver.driveOmni(-1f, 0f, 0f);
              nextStep(1000);
          break;
-         case MOVE6:
-             driver.driveOmni(1f, 0f, 0f);
-             nextStep(1000);
-         break;
-         case MOVE7:
+         case MOVE1:
              driver.driveOmni(0f, -1f, 0f);
              nextStep(500);
-         break;
-         case MOVE8:
-             //finding last skystone
+         case MOVE2:
+             //sampling
+             driver.driveOmni(0f, 0f, 0f);
              nextStep(1000);
          break;
-         case MOVE9:
-         driver.driveOmni(0f, 1f, 0f);
-         nextStep(1000);
+         case MOVE3:
+             driver.driveOmni(-1f, 0f, 0f);
+             nextStep(500);
+         case MOVE4:
+             //picking up a sky stone
+             driver.driveOmni(0f, 0f, 0f);
+             nextStep(1000);
          break;
-         case MOVE10:
-         driver.driveOmni(-1f, 0f, 0f);
-         nextStep(1000);
+         case MOVE5:
+             driver.driveOmni(0f, -1f, 0f);
+             nextStep(1000);
          break;
          default:
              driver.driveOmni(0f, 0f, 0f);

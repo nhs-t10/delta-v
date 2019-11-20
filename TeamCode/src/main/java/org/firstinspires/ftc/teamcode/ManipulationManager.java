@@ -32,10 +32,20 @@ public class ManipulationManager extends FeatureManager {
         this.lastRecordTime = timer.milliseconds();
     }
 
+    /**
+     * Sets power of servo
+     * @param servo servo of choice
+     * @param power power of choice
+     */
     public void setServoPower(Servo servo, double power) {
         //servo.setPower(power);
     }
 
+    /**
+     * Sets position of servo
+     * @param servo servo of choice
+     * @param position position of choice
+     */
     public void setServoPosition(Servo servo, double position) {
         //servo.setPosition(position);
     }

@@ -94,7 +94,7 @@ public boolean isGold() {
         return false;
     }
     
-    }
+  }
 
   //This won't be ran by any code outside of this class, so we can make it private.
 

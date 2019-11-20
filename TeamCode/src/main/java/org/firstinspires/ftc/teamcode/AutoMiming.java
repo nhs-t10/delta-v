@@ -23,15 +23,20 @@ public class AutoMiming extends OpMode {
         timer = new ElapsedTime();
     }
     public void loop() {
-        if(timer.milliseconds() % FeatureManager.MIMING_MS_PER_SAMPLE == 0) {
-            float[] drivable = new float[3];
-            String temp = instructions.get(currentMimeIndex);
-            String[] splitInstructions = temp.substring(1, temp.length() - 1).split(",");
-            currentMimeIndex++;
-            for(int i = 0; i < splitInstructions.length; i++) {
-                drivable[i] = Float.parseFloat(splitInstructions[i]);
+
+            currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
+
+            if(currentMimeIndex < instructions.size()) {
+                float[] drivable = new float[3];
+                String temp = instructions.get(currentMimeIndex);
+                String[] splitInstructions = temp.substring(1, temp.length() - 1).split(",");
+                for (int i = 0; i < splitInstructions.length; i++) {
+                    drivable[i] = Float.parseFloat(splitInstructions[i]);
+                }
+                driver.driveOmni(drivable);
+                telemetry.addData("latestThing", instructions.get(currentMimeIndex));
             }
-            driver.driveOmni(drivable);
-        }
+
+            telemetry.addData("Instructions Completed", currentMimeIndex + "/" + instructions.size());
     }
 }

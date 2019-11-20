@@ -76,7 +76,7 @@ public class MovementManager extends FeatureManager {
         for (int i = 0; i < 4; i++) {
             sum[i] = vertical[i] + horizontal[i] + rotational[i];
         }
-
+        //This makes sure that no value is greater than 1 by dividing all of them by the maximum
         float highest = Math.max(Math.max(sum[0], sum[1]), Math.max(sum[2], sum[3]));
         if (Math.abs(highest) > 1) {
             for (int i = 0; i < 4; i++) {
@@ -86,6 +86,12 @@ public class MovementManager extends FeatureManager {
         return sum;
     }
 
+    /**
+     * Drives based on inputs
+     * @param horizontalPower Horizontal input
+     * @param verticalPower Verticl input
+     * @param rotationalPower Rotational input
+     */
     public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
         float [] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
 
@@ -118,6 +124,13 @@ public class MovementManager extends FeatureManager {
         this.driveOmni(move.getHor(), move.getVer(), move.getRot());
     }
 
+    /**
+     * Slows down the robot via a rational function
+     * Works only if all inputs are 0
+     * @param horizontalPower Horizontal input
+     * @param verticalPower Verticl input
+     * @param rotationalPower Rotational input
+     */
     public void moveDriftingRational(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
         float stopFr = (float)frontRight.getPower();
@@ -144,6 +157,9 @@ public class MovementManager extends FeatureManager {
      * Activates if all readings are = 0
      * Records motor values
      * Decreases motor values with an exponential function
+     * @param horizontalPower Horizontal input
+     * @param verticalPower Verticl input
+     * @param rotationalPower Rotational input
      */
     public void moveDriftingExponential(float horizontalPower, float verticalPower, float rotationalPower) {
         float stopFl = (float)frontLeft.getPower();
@@ -171,6 +187,9 @@ public class MovementManager extends FeatureManager {
      * Creates a hashmap of all the motors powers and lines them up by time. 
      * Key = time
      * Value = sum array
+     * @param horizontalPower Horizontal input
+     * @param verticalPower Verticl input
+     * @param rotationalPower Rotational input
      */
     public HashMap<String,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
         float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
@@ -182,6 +201,9 @@ public class MovementManager extends FeatureManager {
      * Calls sum array from 100 miliseconds ago
      * Takes the average of the current sum array and the past sum array 
      * Applies average sum to motor powers
+     * @param horizontalPower Horizontal input
+     * @param verticalPower Verticl input
+     * @param rotationalPower Rotational input
      */
     public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
         HashMap<String, float[]> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);

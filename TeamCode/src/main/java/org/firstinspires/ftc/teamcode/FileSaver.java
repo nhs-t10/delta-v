@@ -32,7 +32,7 @@ public class FileSaver {
             ArrayList<String> keyframes = new ArrayList<String>();
 
             try {
-                textFile = new BufferedReader(new InputStreamReader(new FileInputStream(context.getFilesDir().getPath() + "/" + fileName)));
+                textFile = new BufferedReader(new InputStreamReader(new FileInputStream(context.getExternalFilesDir(null).getPath() + "/" + fileName)));
                 BufferedReader br = new BufferedReader(textFile);
 
                 while ((thisLine = br.readLine()) != null) {
@@ -46,11 +46,11 @@ public class FileSaver {
     }
 
     public String getDirectory() {
-        return context.getFilesDir().getPath();
+        return context.getExternalFilesDir(null).getPath();
     }
     public void appendLine(String line) {
         try {
-            BufferedWriter output = new BufferedWriter(new FileWriter(context.getFilesDir().getPath() + "/" + fileName, true));
+            BufferedWriter output = new BufferedWriter(new FileWriter(context.getExternalFilesDir(null).getPath() + "/" + fileName, true));
             output.newLine();
             output.write(line);
         } catch (Exception e) {

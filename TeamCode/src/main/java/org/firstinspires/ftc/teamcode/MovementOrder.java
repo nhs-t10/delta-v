@@ -54,4 +54,8 @@ public class MovementOrder {
     public static MovementOrder RVH (float r, float v, float h) {
         return new MovementOrder(h, v, r);
     }
+
+    public String toString() {
+        return this.ver + "," + this.hor + "," + this.rot;
+    }
 }

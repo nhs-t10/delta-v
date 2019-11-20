@@ -32,8 +32,10 @@ public class TeleMiming extends OpMode {
         if(realMimeIndex > currentMimeIndex) {
             currentMimeIndex = realMimeIndex;
             file.appendLine(controller.getMovementControls().toString());
+            telemetry.addData("lastData", controller.getMovementControls().toString());
         }
 
+        telemetry.addData("lastData", "----");
         telemetry.addData("Readdir: " , file.getDirectory());
         telemetry.addData("Instrcount: " , currentMimeIndex);
     }

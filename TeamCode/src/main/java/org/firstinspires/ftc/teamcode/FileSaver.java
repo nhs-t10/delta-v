@@ -48,11 +48,15 @@ public class FileSaver {
     public String getDirectory() {
         return context.getExternalFilesDir(null).getPath();
     }
+    public void clearFile() {
+        
+    }
     public void appendLine(String line) {
         try {
             BufferedWriter output = new BufferedWriter(new FileWriter(context.getExternalFilesDir(null).getPath() + "/" + fileName, true));
             output.newLine();
             output.write(line);
+            output.close();
         } catch (Exception e) {
             //e.printStackTrace
         }

@@ -29,7 +29,7 @@ public class AutoMiming extends OpMode {
             if(currentMimeIndex < instructions.size()) {
                 float[] drivable = new float[3];
                 String temp = instructions.get(currentMimeIndex);
-                String[] splitInstructions = temp.substring(1, temp.length() - 1).split(",");
+                String[] splitInstructions = temp.split(",");
                 for (int i = 0; i < splitInstructions.length; i++) {
                     drivable[i] = Float.parseFloat(splitInstructions[i]);
                 }

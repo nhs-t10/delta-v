@@ -23,6 +23,8 @@ public class TeleMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
+
+        file.deleteFile();
     }
     public void loop() {
         driver.driveOmni(controller.getMovementControls());

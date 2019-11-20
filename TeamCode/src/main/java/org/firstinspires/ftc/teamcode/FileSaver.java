@@ -48,8 +48,9 @@ public class FileSaver {
     public String getDirectory() {
         return context.getExternalFilesDir(null).getPath();
     }
-    public void clearFile() {
-        
+    public void deleteFile() {
+        File file = new File(context.getExternalFilesDir(null).getPath() + "/" + fileName);
+        file.delete();
     }
     public void appendLine(String line) {
         try {

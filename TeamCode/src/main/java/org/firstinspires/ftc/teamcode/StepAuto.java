@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 enum step {
-    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5, MOVE6, MOVE7, MOVE8, MOVE9, MOVE10; 
+    START, MOVE1, MOVE2, MOVE3, MOVE4, MOVE5, MOVE6, MOVE7, MOVE8, MOVE9, MOVE10, MOVE11, MOVE12, MOVE13, MOVE14, MOVE15,MOVE16; 
 }
 
 @Autonomous

@@ -55,7 +55,7 @@ public class ManipulationManager extends FeatureManager {
      * @param lift for lift
      */
     public void raiseLift(DcMotor lift) {
-        lift.setPower(.5);
+        lift.setPower(.16);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ManipulationManager extends FeatureManager {
      * @param lift for lift
      */
     public void lowerLift(DcMotor lift) {
-        lift.setPower(-.5);
+        lift.setPower(-.16);
     }
 
 }

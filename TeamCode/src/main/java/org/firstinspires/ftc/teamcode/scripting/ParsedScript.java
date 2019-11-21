@@ -10,6 +10,9 @@ public class ParsedScript {
     private static ArrayList<ScriptStatement> availableStatements = new ArrayList<ScriptStatement>();
     private static ArrayList<ScriptConstraint> availableConstraints = new ArrayList<ScriptConstraint>();
 
+    //MOVE F TIME 3000
+    //MOVE B TIME 1000
+
     public ParsedScript(String script) {
         this(script.split("\n"));
     }

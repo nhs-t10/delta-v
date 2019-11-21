@@ -119,11 +119,13 @@ public boolean isGold() {
         //Convert the color to HSV
         Color.colorToHSV(colors.toColor(), hsvValues);
 
+
+
         //normalize the colors-- make it so brightness won't affect our readout (much)
         float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));
         colors.red /= max;
         colors.green /= max;
-        colors.blue /= max;
+        colors.blue /= max; //*
 
 
         //set the colorReturned variable so it can be used by the other methods

@@ -58,4 +58,8 @@ public class MovementOrder {
     public String toString() {
         return this.ver + "," + this.hor + "," + this.rot;
     }
+    public static MovementOrder fromString(String str) {
+        String[] stspl = str.split(",");
+        return MovementOrder.VHR(Float.parseFloat(stspl[0]), Float.parseFloat(stspl[1]), Float.parseFloat(stspl[2]));
+    }
 }

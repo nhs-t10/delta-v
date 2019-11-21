@@ -9,29 +9,26 @@ import java.util.ArrayList;
 
 @Autonomous
 public class AutoMiming extends OpMode {
-    ArrayList<String> instructions;
+    ParsedScript script;
+    FileSaver file;
     MovementManager driver;
     ElapsedTime timer;
-    int currentMimeIndex = 0;
+    int currentLine = 0;
 
     public void init() {
-        instructions = (new FileSaver(FeatureManager.MIMING_FILENAME)).readLines();
+        file = new FileSaver(FeatureManager.MIMING_FILENAME);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
+        script = new ParsedScript(instructions).readLines();
     }
     public void loop() {
 
-            currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
+            MovementOrder currentOrder = script.getStatement(currentLine).order;
+            if(script.getStatement(currentLine).finished(RobotState.current)) currentLine++;
 
-            if(currentMimeIndex < instructions.size()) {
-                MovementOrder order = MovementOrder.fromString(instructions.get(currentMimeIndex));
-                driver.driveOmni(order);
-                telemetry.addData("latestThing", instructions.get(currentMimeIndex));
-            }
-
-            telemetry.addData("Instructions Completed", currentMimeIndex + "/" + instructions.size());
+            telemetry.addData("Instructions Completed", currentLine + "/" + script.statements.length);
     }
 }

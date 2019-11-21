@@ -4,11 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.util.ArrayList;
+import org.firstinspires.ftc.teamcode.scripting.ScriptStatement;
+import org.firstinspires.ftc.teamcode.scripting.ParsedScript;
+import org.firstinspires.ftc.teamcode.scripting.MovementScriptStatement;
 
 @Autonomous
-public class AutoMiming extends OpMode {
+public class AutoScript extends OpMode {
     ParsedScript script;
     FileSaver file;
     MovementManager driver;
@@ -16,19 +17,26 @@ public class AutoMiming extends OpMode {
     int currentLine = 0;
 
     public void init() {
-        file = new FileSaver(FeatureManager.MIMING_FILENAME);
+        file = new FileSaver("ftcscript.txt");
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
-        script = new ParsedScript(instructions).readLines();
+        script = new ParsedScript(file.readLines());
     }
     public void loop() {
 
-            MovementOrder currentOrder = script.getStatement(currentLine).order;
-            if(script.getStatement(currentLine).finished(RobotState.current)) currentLine++;
+        if(currentLine <= script.length) {
+            ScriptStatement currentStatement = script.getStatement(currentLine);
 
-            telemetry.addData("Instructions Completed", currentLine + "/" + script.statements.length);
+            if (currentStatement instanceof MovementScriptStatement) {
+
+                MovementOrder currentOrder = ((MovementScriptStatement) script.getStatement(currentLine)).order;
+            }
+            if (script.getStatement(currentLine).finished(RobotState.current)) currentLine++;
+        }
+
+        telemetry.addData("Instructions Completed", currentLine + "/" + script.length);
     }
 }

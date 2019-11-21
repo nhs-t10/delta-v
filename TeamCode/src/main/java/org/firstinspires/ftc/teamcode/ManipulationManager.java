@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import java.util.HashMap;
 
 /**
- * Handles all servos
+ * Handles all attachments to the robot
  */
 public class ManipulationManager extends FeatureManager {
 
@@ -23,7 +23,7 @@ public class ManipulationManager extends FeatureManager {
     private ElapsedTime timer;
     private double lastRecordTime;
 
-    public ManipulationManager(Servo servo) {
+    public ManipulationManager(Servo servo, DcMotor lift) {
         //this.servo = new Servo();
 
         this.cache = new TrigCache();
@@ -38,7 +38,7 @@ public class ManipulationManager extends FeatureManager {
      * @param power power of choice
      */
     public void setServoPower(Servo servo, double power) {
-        //servo.setPower(power);
+        servo.setPosition(servo.getPosition() + 0.1);
     }
 
     /**
@@ -47,7 +47,23 @@ public class ManipulationManager extends FeatureManager {
      * @param position position of choice
      */
     public void setServoPosition(Servo servo, double position) {
-        //servo.setPosition(position);
+        servo.setPosition(position);
+    }
+
+    /**
+     * Raises lift
+     * @param lift for lift
+     */
+    public void raiseLift(DcMotor lift) {
+        lift.setPower(.5);
+    }
+
+    /**
+     * Lowers lift
+     * @param lift for lift
+     */
+    public void lowerLift(DcMotor lift) {
+        lift.setPower(-.5);
     }
 
 }

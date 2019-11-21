@@ -31,7 +31,7 @@ public class AutoBR extends StepAuto {
         break;
         case MOVE1:
             //Drop bar thing left
-            driver.driveOmni(0f, 0f, 0f);
+            // driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
             driver.driveOmni(1f, 0f, 0f);

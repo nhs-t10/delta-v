@@ -34,11 +34,11 @@ public class MotorCheck extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-           nextStep(1000)
+           nextStep(1000);
         break;
         case MOVE1:
 
-           nextStep(2500)
+           nextStep(2500);
         case MOVE2:
           
         break;

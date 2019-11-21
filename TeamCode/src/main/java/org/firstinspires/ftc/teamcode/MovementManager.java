@@ -49,10 +49,10 @@ public class MovementManager extends FeatureManager {
      * @param bl Back left motor power
      */
     private void driveRaw(float fl, float fr, float br, float bl) {
-        frontLeft.setPower(Range.clip(-fl, -1, 1)*SPEED);
-        backRight.setPower(Range.clip(br, -1, 1)*SPEED);
-        frontRight.setPower(Range.clip(fr, -1, 1)*SPEED);
-        backLeft.setPower(Range.clip(-bl, -1, 1)*SPEED);
+        frontLeft.setPower(fl*SPEED);
+        backRight.setPower(br*SPEED);
+        frontRight.setPower(fr*SPEED);
+        backLeft.setPower(bl*SPEED);
     }
 
     /**
@@ -69,8 +69,8 @@ public class MovementManager extends FeatureManager {
         
         // Motor powers of fl, fr, br, bl
         float[] vertical = {0.7f * -lY, 0.7f * lY, 0.7f * lY, 0.7f * -lY};
-        float[] horizontal = {lX, lX, -lX, -lX};
-        float[] rotational = {1f * rX, 1f * rX, 1f * rX, 1f * rX};
+        float[] horizontal = {0.7f * lY, 0.7f * -lY, 0.7f * -lY, 0.7f * lY};
+        float[] rotational = {0.7f * lY, 0.7f * -lY, 0.7f * lY, 0.7f * -lY};
 
         float[] sum = new float[4];
         for (int i = 0; i < 4; i++) {

@@ -33,7 +33,7 @@ public class AutoFR extends StepAuto {
              nextStep(500);
          case MOVE2:
              //sampling
-             driver.driveOmni(0f, 0f, 0f);
+            //  driver.driveOmni(0f, 0f, 0f);
              nextStep(1000);
          break;
          case MOVE3:
@@ -41,7 +41,7 @@ public class AutoFR extends StepAuto {
              nextStep(500);
          case MOVE4:
              //picking up a sky stone
-             driver.driveOmni(0f, 0f, 0f);
+            //  driver.driveOmni(0f, 0f, 0f);
              nextStep(1000);
          break;
          case MOVE5:

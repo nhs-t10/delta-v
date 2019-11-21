@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
 public class HardDrive extends OpMode {
-    GamePad input;
+    Gamepad input;
     ColorSensor sensor;
     
     DcMotor fl;
@@ -23,16 +25,16 @@ public class HardDrive extends OpMode {
          br = hardwareMap.get(DcMotor.class, "br");
     }
     public void loop() {
-        lx = controle.left_stick_x;
-        ly = controls.left_stick_y;
-        rx = controls.right_stick_x;
+        float lx = controls.left_stick_x;
+        float ly = controls.left_stick_y;
+        float rx = controls.right_stick_x;
 
         //FL, FR, BL, BR
-        float[] ver = {ly, -ly, ly, -ly};
-        float[] ver = {lx, lx, lx, lx};
-        float[] ver = {-rx, rx, rx, -rx};
+        float[] vertical = {ly, -ly, ly, -ly};
+        float[] horizontal = {lx, lx, lx, lx};
+        float[] rotational = {-rx, rx, rx, -rx};
 
-        float[] main = new float[4];
+        float[] sum = new float[4];
 
         for (int i = 0; i < 4; i++) {
             sum[i] = vertical[i] + horizontal[i] + rotational[i];

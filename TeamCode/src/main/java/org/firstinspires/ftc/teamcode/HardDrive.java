@@ -45,15 +45,13 @@ public class HardDrive extends OpMode {
 
 
 
-        telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
-        telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
-        telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
+        telemetry.addData("Input LX: ", controls.left_stick_x);
+        telemetry.addData("Input LY: ", controls.left_stick_y);
+        telemetry.addData("Input RX: ", controls.right_stick_x);
 
-        telemetry.addData("Color Code", sensor.getHexCode());
-
-        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
-        telemetry.addData("FR Power: ", driver.frontRight.getPower());
-        telemetry.addData("BL Power: ", driver.backLeft.getPower());
-        telemetry.addData("BR Power: ", driver.backRight.getPower());
+        telemetry.addData("FL Power: ", fl.getPower());
+        telemetry.addData("FR Power: ", fr.getPower());
+        telemetry.addData("BL Power: ", bl.getPower());
+        telemetry.addData("BR Power: ", br.getPower());
    }
 }

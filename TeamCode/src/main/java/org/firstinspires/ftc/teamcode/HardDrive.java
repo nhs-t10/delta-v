@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
 public class HardDrive extends OpMode {
@@ -15,8 +18,10 @@ public class HardDrive extends OpMode {
     DcMotor fr;
     DcMotor bl;
     DcMotor br;
-
+    Servo sev;
     public void init() {
+        input = gamepad1;
+        sev = hardwareMap.get(Servo.class, "ml");
 
          fl = hardwareMap.get(DcMotor.class, "fl");
          fr = hardwareMap.get(DcMotor.class, "fr");
@@ -29,8 +34,8 @@ public class HardDrive extends OpMode {
         float rx = (float) input.right_stick_x;
 
         //FL, FR, BL, BR
-        float[] vertical = {ly, -ly, ly, -ly};
-        float[] horizontal = {lx, lx, lx, lx};
+        float[] vertical = {-ly, ly, -ly, ly};
+        float[] horizontal = {-lx, -0.9f*lx, 0.9f*lx, 0.9f*lx};
         float[] rotational = {-rx, rx, rx, -rx};
 
         float[] sum = new float[4];
@@ -38,7 +43,12 @@ public class HardDrive extends OpMode {
         for (int i = 0; i < 4; i++) {
             sum[i] = vertical[i] + horizontal[i] + rotational[i];
         }
-
+        if(input.a){
+            ManipulationManager.setServoPosition(sev, 1);
+        }
+        if(input.b){
+            ManipulationManager.setServoPosition(sev, 0);
+        }
         fl.setPower(Range.clip(sum[0], -1, 1));
         fr.setPower(Range.clip(sum[1], -1, 1));
         bl.setPower(Range.clip(sum[2], -1, 1));

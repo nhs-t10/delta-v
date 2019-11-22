@@ -44,10 +44,10 @@ public class HardDrive extends OpMode {
             sum[i] = vertical[i] + horizontal[i] + rotational[i];
         }
         if(input.a){
-            ManipulationManager.setServoPosition(sev, 1);
+            sev.setPosition(1);
         }
         if(input.b){
-            ManipulationManager.setServoPosition(sev, 0);
+            sev.setPosition(0);
         }
         fl.setPower(Range.clip(sum[0], -1, 1));
         fr.setPower(Range.clip(sum[1], -1, 1));

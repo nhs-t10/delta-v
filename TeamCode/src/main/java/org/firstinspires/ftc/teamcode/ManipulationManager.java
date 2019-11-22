@@ -46,7 +46,7 @@ public class ManipulationManager extends FeatureManager {
      * @param servo servo of choice
      * @param position position of choice
      */
-    public void setServoPosition(Servo servo, double position) {
+    public static void setServoPosition(Servo servo, double position) {
         servo.setPosition(position);
     }
 

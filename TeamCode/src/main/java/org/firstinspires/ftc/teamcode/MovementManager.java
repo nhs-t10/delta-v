@@ -63,14 +63,14 @@ public class MovementManager extends FeatureManager {
      */
     //confusing names we are trubleshooting
     public float[] omniCalc(float verticalPower, float horizontalPower, float rotationalPower) {
-        float lX = Range.clip(horizontalPower, -1, 1);
+        float lx = Range.clip(horizontalPower, -1, 1);
         float lY = Range.clip(verticalPower, -1, 1);
-        float rX = Range.clip(rotationalPower, -1, 1);
+        float rx = Range.clip(rotationalPower, -1, 1);
         
         // Motor powers of fl, fr, br, bl
-        float[] vertical = {0.7f * -lY, 0.7f * lY, 0.7f * lY, 0.7f * -lY};
-        float[] horizontal = {0.7f * lY, 0.7f * -lY, 0.7f * -lY, 0.7f * lY};
-        float[] rotational = {0.7f * lY, 0.7f * -lY, 0.7f * lY, 0.7f * -lY};
+        float[] vertical = {0.7f * -lY, 0.7f * lY, 0.7f * lY, 0.7f * -olY};
+        float[] horizontal = {lx, lx, lx, 0.9f* lx};
+        float[] rotational = {0.7f * rx, 0.7f * rx, 0.7f * rx, 0.7f * rx};
 
         float[] sum = new float[4];
         for (int i = 0; i < 4; i++) {
@@ -93,7 +93,7 @@ public class MovementManager extends FeatureManager {
      * @param rotationalPower Rotational input
      */
     public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
-        float [] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        float [] sum = omniCalc(verticalPower, horizontalPower, rotationalPower);
 
         //record current position
         double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;

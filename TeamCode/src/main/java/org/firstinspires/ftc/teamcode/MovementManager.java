@@ -48,7 +48,7 @@ public class MovementManager extends FeatureManager {
      * @param br Back right motor power
      * @param bl Back left motor power
      */
-    private void driveRaw(float fl, float fr, float br, float bl) {
+    public void driveRaw(float fl, float fr, float br, float bl) {
         frontLeft.setPower(fl*SPEED);
         backRight.setPower(br*SPEED);
         frontRight.setPower(fr*SPEED);

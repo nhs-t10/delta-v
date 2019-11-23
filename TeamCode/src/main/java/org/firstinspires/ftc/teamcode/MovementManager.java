@@ -68,9 +68,9 @@ public class MovementManager extends FeatureManager {
         float rx = Range.clip(rotationalPower, -1, 1);
         
         // Motor powers of fl, fr, br, bl
-        float[] vertical = {0.7f * -lY, 0.7f * lY, 0.7f * lY, 0.7f * -lY};
-        float[] horizontal = {lx, lx, lx, 0.9f* lx};
-        float[] rotational = {0.7f * rx, 0.7f * rx, 0.7f * rx, 0.7f * rx};
+        float[] vertical = {-lY, lY, -lY, lY};
+        float[] horizontal = {-lx, -0.4f*lx, 0.4f*lx, 0.4f*lx};
+        float[] rotational = {rx, rx, rx, rx};
 
         float[] sum = new float[4];
         for (int i = 0; i < 4; i++) {

@@ -35,8 +35,8 @@ public class HardDrive extends OpMode {
 
         //FL, FR, BL, BR
         float[] vertical = {-ly, ly, -ly, ly};
-        float[] horizontal = {-lx, -0.9f*lx, 0.9f*lx, 0.9f*lx};
-        float[] rotational = {-rx, rx, rx, -rx};
+        float[] horizontal = {-lx, -0.4f*lx, 0.4f*lx, 0.4f*lx};
+        float[] rotational = {rx, rx, rx, rx};
 
         float[] sum = new float[4];
 
@@ -64,5 +64,10 @@ public class HardDrive extends OpMode {
         telemetry.addData("FR Power: ", fr.getPower());
         telemetry.addData("BL Power: ", bl.getPower());
         telemetry.addData("BR Power: ", br.getPower());
-   }
+
+        telemetry.addData("Servo control ", sev.getController());
+        telemetry.addData("Servo pos", sev.getPosition());
+        telemetry.addData("Servo Dir", sev.getDirection());
+
+    }
 }

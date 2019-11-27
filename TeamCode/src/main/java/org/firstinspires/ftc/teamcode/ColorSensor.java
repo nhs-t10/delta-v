@@ -47,7 +47,6 @@ public class ColorSensor {
   HardwareMap hardwareMap;
   boolean weShouldRead, weveInitiated;
   int colorReturned;
-  float hsvValues[];
 
   public ColorSensor(HardwareMap _hardwareMap) {
       this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
@@ -78,7 +77,6 @@ public class ColorSensor {
 
   public String getHexCode() {
 
-
       return Color.red(this.colorReturned) + " | "+ Color.green(this.colorReturned) + " | " + Color.blue(this.colorReturned) + " | " +Color.alpha(this.colorReturned);
   }
   public boolean getReadState() {
@@ -89,7 +87,7 @@ public class ColorSensor {
 //Test if we're seeing gold
 public boolean isGold() {
       //if the green value is between 0x53 (hexidecimal 53) and 0x64 (hexidecimal 64), it's gold. Otherwise, it's false.
-    if ( Color.red(this.colorReturned) >= 112) {
+    if ( Color.green(this.colorReturned) >= 112) {
         return true;
         //Since the condition is commented out, this will always be passed over
     } else {
@@ -120,14 +118,13 @@ public boolean isGold() {
 
         //Convert the color to HSV
         Color.colorToHSV(colors.toColor(), hsvValues);
-
-
+        
 
         //normalize the colors-- make it so brightness won't affect our readout (much)
-        float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));
-        colors.red /= max;
-        colors.green /= max;
-        colors.blue /= max;
+       // float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));
+       // colors.red /= max;
+       // colors.green /= max;
+       // colors.blue /= max; 
 
 
         //set the colorReturned variable so it can be used by the other methods

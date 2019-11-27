@@ -69,7 +69,7 @@ public class MovementManager extends FeatureManager {
         
         // Motor powers of fl, fr, br, bl
         float[] vertical = {-lY, lY, -lY, lY};
-        float[] horizontal = {-lx, -0.4f*lx, 0.4f*lx, 0.4f*lx};
+        float[] horizontal = {lx, 0.4f*lx, -0.4f*lx, -0.4f*lx};
         float[] rotational = {rx, rx, rx, rx};
 
         float[] sum = new float[4];

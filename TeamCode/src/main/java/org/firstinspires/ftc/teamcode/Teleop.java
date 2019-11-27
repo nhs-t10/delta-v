@@ -10,7 +10,7 @@ public class Teleop extends OpMode {
     InputManager input;
     MovementManager driver;
     ColorSensor sensor;
-    Servo sev;
+    ManipulationManager manip;
 
     public void init() {
         input = new InputManager(gamepad1);
@@ -19,18 +19,20 @@ public class Teleop extends OpMode {
                                      hardwareMap.get(DcMotor.class, "bl"),
                                      hardwareMap.get(DcMotor.class, "br"));
         sensor = new ColorSensor(hardwareMap);
-       sev = hardwareMap.get(Servo.class, "ml");
-        ManipulationManager grab = new ManipulationManager(sev, hardwareMap.get(DcMotor.class, "fr"));
+        manip = new ManipulationManager(
+                hardwareMap.get(Servo.class, "ml"),
+                hardwareMap.get(DcMotor.class, "lift")
+        );
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         sensor.runSample();
 
         if(input.getGamepad().a){
-            ManipulationManager.setServoPosition(sev, 1);
+            manip.setServoPosition(1);
         }
         if(input.getGamepad().b){
-            ManipulationManager.setServoPosition(sev, 0);
+            manip.setServoPosition(0);
         }
         telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
         telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
@@ -42,7 +44,6 @@ public class Teleop extends OpMode {
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
-        telemetry.addData("Servo Rot ", sev.getPosition());
 
     }
 }

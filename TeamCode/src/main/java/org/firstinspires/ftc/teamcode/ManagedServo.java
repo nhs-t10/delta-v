@@ -30,12 +30,10 @@ public class ManagedServo {
         this.lastRecordTime = timer.milliseconds();
     }
 
-    public void setServoPower(Servo servo, double power) {
-        //servo.setPower(power);
+    public void setServoPosition(double position) {
+       servo.setPosition(position);
     }
-
-    public void setServoPosition(Servo servo, double position) {
-       // servo.setPosition(position);
+    public double getServoPosition() {
+        return servo.getPosition();
     }
-
 }

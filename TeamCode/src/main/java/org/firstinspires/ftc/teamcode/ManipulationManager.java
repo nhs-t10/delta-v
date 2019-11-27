@@ -15,8 +15,9 @@ import java.util.HashMap;
  */
 public class ManipulationManager extends FeatureManager {
 
-    public ManagedServo upServo;
-    public ManagedServo downServo;
+    public ManagedServo grabServo;
+
+    public DcMotor liftMotor;
 
     private PointNd points;
     private TrigCache cache;
@@ -24,7 +25,8 @@ public class ManipulationManager extends FeatureManager {
     private double lastRecordTime;
 
     public ManipulationManager(Servo servo, DcMotor lift) {
-        //this.servo = new Servo();
+        this.grabServo = new ManagedServo(servo);
+        this.liftMotor = lift;
 
         this.cache = new TrigCache();
         this.points = new PointNd(0f,0f,0f);
@@ -34,36 +36,39 @@ public class ManipulationManager extends FeatureManager {
 
     /**
      * Sets power of servo
-     * @param servo servo of choice
      * @param power power of choice
      */
-    public void setServoPower(Servo servo, double power) {
-        servo.setPosition(servo.getPosition() + 0.1);
+    public void setServoPower(double power) {
+        grabServo.setServoPosition(grabServo.getServoPosition() + 0.1f * power);
     }
 
     /**
      * Sets position of servo
-     * @param servo servo of choice
      * @param position position of choice
      */
-    public static void setServoPosition(Servo servo, double position) {
-        servo.setPosition(position);
+    public void setServoPosition(double position) {
+        grabServo.setServoPosition(position);
     }
 
     /**
      * Raises lift
-     * @param lift for lift
      */
-    public void raiseLift(DcMotor lift) {
-        lift.setPower(.16);
+    public void raiseLift() {
+        liftMotor.setPower(0.16);
     }
 
     /**
      * Lowers lift
-     * @param lift for lift
      */
-    public void lowerLift(DcMotor lift) {
-        lift.setPower(-.16);
+    public void lowerLift() {
+        liftMotor.setPower(-0.16);
+    }
+
+    /**
+     * Stops lift
+     */
+    public void stopLift() {
+        liftMotor.setPower(0);
     }
 
 }

@@ -1,15 +1,18 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.MovementManager;
+import org.firstinspires.ftc.teamcode.autonomous.StepAuto;
+
 import java.util.ArrayList;
+import java.util.Timer;
 
-
-@Autonomous
-public class AutoBR extends StepAuto {
+@Autonomous(group = "Step")
+public class BL extends StepAuto {
     MovementManager driver;
     
 
@@ -17,42 +20,42 @@ public class AutoBR extends StepAuto {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
-                hardwareMap.get(DcMotor.class, "br")); 
-    }  
+                hardwareMap.get(DcMotor.class, "br"));
+    }
 
-
-
+    
     
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(0f, -0.5f, 0f);
             nextStep(1000);
         break;
-        case MOVE1:
-            //Drop bar thing left
-            // driver.driveOmni(0f, 0f, 0f);
-            nextStep(1000);
-        case MOVE2:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
-        break;
-        case MOVE3:
-            driver.driveOmni(0f, -1f, 0f);
-            nextStep(500);
-        break;
-        case MOVE4:
-            driver.driveOmni(-1f, 0f, 0f);
-            nextStep(1000);
-        break;
+//        case MOVE1:
+////
+////            //Drop bar t
+////            // driver.driveOmni(0f, 0f, 0f);
+////            nextStep(1000);
+////        case MOVE2:
+////            driver.driveOmni(-1f, 0f, 0f);
+////            nextStep(1000);
+////        break;
+////        case MOVE3:
+////            driver.driveOmni(0f, -1f, 0f);
+////            nextStep(500);
+////        break;
+////        case MOVE4:
+////            driver.driveOmni(1f, 0f, 0f);
+////            nextStep(1000);
+////        break;
         default:
             driver.driveOmni(0f, 0f, 0f);
+
        }
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
-
 
     }
 }

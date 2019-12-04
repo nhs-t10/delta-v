@@ -1,13 +1,16 @@
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.MovementManager;
+
 import java.util.ArrayList;
-@Autonomous
+
+@Autonomous(group = "Step")
 public class AutoMark extends OpMode {
     MovementManager driver;
     ElapsedTime timer;

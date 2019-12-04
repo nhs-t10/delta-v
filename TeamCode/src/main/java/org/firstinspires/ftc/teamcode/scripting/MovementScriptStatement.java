@@ -20,7 +20,7 @@ public class MovementScriptStatement extends ScriptStatement {
             String[] numsplit = token[1].split(",");
             return MovementOrder.HVR(Float.parseFloat(token[0]), Float.parseFloat(token[1]), Float.parseFloat(token[2]));
 
-        } else if(token[1].split(",").length == 4) {
+        } else if(token[0] == "MOVERAW" || token[1].split(",").length == 4) {
             //TODO: implement raw motors in MovementOrder
             return MovementOrder.NOTHING;
 

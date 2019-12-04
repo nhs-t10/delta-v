@@ -1,14 +1,19 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.FileSaver;
+import org.firstinspires.ftc.teamcode.MovementManager;
+import org.firstinspires.ftc.teamcode.MovementOrder;
+import org.firstinspires.ftc.teamcode.RobotState;
 import org.firstinspires.ftc.teamcode.scripting.ScriptStatement;
 import org.firstinspires.ftc.teamcode.scripting.ParsedScript;
 import org.firstinspires.ftc.teamcode.scripting.MovementScriptStatement;
 
-@Autonomous
+@Autonomous(group = "Script")
 public class AutoScript extends OpMode {
     ParsedScript script;
     FileSaver file;

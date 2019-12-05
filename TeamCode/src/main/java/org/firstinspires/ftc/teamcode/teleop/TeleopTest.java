@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import android.graphics.Point;
 
@@ -6,7 +6,9 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
+import org.firstinspires.ftc.teamcode.*;
 @TeleOp
 public class TeleopTest extends OpMode {
     float[] velocity_x;

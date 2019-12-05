@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+import org.firstinspires.ftc.teamcode.teleop.*;
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
 import java.util.ArrayList;
 /**
  * Handle input (button combos, keybinds, etc.) for gamepads.

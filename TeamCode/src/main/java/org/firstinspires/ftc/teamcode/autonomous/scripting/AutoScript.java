@@ -5,10 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.FileSaver;
-import org.firstinspires.ftc.teamcode.MovementManager;
-import org.firstinspires.ftc.teamcode.MovementOrder;
-import org.firstinspires.ftc.teamcode.RobotState;
+import org.firstinspires.ftc.teamcode.teleop.*;
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
 import org.firstinspires.ftc.teamcode.autonomous.scripting.ScriptStatement;
 import org.firstinspires.ftc.teamcode.autonomous.scripting.ParsedScript;
 import org.firstinspires.ftc.teamcode.autonomous.scripting.MovementScriptStatement;

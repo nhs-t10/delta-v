@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous.step;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -9,8 +9,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import org.firstinspires.ftc.teamcode.FeatureManager;
 import org.firstinspires.ftc.teamcode.ManagedServo;
-import org.firstinspires.ftc.teamcode.PointNd;
-import org.firstinspires.ftc.teamcode.TrigCache;
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
 
 import java.util.HashMap;
 

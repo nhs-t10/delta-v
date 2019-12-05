@@ -5,7 +5,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
+import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 
+import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
 import java.util.HashMap;
 
 /**
@@ -214,7 +218,7 @@ public class MovementManager extends FeatureManager {
         driveRaw(currentSum[0], currentSum[1], currentSum[2], currentSum[3]);
     }
 
-    public void resetEncoders(DCmotor motor) {
+    public void resetEncoders(DcMotor motor) {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }

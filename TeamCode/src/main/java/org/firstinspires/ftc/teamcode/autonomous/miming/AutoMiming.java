@@ -5,10 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.FeatureManager;
-import org.firstinspires.ftc.teamcode.FileSaver;
-import org.firstinspires.ftc.teamcode.MovementManager;
-import org.firstinspires.ftc.teamcode.MovementOrder;
+import org.firstinspires.ftc.teamcode.teleop.*;
+import org.firstinspires.ftc.teamcode.data.*;
+import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.autonomous.scripting;
 
-import org.firstinspires.ftc.teamcode.RobotState;
+import org.firstinspires.ftc.teamcode.data.RobotState;
 
 public class ScriptStatement {
     public ScriptConstraint[] constraints;

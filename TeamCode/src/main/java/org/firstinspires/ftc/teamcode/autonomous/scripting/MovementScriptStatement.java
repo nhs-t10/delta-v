@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.autonomous.scripting;
 
-import org.firstinspires.ftc.teamcode.MovementOrder;
+import org.firstinspires.ftc.teamcode.data.MovementOrder;
 
 public class MovementScriptStatement extends ScriptStatement {
     public MovementOrder order;

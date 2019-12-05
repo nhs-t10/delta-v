@@ -25,10 +25,10 @@ public class TeleopTest extends OpMode {
 
         // imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
         // imu.calibrate();
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"),
-        hardwareMap.get(DcMotor.class, "fr"),
-        hardwareMap.get(DcMotor.class, "bl"),
-        hardwareMap.get(DcMotor.class, "br"))
+        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
+        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
+        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
+        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());

@@ -221,10 +221,10 @@ public class MovementManager extends FeatureManager {
 
     public void driveEncoder(float rotFL, float rotFR, float rotBL, float rotBR) {
         
-        frontLeft.setTargetPosition(rotFL*1440);
-        frontRight.setTargetPosition(rotFR*1440);
-        backLeft.setTargetPosition(rotBL*1440);
-        backRight.setTargetPosition(rotBR*1440);
+        frontLeft.setTargetPosition((int)rotFL*1440);
+        frontRight.setTargetPosition((int)rotFR*1440);
+        backLeft.setTargetPosition((int)rotBL*1440);
+        backRight.setTargetPosition((int)rotBR*1440);
 
 
     }

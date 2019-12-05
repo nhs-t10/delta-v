@@ -104,7 +104,7 @@ public class ParsedScript {
     }
 
     public ParsedScript(ArrayList<String> scriptLines) {
-        this((String[])scriptLines.toArray());
+        this(scriptLines.toArray(new String[0]));
     }
 
     public ScriptStatement getStatement(int i) {

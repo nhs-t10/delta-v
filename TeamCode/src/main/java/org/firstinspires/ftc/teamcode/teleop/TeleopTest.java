@@ -13,7 +13,7 @@ public class TeleopTest extends OpMode {
     float[] velocity_y;
     InputManager input;
     MovementManager driver;
-    ImuManager imu; 
+    // ImuManager imu; 
     int counter;
     PointNd location;
     public void init() {
@@ -23,20 +23,28 @@ public class TeleopTest extends OpMode {
                                      hardwareMap.get(DcMotor.class, "bl"),
                                      hardwareMap.get(DcMotor.class, "br"));
 
-        imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
-        imu.calibrate();
+        // imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
+        // imu.calibrate();
+        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"),
+        hardwareMap.get(DcMotor.class, "fr"),
+        hardwareMap.get(DcMotor.class, "bl"),
+        hardwareMap.get(DcMotor.class, "br"))
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         //Creates an array of all previous velocities and calculates the location of the robot
-        velocity_x[counter] = (float)imu.getVelocityX();
-        velocity_y[counter] = (float)imu.getVelocityY();
-        location = PaulMath.location(velocity_x, velocity_y);
+        // velocity_x[counter] = (float)imu.getVelocityX();
+        // velocity_y[counter] = (float)imu.getVelocityY();
+        // location = PaulMath.location(velocity_x, velocity_y);
         
-        telemetry.addData("Velocity X: " , imu.getVelocityX());
-        telemetry.addData("Velocity Y: " , imu.getVelocityY());
-        telemetry.addData("Velocity Z: " , imu.getVelocityZ());
-        telemetry.addData("Location: " , location);
+        if(gamepad1.a) {
+            driver.driveEncoder(2f, 2f, 2f, 2f);
+        }
+
+        // telemetry.addData("Velocity X: " , imu.getVelocityX());
+        // telemetry.addData("Velocity Y: " , imu.getVelocityY());
+        // telemetry.addData("Velocity Z: " , imu.getVelocityZ());
+        // telemetry.addData("Location: " , location);
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());

@@ -1,14 +1,13 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.step;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MovementManager;
-import org.firstinspires.ftc.teamcode.autonomous.StepAuto;
-
+import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 
 @Autonomous(group = "Step")
-public class BR extends StepAuto {
+public class FL extends StepAuto {
     MovementManager driver;
     
 
@@ -16,32 +15,34 @@ public class BR extends StepAuto {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
-                hardwareMap.get(DcMotor.class, "br")); 
+                hardwareMap.get(DcMotor.class, "br"));
     }  
-
-
 
     
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, 1f, 0f);
-            nextStep(1000);
-        break;
-        case MOVE1:
-            //Drop bar thing left
-            // driver.driveOmni(0f, 0f, 0f);
-            nextStep(1000);
-        case MOVE2:
             driver.driveOmni(1f, 0f, 0f);
             nextStep(1000);
         break;
-        case MOVE3:
+        case MOVE1:
             driver.driveOmni(0f, -1f, 0f);
             nextStep(500);
+        case MOVE2:
+            //sampling
+            // driver.driveOmni(0f, 0f, 0f);
+            nextStep(1000);
         break;
+        case MOVE3:
+            driver.driveOmni(1f, 0f, 0f);
+            nextStep(500);
         case MOVE4:
-            driver.driveOmni(-1f, 0f, 0f);
+            //picking up a sky stone
+            // driver.driveOmni(0f, 0f, 0f);
+            nextStep(1000);
+        break;
+        case MOVE5:
+            driver.driveOmni(0f, -1f, 0f);
             nextStep(1000);
         break;
         default:

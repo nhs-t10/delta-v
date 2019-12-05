@@ -8,6 +8,11 @@ public class FeatureManager {
     public final static int MIMING_MS_PER_SAMPLE = 10;
     public final static String MIMING_FILENAME = "miming.txt";
 
+    public final static String MIMING_FR = "mimingfr.txt";
+    public final static String MIMING_FL = "mimingfr.txt";
+    public final static String MIMING_BL = "mimingbl.txt";
+    public final static String MIMING_BR = "mimingbr.txt";
+
     public boolean isInputType;
     public FeatureManager() {
     

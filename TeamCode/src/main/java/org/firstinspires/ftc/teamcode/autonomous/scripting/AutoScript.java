@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.scripting;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.FileSaver;
 import org.firstinspires.ftc.teamcode.MovementManager;
 import org.firstinspires.ftc.teamcode.MovementOrder;
 import org.firstinspires.ftc.teamcode.RobotState;
-import org.firstinspires.ftc.teamcode.scripting.ScriptStatement;
-import org.firstinspires.ftc.teamcode.scripting.ParsedScript;
-import org.firstinspires.ftc.teamcode.scripting.MovementScriptStatement;
+import org.firstinspires.ftc.teamcode.autonomous.scripting.ScriptStatement;
+import org.firstinspires.ftc.teamcode.autonomous.scripting.ParsedScript;
+import org.firstinspires.ftc.teamcode.autonomous.scripting.MovementScriptStatement;
 
 @Autonomous(group = "Script")
 public class AutoScript extends OpMode {
@@ -31,7 +31,7 @@ public class AutoScript extends OpMode {
         script = new ParsedScript(file.readLines());
     }
     public void loop() {
-
+        telemetry.addData("Instructions Completed", currentLine + "/" + script.length);
         if(currentLine <= script.length) {
             ScriptStatement currentStatement = script.getStatement(currentLine);
 
@@ -42,6 +42,6 @@ public class AutoScript extends OpMode {
             if (script.getStatement(currentLine).finished(RobotState.current)) currentLine++;
         }
 
-        telemetry.addData("Instructions Completed", currentLine + "/" + script.length);
+
     }
 }

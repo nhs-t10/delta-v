@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.step;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MovementManager;
-import org.firstinspires.ftc.teamcode.autonomous.StepAuto;
+import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 
 @Autonomous(group = "Step")
 public class FR extends StepAuto {

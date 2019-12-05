@@ -185,8 +185,7 @@ public class MovementManager extends FeatureManager {
     }
     /**
      * Creates a hashmap of all the motors powers and lines them up by time. 
-     * Key = time
-     * Value = sum array
+     * @return a map where the key is the time and the value is an array of motor powers.
      * @param horizontalPower Horizontal input
      * @param verticalPower Verticl input
      * @param rotationalPower Rotational input
@@ -214,4 +213,21 @@ public class MovementManager extends FeatureManager {
         }
         driveRaw(currentSum[0], currentSum[1], currentSum[2], currentSum[3]);
     }
+
+    public void resetEncoders(DCmotor motor) {
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void driveEncoder(float rotFL, float rotFR, float rotBL, float rotBR) {
+        
+        frontLeft.setTargetPosition(rotFL*1440);
+        frontRight.setTargetPosition(rotFR*1440);
+        backLeft.setTargetPosition(rotBL*1440);
+        backRight.setTargetPosition(rotBR*1440);
+
+
+    }
 }
+
+

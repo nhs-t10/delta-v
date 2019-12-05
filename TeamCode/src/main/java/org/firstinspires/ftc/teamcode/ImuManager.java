@@ -38,12 +38,14 @@ public class ImuManager extends FeatureManager {
 
         this.imu.initialize(params);
         // IDK if we really ned to calibrate it or if we have to, some examples have some don't, let's play it safe
-        while(!this.imu.isGyroCalibrated()){
-            try{
-                Thread.sleep(50);
-            } catch(InterruptedException e){}
-            status = imu.getCalibrationStatus().toString();
-        }
+
+        //however, this causes it to be stuck in init, so i'm taking it out for now.
+//        while(!this.imu.isGyroCalibrated()){
+//            try{
+//                Thread.sleep(50);
+//            } catch(InterruptedException e){}
+//            status = imu.getCalibrationStatus().toString();
+//        }
     }
     public double getVelocityX(){
         timeSpeed = this.imu.getVelocity();

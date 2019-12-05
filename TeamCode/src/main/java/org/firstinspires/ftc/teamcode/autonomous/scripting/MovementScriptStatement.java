@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.scripting;
+package org.firstinspires.ftc.teamcode.autonomous.scripting;
 
 import org.firstinspires.ftc.teamcode.MovementOrder;
 

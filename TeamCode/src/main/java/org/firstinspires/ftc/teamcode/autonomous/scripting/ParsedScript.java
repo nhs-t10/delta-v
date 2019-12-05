@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.scripting;
+package org.firstinspires.ftc.teamcode.autonomous.scripting;
 
 import java.util.ArrayList;
+
 
 public class ParsedScript {
     private ScriptStatement[] statements;
@@ -48,10 +49,11 @@ public class ParsedScript {
                                 break;
                             }
                         } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 } catch(Exception e) {
-
+                    e.printStackTrace();
                 }
             }
             if(lineStatement != null) {

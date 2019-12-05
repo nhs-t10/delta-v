@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.autonomous;
+package org.firstinspires.ftc.teamcode.autonomous.miming;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -13,14 +13,14 @@ import org.firstinspires.ftc.teamcode.MovementOrder;
 import java.util.ArrayList;
 
 @Autonomous(group = "Miming")
-public class AutoMiming extends OpMode {
+public class BL extends OpMode {
     ArrayList<String> instructions;
     MovementManager driver;
     ElapsedTime timer;
     int currentMimeIndex = 0;
 
     public void init() {
-        instructions = (new FileSaver(FeatureManager.MIMING_FILENAME)).readLines();
+        instructions = (new FileSaver(FeatureManager.MIMING_BL)).readLines();
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),

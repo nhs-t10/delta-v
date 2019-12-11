@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
@@ -16,10 +17,10 @@ import java.util.HashMap;
  * Handle all movement of the chassis.
  */
 public class MovementManager extends FeatureManager {
-    public EncodedMotor frontLeft;
-    public EncodedMotor frontRight;
-    public EncodedMotor backLeft;
-    public EncodedMotor backRight;
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
 
     private PointNd currentLocation;
     private TrigCache cache;
@@ -33,10 +34,10 @@ public class MovementManager extends FeatureManager {
      * @param bl Back Left motor
      */
     public MovementManager(DcMotor fl, DcMotor fr, DcMotor br, DcMotor bl) {
-        this.frontLeft = new EncodedMotor(fl);
-        this.frontRight = new EncodedMotor(fr);
-        this.backRight = new EncodedMotor(br);
-        this.backLeft = new EncodedMotor(bl);
+        this.frontLeft = fl;
+        this.frontRight = fr;
+        this.backRight = br;
+        this.backLeft = bl;
 
         this.cache = new TrigCache();
         this.currentLocation = new PointNd(0f,0f,0f);

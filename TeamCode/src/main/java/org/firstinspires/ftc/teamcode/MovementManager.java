@@ -73,8 +73,9 @@ public class MovementManager extends FeatureManager {
         float rx = Range.clip(rotationalPower, -1, 1);
         
         // Motor powers of fl, fr, br, bl
+        // Motor powers used to be 0.4f for all motors other than fl
         float[] vertical = {-lY, lY, -lY, lY};
-        float[] horizontal = {lx, 0.4f*lx, -0.4f*lx, -0.4f*lx};
+        float[] horizontal = {lx, lx, -lx, -lx};
         float[] rotational = {rx, rx, rx, rx};
 
         float[] sum = new float[4];
@@ -226,10 +227,10 @@ public class MovementManager extends FeatureManager {
 
     public void driveEncoder(float rotFL, float rotFR, float rotBL, float rotBR) {
         
-        frontLeft.setTargetPosition((int)rotFL*1440);
-        frontRight.setTargetPosition((int)rotFR*1440);
-        backLeft.setTargetPosition((int)rotBL*1440);
-        backRight.setTargetPosition((int)rotBR*1440);
+        frontLeft.setTargetPosition((int)rotFL*1680);
+        frontRight.setTargetPosition((int)rotFR*1680);
+        backLeft.setTargetPosition((int)rotBL*1680);
+        backRight.setTargetPosition((int)rotBR*1680);
 
 
     }

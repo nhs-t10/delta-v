@@ -130,4 +130,6 @@ public boolean isGold() {
         //set the colorReturned variable so it can be used by the other methods
         this.colorReturned = colors.toColor();
   }
+
+  
 }

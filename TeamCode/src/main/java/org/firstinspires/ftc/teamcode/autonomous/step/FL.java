@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.autonomous.step;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.ColorSensor;
 import org.firstinspires.ftc.teamcode.MovementManager;
 import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 
 @Autonomous(group = "Step")
 public class FL extends StepAuto {
     MovementManager driver;
+    ColorSensor sensor;
     
 
     public void init() {
@@ -16,6 +18,7 @@ public class FL extends StepAuto {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
+        sensor = new ColorSensor(hardwareMap);
     }  
 
     
@@ -26,23 +29,34 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE1:
-            driver.driveOmni(0f, -1f, 0f);
+          //  driver.driveOmni(0f, -1f, 0f);
             nextStep(500);
         case MOVE2:
-            //sampling
-            // driver.driveOmni(0f, 0f, 0f);
-            nextStep(1000);
+            if (sensor.isGold()) {
+                 currentStep = step.MOVE5;
+            } else {
+                driver.driveOmni(0f, 1f, 0f);
+            }
+            nextStep(5000);
         break;
         case MOVE3:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(500);
-        case MOVE4:
-            //picking up a sky stone
-            // driver.driveOmni(0f, 0f, 0f);
+            // Takes in information from a color sensor on the bottom of the robot in order to see if there is a line
+//            if (sensorDown.park){
+//                driver.driveOmni(0f, 0f, 0f);
+//            } else {
+//                driver.driveOmni(0f, 1f, 0f);
+//            }
             nextStep(1000);
         break;
+        case MOVE4:
+            driver.driveOmni(0f, 0f, 0f);
+        break;
         case MOVE5:
-            driver.driveOmni(0f, -1f, 0f);
+            // General grab code
+            nextStep(1000);
+        break;
+        case MOVE6:
+            //General lift code
             nextStep(1000);
         break;
         default:

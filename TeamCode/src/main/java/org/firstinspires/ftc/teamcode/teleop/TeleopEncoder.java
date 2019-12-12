@@ -9,26 +9,23 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.data.*;
 import org.firstinspires.ftc.teamcode.auxillary.*;
 import org.firstinspires.ftc.teamcode.*;
+
 @TeleOp
-public class TeleopTest extends OpMode {
-    float[] velocity_x;
-    float[] velocity_y;
+public class TeleopEncoder extends OpMode {
+
     InputManager input;
     MovementManager driver;
-    // ImuManager imu; 
     int counter;
     PointNd location;
-    //Servo sev;
-
     public void init() {
         input = new InputManager(gamepad1);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
-                                     hardwareMap.get(DcMotor.class, "fr"),
-                                     hardwareMap.get(DcMotor.class, "bl"),
-                                     hardwareMap.get(DcMotor.class, "br"));
-        //sev = new Servo(hardwareMap.get(Servo.class, "sev"))
-        // imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
-        // imu.calibrate();
+                hardwareMap.get(DcMotor.class, "fr"),
+                hardwareMap.get(DcMotor.class, "bl"),
+                hardwareMap.get(DcMotor.class, "br"));
+
+        driver.driveEncoder(0f, 0f, 0f, 0f);
+
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
@@ -36,19 +33,23 @@ public class TeleopTest extends OpMode {
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
-        //Creates an array of all previous velocities and calculates the location of the robot
-        // velocity_x[counter] = (float)imu.getVelocityX();
-        // velocity_y[counter] = (float)imu.getVelocityY();
-        // location = PaulMath.location(velocity_x, velocity_y);
-        
+
         if(gamepad1.a) {
-            driver.driveEncoder(2f, 2f, 2f, 2f);
+            driver.driveEncoder(-2f, 2f, 2f, 2f);
+        }
+        if(gamepad1.x) {
+            driver.driveRaw(0.1f, -0.1f,0,0);
         }
 
-        // telemetry.addData("Velocity X: " , imu.getVelocityX());
-        // telemetry.addData("Velocity Y: " , imu.getVelocityY());
-        // telemetry.addData("Velocity Z: " , imu.getVelocityZ());
-        // telemetry.addData("Location: " , location);
+        telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
+        telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
+        telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());
+        telemetry.addData("Target Position BR: ", driver.backRight.getTargetPosition());
+        telemetry.addData("Current Position FL: ", driver.frontLeft.getCurrentPosition());
+        telemetry.addData("Current Position FR: ", driver.frontRight.getCurrentPosition());
+        telemetry.addData("Current Position BL: ", driver.backLeft.getCurrentPosition());
+        telemetry.addData("Current Position BR: ", driver.backRight.getCurrentPosition());
+        telemetry.addData("A Pressed: ", gamepad1.a );
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());

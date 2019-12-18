@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class RobotState {
 
-    public final static String version = "1";
+    public final static float version = 1f;
     public static RobotState current;
 
     public float time;
@@ -21,16 +21,21 @@ public class RobotState {
 
     public MovementOrder movement;
 
-    public float[] servoPos;
+    public float liftMotorPower;
 
-    public RobotState (ElapsedTime tmr, float[] _servoPos, MovementOrder _movement) {
-        this.servoPos = _servoPos;
+    public float liftServoPos;
+
+    public RobotState (ElapsedTime tmr, float _liftMotorPower, float _liftServoPos, MovementOrder _movement) {
+        this.liftServoPos = _liftServoPos;
+        this.liftMotorPower = _liftMotorPower;
         this.timer = tmr;
 
         this.time = (float)timer.milliseconds();
 
         this.movement = _movement;
     }
+
+    public float getTime() {return this.time; }
 
     public float get(String key) {
         this.time = (float)timer.milliseconds();
@@ -39,23 +44,23 @@ public class RobotState {
     }
 
     public String toString() {
-        return RobotState.version + "," + movement.toString() + "," + servoPos.toString().substring(1, servoPos.toString().length() - 1);
+        return RobotState.version + "," + movement.toString() + "," + liftMotorPower + "," + liftServoPos + ",";
     }
 
     public static RobotState fromString(String str) {
         String[] strSplit = str.split(",");
-        if(strSplit[0] != RobotState.version) return new RobotState(new ElapsedTime(), new float[1], new MovementOrder());
 
+        //validate version-- if the version is old, return an erorr
+        if(Float.parseFloat(strSplit[0]) != RobotState.version) throw new IllegalArgumentException("Wrong version");
+        
+        //the first three numbers are the movementorder power
         String[] strMove = Arrays.copyOfRange(strSplit, 1, 3);
-        String[] strServo = Arrays.copyOfRange(strSplit, 4, strSplit.length - 1);
-
         MovementOrder order = MovementOrder.fromString(String.join(",", strMove));
 
-        float[] servoPosFloats = new float[strServo.length];
-        for(int i = 0; i < strServo.length; i++) {
-            servoPosFloats[i] = Float.parseFloat(strServo[i]);
-        }
+        float liftMotorPower = Float.parseFloat(strSplit[4]);
 
-        return new RobotState(new ElapsedTime(), servoPosFloats, order);
+        float liftServoPos = Float.parseFloat(strSplit[4]);
+
+        return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order);
     }
 }

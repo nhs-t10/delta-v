@@ -32,8 +32,13 @@ public class AutoMiming extends OpMode {
             currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
             if(currentMimeIndex < instructions.size()) {
-                MovementOrder order = MovementOrder.fromString(instructions.get(currentMimeIndex));
-                driver.driveOmni(order);
+                RobotState state = RobotState.fromString(instructions.get(currentMimeIndex));
+
+                driver.driveOmni(state.movement);
+
+                float[] liftPowers = new float[] {state.liftMotorPower, state.liftServoPos};
+                hands.setLiftState(liftPowers);
+                
                 telemetry.addData("latestThing", instructions.get(currentMimeIndex));
             }
 

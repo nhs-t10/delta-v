@@ -4,6 +4,7 @@ import android.graphics.Point;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.data.*;
@@ -15,6 +16,7 @@ public class TeleopTest extends OpMode {
     float[] velocity_y;
     InputManager input;
     MovementManager driver;
+    ManipulationManager hands;
     // ImuManager imu; 
     int counter;
     PointNd location;
@@ -33,9 +35,14 @@ public class TeleopTest extends OpMode {
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
+        hands = new ManipulationManager(
+            hardwareMap.get(Servo.class, "lift"),
+            hardwareMap.get(DcMotor.class, "liftServo")
+        );
     }
     public void loop() {
         driver.driveOmni(input.getMovementControls());
+        hands.setLiftState(input.getLiftControls());
         //Creates an array of all previous velocities and calculates the location of the robot
         // velocity_x[counter] = (float)imu.getVelocityX();
         // velocity_y[counter] = (float)imu.getVelocityY();
@@ -44,6 +51,8 @@ public class TeleopTest extends OpMode {
         if(gamepad1.a) {
             driver.driveEncoder(2f, 2f, 2f, 2f);
         }
+
+        
 
         // telemetry.addData("Velocity X: " , imu.getVelocityX());
         // telemetry.addData("Velocity Y: " , imu.getVelocityY());

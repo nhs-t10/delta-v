@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.teleop.*;
 import org.firstinspires.ftc.teamcode.data.*;
 import org.firstinspires.ftc.teamcode.*;
@@ -47,6 +49,32 @@ public class InputManager extends FeatureManager {
         }
 
         return res;
+    }
+
+    public float[] getLiftControls() {
+        float[] powers = new float[2];
+
+        float motorSpeed = 0f;
+        if(gamepad.dpad_down) motorSpeed = -1f;
+        else if(gamepad.dpad_up) motorSpeed = 1f;
+        motorSpeed *= FeatureManager.LIFT_RAISE_LOWER_SPEED;
+
+        powers[0] = motorSpeed;
+
+        float servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
+        if(gamepad.left_trigger > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
+
+        powers[1] = servoPos;
+
+        return powers;
+    }
+
+    public RobotState getState() {
+        MovementOrder move = this.getMovementControls();
+        float[] powers = this.getLiftControls();
+
+        return new RobotState(new ElapsedTime(), powers[0], powers[1], move);
+
     }
 
     /**

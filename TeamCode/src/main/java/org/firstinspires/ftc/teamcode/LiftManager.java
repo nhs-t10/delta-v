@@ -8,18 +8,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.ArrayList;
 
 public class LiftManager extends FeatureManager {
-    private EncodedMotor downMotor;
-    private EncodedMotor upMotor;
+    private DcMotor motor;
     
     private int currentLiftLevel;
 
 
-    public LiftManager(DcMotor _downMotor) {
-        this.downMotor = new EncodedMotor(_downMotor);
-    }
-    public LiftManager(DcMotor _downMotor, DcMotor _upMotor) {
-        this.downMotor = new EncodedMotor(_downMotor);
-        this.upMotor = new EncodedMotor(_upMotor);
+    public LiftManager(DcMotor _motor) {
+        this.motor = _motor;
     }
 
     /**

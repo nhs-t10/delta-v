@@ -35,11 +35,20 @@ public class TeleopEncoder extends OpMode {
         driver.driveOmni(input.getMovementControls());
 
         if(gamepad1.a) {
-            driver.driveEncoder(-2f, 2f, 2f, 2f);
+            driver.driveEncoder(2f, 2f, 2f, 2f);
+            driver.driveOmni(0.1f, -0.1f, 0.1f, -0.1f);
         }
-        if(gamepad1.x) {
-            driver.driveRaw(0.1f, -0.1f,0,0);
+
+        if(gamepad1.b) {
+            driver.driveEncoder(2f, -2f, 2f, -2f);
+            driver.driveOmni(0.1f, 0.1f, 0.1f, 0.1f);
         }
+
+
+        
+
+
+
 
         telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
         telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());

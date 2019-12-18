@@ -39,6 +39,12 @@ public class ManipulationManager extends FeatureManager {
         this.lastRecordTime = timer.milliseconds();
     }
 
+    public void setLiftState(float[] powers) {
+        this.setServoPosition(powers[1]);
+        liftMotor.setPower(powers[0]);
+
+    }
+
     /**
      * Sets power of servo
      * @param power power of choice

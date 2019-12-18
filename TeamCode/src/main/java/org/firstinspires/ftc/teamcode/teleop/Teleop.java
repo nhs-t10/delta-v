@@ -42,7 +42,7 @@ public class Teleop extends OpMode {
         }
         if(input.getGamepad().b){
 //            manip.setServoPosition(0);
-            sev.setPosition(0)
+            sev.setPosition(0.25);
         }
         telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
         telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);

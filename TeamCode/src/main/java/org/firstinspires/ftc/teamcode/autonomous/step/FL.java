@@ -107,7 +107,7 @@ public class FL extends StepAuto {
         default:
             driver.driveOmni(0f, 0f, 0f);
        }
-        telemetry.addData("State: ", step);
+        telemetry.addData("State: ", currentStep);
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());

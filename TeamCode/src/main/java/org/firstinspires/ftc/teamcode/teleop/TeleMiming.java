@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.teleop.*;
 import org.firstinspires.ftc.teamcode.data.*;
@@ -30,8 +31,7 @@ public class TeleMiming extends OpMode {
         timer = new ElapsedTime();
         hands = new ManipulationManager(
             hardwareMap.get(Servo.class, "lift"),
-            hardwareMap.get(DcMotor.class, "liftServo")
-        );
+            hardwareMap.get(DcMotor.class, "liftServo"));
 
         file.deleteFile();
     }

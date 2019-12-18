@@ -36,12 +36,14 @@ public class TeleopEncoder extends OpMode {
 
         if(gamepad1.a) {
             driver.driveEncoder(2f, 2f, 2f, 2f);
-            driver.driveOmni(0.1f, -0.1f, 0.1f, -0.1f);
+            // CH 2019/12/18 - changed DriveOmni to DriveRaw, as this has 4 args
+            driver.driveRaw(0.1f, -0.1f, 0.1f, -0.1f);
         }
 
         if(gamepad1.b) {
             driver.driveEncoder(2f, -2f, 2f, -2f);
-            driver.driveOmni(0.1f, 0.1f, 0.1f, 0.1f);
+            // CH 2019/12/18 - changed DriveOmni to DriveRaw, as this has 4 args
+            driver.driveRaw(0.1f, 0.1f, 0.1f, 0.1f);
         }
 
 

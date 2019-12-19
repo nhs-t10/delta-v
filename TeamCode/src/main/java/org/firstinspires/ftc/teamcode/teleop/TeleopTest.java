@@ -31,13 +31,13 @@ public class TeleopTest extends OpMode {
         //sev = new Servo(hardwareMap.get(Servo.class, "sev"))
         // imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
         // imu.calibrate();
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
+//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
+//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
+//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
+//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "lift"),
-            hardwareMap.get(DcMotor.class, "liftServo")
+            hardwareMap.get(Servo.class, "liftServo"),
+            /*hardwareMap.get(DcMotor.class, "lift")*/
         );
     }
     public void loop() {
@@ -49,7 +49,7 @@ public class TeleopTest extends OpMode {
         // location = PaulMath.location(velocity_x, velocity_y);
         
         if(gamepad1.a) {
-            driver.driveEncoder(2f, 2f, 2f, 2f);
+//            driver.driveEncoder(2f, 2f, 2f, 2f);
         }
 
         

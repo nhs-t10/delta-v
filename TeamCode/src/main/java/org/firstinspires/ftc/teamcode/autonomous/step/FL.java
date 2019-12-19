@@ -10,33 +10,34 @@ import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 @Autonomous(group = "Step")
 public class FL extends StepAuto {
     MovementManager driver;
-    ColorSensor sensor;    
+    //ColorSensor sensor;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-        sensor = new ColorSensor(hardwareMap);
+        //sensor = new ColorSensor(hardwareMap);
     }  
 
     
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
+            driver.driveOmni(0f, -0.4f, 0f);
+            nextStep(2500);
         break;
         case MOVE1:
-          //  driver.driveOmni(0f, -1f, 0f);
-            nextStep(500);
+            driver.driveOmni(0f, 0f, 0f);
+            nextStep(1000);
         case MOVE2:
-            if (sensor.isGold()) {
-                 currentStep = step.MOVE5;
-            } else {
-                driver.driveOmni(0f, 1f, 0f);
-            }
-            nextStep(5000);
+//            if (sensor.isGold()) {
+//                 currentStep = step.MOVE5;
+//            } else {
+//                driver.driveOmni(0f, 1f, 0f);
+//            }
+            driver.driveOmni(-0.5f, 0f, 0f);
+            nextStep(2000);
         break;
         case MOVE3:
             // Takes in information from a color sensor on the bottom of the robot in order to see if there is a line
@@ -60,11 +61,11 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveOmni(-1f, 0f, 0f);
+            driver.driveOmni(0f, 1f, 0f);
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(-1f, 0f, 0f);
             nextStep(1500);
         break;
         case MOVE9:
@@ -73,15 +74,15 @@ public class FL extends StepAuto {
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(1f, 0f, 0f);
             nextStep(1500);
         break;
         case MOVE11:
-            driver.driveOmni(1f, 0f, 0f);
+            driver.driveOmni(0f, -1f, 0f);
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(1f, 0f, 0f);
             nextStep(1000);
         break;
         case MOVE13:

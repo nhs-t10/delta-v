@@ -14,7 +14,6 @@ enum step {
 public class StepAuto extends OpMode {
     ElapsedTime timer;
     step currentStep = step.START;
-    MovementManager driver;
 
     int numberCalled = 0;
     double referPoint = 0;
@@ -25,7 +24,6 @@ public class StepAuto extends OpMode {
         for (; x[i] != currentStep; i++);
         i++;
         i %= x.length;
-        driver.driveOmni(0f, 0f, 0f);
         return x[i];
     }
 

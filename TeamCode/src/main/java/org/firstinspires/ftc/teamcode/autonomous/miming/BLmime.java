@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.auxillary.*;
 import java.util.ArrayList;
 
 @Autonomous(group = "Miming")
-public class BL extends OpMode {
+public class BLmime extends OpMode {
     ArrayList<String> instructions;
     MovementManager driver;
     ElapsedTime timer;

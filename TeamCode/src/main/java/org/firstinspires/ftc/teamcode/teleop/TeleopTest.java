@@ -22,6 +22,9 @@ public class TeleopTest extends OpMode {
     PointNd location;
     //Servo sev;
 
+    private float speed = 0.5f;
+    private float speedIncrement = 0.0001f;
+    
     public void init() {
         input = new InputManager(gamepad1);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -62,5 +65,15 @@ public class TeleopTest extends OpMode {
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
+
+        if(gamepad1.left_bumper) {
+            speed -= speedIncrement;
+        }
+        if(gamepad1.right_bumper) {
+            speed += speedIncrement;
+        }
+        if(gamepad1.right_bumper) {
+            speed = 0.5f;
+        }
     }
 }

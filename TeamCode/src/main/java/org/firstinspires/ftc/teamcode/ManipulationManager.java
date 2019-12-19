@@ -40,6 +40,7 @@ public class ManipulationManager extends FeatureManager {
     }
 
     public void setLiftState(float[] powers) {
+
         this.setServoPosition(powers[1]);
         //liftMotor.setPower(powers[0]);
 

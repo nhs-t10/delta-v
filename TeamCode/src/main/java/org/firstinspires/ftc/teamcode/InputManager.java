@@ -15,6 +15,8 @@ public class InputManager extends FeatureManager {
     public InputMode currentMode;
     public Gamepad gamepad;
 
+    public static String lastKey;
+
     public InputManager(Gamepad _gamepad) {
         this.gamepad = _gamepad;
 
@@ -116,4 +118,10 @@ public class InputManager extends FeatureManager {
  }
  enum InputMode {
     DRIVING, DRIVE_FINETUNE
+}
+
+class GamepadCb implements Gamepad.GamepadCallback {
+    public void gamepadChanged(Gamepad gamepad) {
+        InputManager.lastKey = gamepad.left_stick_y + "";
+    }
 }

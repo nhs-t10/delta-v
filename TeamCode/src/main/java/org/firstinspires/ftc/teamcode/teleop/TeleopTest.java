@@ -39,7 +39,7 @@ public class TeleopTest extends OpMode {
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "liftServo"),
+            hardwareMap.get(Servo.class, "liftServo")
             /*hardwareMap.get(DcMotor.class, "lift")*/
         );
     }
@@ -72,7 +72,7 @@ public class TeleopTest extends OpMode {
         if(gamepad1.right_bumper) {
             speed += speedIncrement;
         }
-        if(gamepad1.right_bumper) {
+        if(gamepad1.y) {
             speed = 0.5f;
         }
     }

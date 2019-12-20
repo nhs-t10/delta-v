@@ -62,6 +62,7 @@ public class ManipulationManager extends FeatureManager {
         grabServo.setServoPosition(position);
     }
 
+    public double getServoPosition() {return grabServo.getServoPosition();}
     /**
      * Raises lift
      */

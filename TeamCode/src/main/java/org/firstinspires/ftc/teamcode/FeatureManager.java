@@ -9,7 +9,7 @@ public class FeatureManager {
 
     public final static float LIFT_RAISE_LOWER_SPEED = 0.4f;
     public final static float LIFT_CLAMP_OPEN_POS = 0f;
-    public final static float LIFT_CLAMP_CLOSE_POS = 0.25f;
+    public final static float LIFT_CLAMP_CLOSE_POS = 1f;
 
     public final static int MIMING_MS_PER_SAMPLE = 10;
     public final static String MIMING_FILENAME = "miming.txt";

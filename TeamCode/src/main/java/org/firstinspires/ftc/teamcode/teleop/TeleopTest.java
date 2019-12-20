@@ -66,6 +66,8 @@ public class TeleopTest extends OpMode {
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
 
+        telemetry.addData("Servo Pos", hands.getServoPosition());
+
         if(gamepad1.left_bumper) {
             speed -= speedIncrement;
         }

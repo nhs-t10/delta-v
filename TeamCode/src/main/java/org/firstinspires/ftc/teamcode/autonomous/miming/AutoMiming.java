@@ -30,8 +30,8 @@ public class AutoMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
         hands = new ManipulationManager(
-                hardwareMap.get(Servo.class, "liftServo")//,
-                /*hardwareMap.get(DcMotor.class, "lift")*/);
+                hardwareMap.get(Servo.class, "liftServo"),
+                hardwareMap.get(DcMotor.class, "lift"));
     }
     public void loop() {
 

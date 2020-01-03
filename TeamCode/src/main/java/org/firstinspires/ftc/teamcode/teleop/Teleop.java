@@ -51,9 +51,17 @@ public class Teleop extends OpMode {
         telemetry.addData("Color Code", sensor.getHexCode());
 
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FL Port: ", driver.frontLeft.getPortNumber());
+
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("FR Port: ", driver.frontRight.getPortNumber());
+
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BL Port: ", driver.backLeft.getPortNumber());
+
         telemetry.addData("BR Power: ", driver.backRight.getPower());
+        telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
+
 
     }
 }

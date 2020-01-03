@@ -29,9 +29,9 @@ public class ManipulationManager extends FeatureManager {
     private ElapsedTime timer;
     private double lastRecordTime;
 
-    public ManipulationManager(Servo servo/*, DcMotor lift*/) {
+    public ManipulationManager(Servo servo, DcMotor lift) {
         this.grabServo = new ManagedServo(servo);
-        //this.liftMotor = lift;
+        this.liftMotor = lift;
 
         this.cache = new TrigCache();
         this.points = new PointNd(0f,0f,0f);
@@ -42,7 +42,7 @@ public class ManipulationManager extends FeatureManager {
     public void setLiftState(float[] powers) {
 
         this.setServoPosition(powers[1]);
-        //liftMotor.setPower(powers[0]);
+        liftMotor.setPower(powers[0]);
 
     }
 
@@ -63,6 +63,12 @@ public class ManipulationManager extends FeatureManager {
     }
 
     public double getServoPosition() {return grabServo.getServoPosition();}
+    public double getMotorPower() {return liftMotor.getPower();}
+
+    public void setGrabbingState(boolean state) {
+        if(state) grabServo.setServoPosition(1);
+        else grabServo.setServoPosition(0);
+    }
     /**
      * Raises lift
      */

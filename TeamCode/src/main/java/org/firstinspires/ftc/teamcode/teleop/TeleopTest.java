@@ -39,8 +39,8 @@ public class TeleopTest extends OpMode {
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "liftServo")
-            /*hardwareMap.get(DcMotor.class, "lift")*/
+            hardwareMap.get(Servo.class, "sev"),
+            hardwareMap.get(DcMotor.class, "lift")
         );
     }
     public void loop() {
@@ -67,6 +67,7 @@ public class TeleopTest extends OpMode {
         telemetry.addData("BR Power: ", driver.backRight.getPower());
 
         telemetry.addData("Servo Pos", hands.getServoPosition());
+        telemetry.addData("Motor Power", hands.getMotorPower());
 
         if(gamepad1.left_bumper) {
             speed -= speedIncrement;

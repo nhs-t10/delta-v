@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous.miming;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.teleop.*;
@@ -17,6 +18,8 @@ public class AutoMiming extends OpMode {
     ArrayList<String> instructions;
     MovementManager driver;
     ElapsedTime timer;
+    ManipulationManager hands;
+
     int currentMimeIndex = 0;
 
     public void init() {
@@ -26,14 +29,22 @@ public class AutoMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
+        hands = new ManipulationManager(
+                hardwareMap.get(Servo.class, "liftServo"),
+                hardwareMap.get(DcMotor.class, "lift"));
     }
     public void loop() {
 
             currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
             if(currentMimeIndex < instructions.size()) {
-                MovementOrder order = MovementOrder.fromString(instructions.get(currentMimeIndex));
-                driver.driveOmni(order);
+                RobotState state = RobotState.fromString(instructions.get(currentMimeIndex));
+
+                driver.driveOmni(state.movement);
+
+                float[] liftPowers = new float[] {state.liftMotorPower, state.liftServoPos};
+                hands.setLiftState(liftPowers);
+                
                 telemetry.addData("latestThing", instructions.get(currentMimeIndex));
             }
 

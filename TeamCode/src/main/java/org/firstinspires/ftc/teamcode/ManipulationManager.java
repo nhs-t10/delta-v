@@ -39,6 +39,13 @@ public class ManipulationManager extends FeatureManager {
         this.lastRecordTime = timer.milliseconds();
     }
 
+    public void setLiftState(float[] powers) {
+
+        this.setServoPosition(powers[1]);
+        liftMotor.setPower(powers[0]);
+
+    }
+
     /**
      * Sets power of servo
      * @param power power of choice
@@ -55,6 +62,13 @@ public class ManipulationManager extends FeatureManager {
         grabServo.setServoPosition(position);
     }
 
+    public double getServoPosition() {return grabServo.getServoPosition();}
+    public double getMotorPower() {return liftMotor.getPower();}
+
+    public void setGrabbingState(boolean state) {
+        if(state) grabServo.setServoPosition(1);
+        else grabServo.setServoPosition(0);
+    }
     /**
      * Raises lift
      */

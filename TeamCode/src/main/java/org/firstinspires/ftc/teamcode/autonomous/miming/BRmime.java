@@ -13,14 +13,14 @@ import org.firstinspires.ftc.teamcode.auxillary.*;
 import java.util.ArrayList;
 
 @Autonomous(group = "Miming")
-public class FL extends OpMode {
+public class BRmime extends OpMode {
     ArrayList<String> instructions;
     MovementManager driver;
     ElapsedTime timer;
     int currentMimeIndex = 0;
 
     public void init() {
-        instructions = (new FileSaver(FeatureManager.MIMING_FL)).readLines();
+        instructions = (new FileSaver(FeatureManager.MIMING_BR)).readLines();
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),

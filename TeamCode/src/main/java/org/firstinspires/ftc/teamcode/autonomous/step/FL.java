@@ -32,7 +32,7 @@ public class FL extends StepAuto {
        switch(currentStep){
         case START:
             driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(2500);
+            nextStep(2100);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);

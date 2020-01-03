@@ -35,8 +35,10 @@ public class StepAuto extends OpMode {
     }
 
     void nextStep(int milliseconds) {
-        if(timer == null) timer = new ElapsedTime();
-        if(currentStep == null) currentStep = step.START;
+        if(timer == null)
+            timer = new ElapsedTime();
+        if(currentStep == null)
+            currentStep = step.START;
 
         
 

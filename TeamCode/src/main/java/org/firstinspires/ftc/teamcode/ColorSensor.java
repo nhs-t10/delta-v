@@ -85,9 +85,9 @@ public class ColorSensor {
   }
 
 //Test if we're seeing gold
-public boolean isGold() {
+public boolean isSkystone() {
       //if the green value is between 0x53 (hexidecimal 53) and 0x64 (hexidecimal 64), it's gold. Otherwise, it's false.
-    if ( Color.red(this.colorReturned) >= 75) {
+    if ( Color.red(this.colorReturned) == 75) {
         return true;
         //Since the condition is commented out, this will always be passed over
     } else {
@@ -96,7 +96,7 @@ public boolean isGold() {
     
   }
 public boolean isSkyStone() {
-      return this.isGold();
+      return this.isSkyStone();
 }
   //This won't be ran by any code outside of this class, so we can make it private.
 

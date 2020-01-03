@@ -30,7 +30,7 @@ public class TeleMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "liftServo"),
+            hardwareMap.get(Servo.class, "sev"),
             hardwareMap.get(DcMotor.class, "lift"));
 
         file.deleteFile();

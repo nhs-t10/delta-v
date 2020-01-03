@@ -65,7 +65,7 @@ public class ColorSensor {
   //Switch the sample loop on/off
   public void switchSampling(boolean start_or_dont) {
           //save a boolean for the loop's state before changes
-          boolean weShouldRead_old = this.weShouldRead;
+          boolean weShouldReadold = this.weShouldRead;
           this.weShouldRead = start_or_dont;
           //if it's switching on from being previously off, start the loop again
   }
@@ -87,7 +87,7 @@ public class ColorSensor {
 //Test if we're seeing gold
 public boolean isGold() {
       //if the green value is between 0x53 (hexidecimal 53) and 0x64 (hexidecimal 64), it's gold. Otherwise, it's false.
-    if ( Color.green(this.colorReturned) >= 112) {
+    if ( Color.green(this.colorReturned) >= 80) {
         return true;
         //Since the condition is commented out, this will always be passed over
     } else {
@@ -121,10 +121,10 @@ public boolean isGold() {
         
 
         //normalize the colors-- make it so brightness won't affect our readout (much)
-       // float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));
-       // colors.red /= max;
-       // colors.green /= max;
-       // colors.blue /= max; 
+        float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));
+        colors.red /= max;
+        colors.green /= max;
+        colors.blue /= max;
 
 
         //set the colorReturned variable so it can be used by the other methods

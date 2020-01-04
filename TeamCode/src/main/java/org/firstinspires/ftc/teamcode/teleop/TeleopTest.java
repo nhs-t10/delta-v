@@ -22,8 +22,7 @@ public class TeleopTest extends OpMode {
     PointNd location;
     //Servo sev;
 
-    private float speed = 0.5f;
-    private float speedIncrement = 0.0001f;
+    private static boolean toggleSpeed = false;
     
     public void init() {
         input = new InputManager(gamepad1);
@@ -69,14 +68,20 @@ public class TeleopTest extends OpMode {
         telemetry.addData("Servo Pos", hands.getServoPosition());
         telemetry.addData("Motor Power", hands.getMotorPower());
 
-        if(gamepad1.left_bumper) {
-            speed -= speedIncrement;
-        }
-        if(gamepad1.right_bumper) {
-            speed += speedIncrement;
-        }
-        if(gamepad1.y) {
-            speed = 0.5f;
+        /*
+        This is Austin's code for speed switching. It will probably delete itself for no reason.
+        */
+        if(gamepad1.left_bumper){
+            if(getSpeed() == 0.2 && !toggleSpeed){
+                setSpeed(0.6);
+                toggleSpeed = true;
+            }
+            if(speed == 0.6 && !toggleSpeed){
+                speed = 0.2;
+                toggleSpeed = true;
+            }
+        } else {
+            toggleSpeed = false;
         }
     }
 }

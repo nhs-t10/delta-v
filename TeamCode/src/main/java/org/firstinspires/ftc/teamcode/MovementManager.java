@@ -33,6 +33,9 @@ public class MovementManager extends FeatureManager {
      * @param br Back Right motor
      * @param bl Back Left motor
      */
+
+    private static float speed = 0.6f;
+
     public MovementManager(DcMotor fl, DcMotor fr, DcMotor br, DcMotor bl) {
         this.frontLeft = fl;
         this.frontRight = fr;
@@ -54,10 +57,10 @@ public class MovementManager extends FeatureManager {
      * @param bl Back left motor power
      */
     public void driveRaw(float fl, float fr, float br, float bl) {
-        frontLeft.setPower(fl*SPEED);
-        backRight.setPower(br*SPEED);
-        frontRight.setPower(fr*SPEED);
-        backLeft.setPower(bl*SPEED);
+        frontLeft.setPower(fl*speed);
+        backRight.setPower(br*speed);   //Austin will defin "speed" later
+        frontRight.setPower(fr*speed);
+        backLeft.setPower(bl*speed);
     }
 
     /**
@@ -231,9 +234,13 @@ public class MovementManager extends FeatureManager {
         frontRight.setTargetPosition((int)rotFR*1680);
         backLeft.setTargetPosition((int)rotBL*1680);
         backRight.setTargetPosition((int)rotBR*1680);
+    }
 
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
 
+    public float getSpeed(){
+        return speed;
     }
 }
-
-

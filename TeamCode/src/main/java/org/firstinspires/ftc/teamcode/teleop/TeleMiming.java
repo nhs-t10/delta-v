@@ -38,7 +38,6 @@ public class TeleMiming extends OpMode {
     public void loop() {
         driver.driveOmni(controller.getMovementControls());
         hands.setLiftState(controller.getLiftControls());
-
         int realMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
         if(realMimeIndex > currentMimeIndex) {

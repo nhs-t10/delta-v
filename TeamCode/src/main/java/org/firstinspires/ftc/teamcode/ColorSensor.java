@@ -83,6 +83,16 @@ public class ColorSensor {
 
       return this.weShouldRead;
   }
+public boolean isBled() {
+        if ( Color.blue(this.colorReturned) >= 90 || Color.red(this.colorReturned) >=90 )  {
+        return true;
+        //Since the condition is commented out, this will always be passed over
+    } else {
+        return false;
+
+    }
+
+}
 
 //Test if we're seeing gold
 public boolean isSkystone() {

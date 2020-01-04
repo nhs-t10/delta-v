@@ -2,30 +2,38 @@ package org.firstinspires.ftc.teamcode.autonomous.step;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.ColorSensor;
+import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
 import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 
 @Autonomous(group = "Step")
 public class FR extends StepAuto {
     MovementManager driver;
-    
+    ManipulationManager hands;
+    ColorSensor sensor;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-    }  
+        hands = new ManipulationManager(
+                hardwareMap.get(Servo.class, "sev"),
+                hardwareMap.get(DcMotor.class, "lift")
+        );
+        sensor = new ColorSensor(hardwareMap);
+    }
 
-    
 
-     
     public void loop() {
         switch(currentStep){
         case START:
+            hands.setGrabbingState(false);
             driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(2100);
+            nextStep(2300);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);
@@ -40,7 +48,7 @@ public class FR extends StepAuto {
         break;
         case MOVE3:
             if (sensor.isBled()) {
-                driveOmni(0f, 0f, 0f);
+                driver.driveOmni(0f, 0f, 0f);
             } else {
                 driver.driveOmni(0.5f, 0f, 0f);
             } 
@@ -100,7 +108,7 @@ public class FR extends StepAuto {
         break;
         case MOVE17:
             if (sensor.isBled()) {
-                 driveOmni(0f, 0f, 0f);
+                 driver.driveOmni(0f, 0f, 0f);
             } else {
                 driver.driveOmni(0.5f, 0f, 0f);
             }

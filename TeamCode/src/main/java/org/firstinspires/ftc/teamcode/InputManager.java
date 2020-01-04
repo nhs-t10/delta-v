@@ -62,8 +62,8 @@ public class InputManager extends FeatureManager {
         float[] powers = new float[2];
 
         float motorSpeed = 0f;
-        if (gamepad.dpad_down) motorSpeed = -1f;
-        else if (gamepad.dpad_up) motorSpeed = 1f;
+        if (gamepad.dpad_up) motorSpeed = -1f;
+        else if (gamepad.dpad_down) motorSpeed = 1f;
         motorSpeed *= FeatureManager.LIFT_RAISE_LOWER_SPEED;
 
         powers[0] = motorSpeed;

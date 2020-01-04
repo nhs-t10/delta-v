@@ -31,8 +31,9 @@ public class FL extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
+            hands.setGrabbingState(false);
             driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(2100);
+            nextStep(2300);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);
@@ -48,7 +49,7 @@ public class FL extends StepAuto {
         break;
         case MOVE3:
             if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f)
+                driver.driveOmni(0f, 0f, 0f);
             } else{
                 driver.driveOmni(-0.5f, 0f, 0f);
             }
@@ -109,7 +110,7 @@ public class FL extends StepAuto {
         break;
         case MOVE17:
             if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f)
+                driver.driveOmni(0f, 0f, 0f);
             }  else{
                 driver.driveOmni(0.5f, 0f, 0f);
             }

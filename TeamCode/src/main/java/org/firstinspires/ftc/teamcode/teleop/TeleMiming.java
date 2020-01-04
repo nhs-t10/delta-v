@@ -19,8 +19,9 @@ public class TeleMiming extends OpMode {
     FileSaver file;
     InputManager controller;
     ManipulationManager hands;
-    int currentMimeIndex = 0;
 
+    int currentMimeIndex = 0;
+    boolean firstLoopRun = true;
     public void init() {
         controller = new InputManager(gamepad1);
         file = new FileSaver(FeatureManager.MIMING_FILENAME);
@@ -36,6 +37,9 @@ public class TeleMiming extends OpMode {
         file.deleteFile();
     }
     public void loop() {
+        if(firstLoopRun) timer = new ElapsedTime();
+        firstLoopRun = false;
+
         driver.driveOmni(controller.getMovementControls());
         hands.setLiftState(controller.getLiftControls());
         int realMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);

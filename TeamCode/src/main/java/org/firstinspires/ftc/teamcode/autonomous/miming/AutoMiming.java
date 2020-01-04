@@ -22,6 +22,7 @@ public class AutoMiming extends OpMode {
     RobotState state;
 
     int currentMimeIndex = 0;
+    boolean firstLoopRun = true;
 
     public void init() {
         instructions = (new FileSaver(FeatureManager.MIMING_FILENAME)).readLines();
@@ -29,12 +30,15 @@ public class AutoMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-        timer = new ElapsedTime();
+
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift"));
     }
     public void loop() {
+
+            if(firstLoopRun) timer = new ElapsedTime();
+            firstLoopRun = false;
 
             currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 

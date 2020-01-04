@@ -2,62 +2,63 @@ package org.firstinspires.ftc.teamcode.autonomous.step;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.ColorSensor;
+import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
 import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 
 @Autonomous(group = "Step")
 public class FL extends StepAuto {
     MovementManager driver;
-    //ColorSensor sensor;
+    ManipulationManager hands;
+    ColorSensor sensor;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-        //sensor = new ColorSensor(hardwareMap);
+        hands = new ManipulationManager(
+                hardwareMap.get(Servo.class, "sev"),
+                hardwareMap.get(DcMotor.class, "lift")
+        );
+        sensor = new ColorSensor(hardwareMap);
     }  
 
     
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, -0.4f, 0f);
-            nextStep(2500);
+            driver.driveOmni(0f, -0.5f, 0f);
+            nextStep(2100);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
-//            if (sensor.isGold()) {
-//                 currentStep = step.MOVE5;
-//            } else {
-//                driver.driveOmni(0f, 1f, 0f);
-//            }
-            driver.driveOmni(-0.5f, 0f, 0f);
+        if (sensor.isSkyStone()) {
+            currentStep = step.MOVE5;
+        } else {
+            driver.driveOmni(-0.2f, 0f, 0f);
+        }
+
             nextStep(2000);
         break;
         case MOVE3:
-            // Takes in information from a color sensor on the bottom of the robot in order to see if there is a line
-//            if (sensorDown.park){
-//                driver.driveOmni(0f, 0f, 0f);
-//            } else {
-//                driver.driveOmni(0f, 1f, 0f);
-//            }
+            driver.driveOmni(-0.5f, 0f, 0f);
             nextStep(1000);
         break;
         case MOVE4:
             driver.driveOmni(0f, 0f, 0f);
         break;
         case MOVE5:
-            driver.driveOmni(0f, 0f, 0f);
-            // General grab code
-            nextStep(1000);
+            driver.driveOmni(0f, -0.1f, 0f);
+            nextStep(100);
         break;
         case MOVE6:
-            //General lift code
+            hands.setGrabbingState(true);
             nextStep(1000);
         break;
         case MOVE7:
@@ -70,7 +71,7 @@ public class FL extends StepAuto {
         break;
         case MOVE9:
             driver.driveOmni(0f, 0f, 0f);
-            //general release claw code
+            hands.setGrabbingState(false);
             nextStep(500);
         break;
         case MOVE10:
@@ -86,24 +87,27 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE13:
-            driver.driveOmni(0f, 0f, 0f);
-            //general claw code
-            nextStep(1000);
+            driver.driveOmni(0f, -0.1f, 0f);
+            nextStep(100);
         break;
         case MOVE14:
-           //General lift code
+           hands.setGrabbingState(true);
            nextStep(1000);
         break;
         case MOVE15:
-            // Takes in information from a color sensor on the bottom of the robot in order to see if there is a line
-//            if (sensorDown.park){
-//                driver.driveOmni(0f, 0f, 0f);
-//            } else {
-//                driver.driveOmni(0f, 1f, 0f);
-//            }
-            nextStep(1000);
+            driver.driveOmni(-0.5f, 0f, 0f);
+            nextStep(1200);
         case MOVE16:
             driver.driveOmni(0f, 0f, 0f);
+            hands.setGrabbingState(false);
+            nextStep(1000);
+        break;
+        case MOVE17:
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(500);
+        break;
+        case MOVE18:
+            driver.driveOmni(0f,0f,0f);
         break;
         default:
             driver.driveOmni(0f, 0f, 0f);

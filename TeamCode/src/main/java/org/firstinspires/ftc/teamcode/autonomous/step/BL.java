@@ -28,8 +28,8 @@ public class BL extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(1000);
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(2000);
         break;
 //        case MOVE1:
 ////

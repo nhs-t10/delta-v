@@ -25,25 +25,25 @@ public class BR extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-            driver.driveOmni(0f, 1f, 0f);
-            nextStep(1000);
+            driver.driveOmni(-0.5f, 0f, 0f);
+            nextStep(2000);
         break;
-        case MOVE1:
-            //Drop bar thing left
-            // driver.driveOmni(0f, 0f, 0f);
-            nextStep(1000);
-        case MOVE2:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
-        break;
-        case MOVE3:
-            driver.driveOmni(0f, -1f, 0f);
-            nextStep(500);
-        break;
-        case MOVE4:
-            driver.driveOmni(-1f, 0f, 0f);
-            nextStep(1000);
-        break;
+//        case MOVE1:
+//            //Drop bar thing left
+//            // driver.driveOmni(0f, 0f, 0f);
+//            nextStep(1000);
+//        case MOVE2:
+//            driver.driveOmni(1f, 0f, 0f);
+//            nextStep(1000);
+//        break;
+//        case MOVE3:
+//            driver.driveOmni(0f, -1f, 0f);
+//            nextStep(500);
+//        break;
+//        case MOVE4:
+//            driver.driveOmni(-1f, 0f, 0f);
+//            nextStep(1000);
+//        break;
         default:
             driver.driveOmni(0f, 0f, 0f);
        }

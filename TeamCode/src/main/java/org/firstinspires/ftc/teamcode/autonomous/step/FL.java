@@ -39,7 +39,7 @@ public class FL extends StepAuto {
             driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
-        if (sensor.isSkyStone()) {
+        if (sensor.isSkystone()) {
             currentStep = step.MOVE5;
         } else{
             driver.driveOmni(-0.2f, 0f, 0f);
@@ -54,7 +54,7 @@ public class FL extends StepAuto {
                 driver.driveOmni(-0.5f, 0f, 0f);
             }
             
-            nextStep(1000);
+            nextStep(2000);
         break;
         case MOVE4:
             driver.driveOmni(0f, 0f, 0f);
@@ -68,12 +68,12 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(0f, 0.5f, 0f);
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveOmni(-1f, 0f, 0f);
-            nextStep(1500);
+            driver.driveOmni(-0.5f, 0f, 0f);
+            nextStep(2500);
         break;
         case MOVE9:
             driver.driveOmni(0f, 0f, 0f);
@@ -81,16 +81,16 @@ public class FL extends StepAuto {
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1500);
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(2500);
         break;
         case MOVE11:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(0f, -0.5f, 0f);
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(2000);
         break;
         case MOVE13:
             driver.driveOmni(0f, -0.1f, 0f);

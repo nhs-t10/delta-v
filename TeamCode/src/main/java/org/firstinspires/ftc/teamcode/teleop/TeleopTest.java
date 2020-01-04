@@ -24,13 +24,13 @@ public class TeleopTest extends OpMode {
 
     private static boolean toggleSpeed = false;
     //private static final float speedIncrement = 0.0001
-    
+
     public void init() {
         input = new InputManager(gamepad1);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
-                                     hardwareMap.get(DcMotor.class, "fr"),
-                                     hardwareMap.get(DcMotor.class, "bl"),
-                                     hardwareMap.get(DcMotor.class, "br"));
+                hardwareMap.get(DcMotor.class, "fr"),
+                hardwareMap.get(DcMotor.class, "bl"),
+                hardwareMap.get(DcMotor.class, "br"));
         //sev = new Servo(hardwareMap.get(Servo.class, "sev"))
         // imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
         // imu.calibrate();
@@ -39,10 +39,11 @@ public class TeleopTest extends OpMode {
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "sev"),
-            hardwareMap.get(DcMotor.class, "lift")
+                hardwareMap.get(Servo.class, "sev"),
+                hardwareMap.get(DcMotor.class, "lift")
         );
     }
+
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         hands.setLiftState(input.getLiftControls());
@@ -50,12 +51,11 @@ public class TeleopTest extends OpMode {
         // velocity_x[counter] = (float)imu.getVelocityX();
         // velocity_y[counter] = (float)imu.getVelocityY();
         // location = PaulMath.location(velocity_x, velocity_y);
-        
-        if(gamepad1.a) {
+
+        if (gamepad1.a) {bbu.,
 //            driver.driveEncoder(2f, 2f, 2f, 2f);
         }
 
-        
 
         // telemetry.addData("Velocity X: " , imu.getVelocityX());
         // telemetry.addData("Velocity Y: " , imu.getVelocityY());
@@ -73,24 +73,26 @@ public class TeleopTest extends OpMode {
         This is Austin's code for speed switching. It will probably delete itself for no reason.
         */
         //this particular part is instantaneous toggling between 0.2 and 0.6
-        if(gamepad1.left_bumper) {
-            if(driver.getSpeed() == 0.2 && !toggleSpeed){
-                driver.setSpeed(0.6f);
+        if (gamepad1.left_bumper) {
+            if (driver.getSpeed() == 0.25f && !toggleSpeed) {
+                driver.setSpeed(1.0f);
                 toggleSpeed = true;
             }
-            if(driver.getSpeed() == 0.6 && !toggleSpeed){
-                driver.setSpeed(0.2f);
+            if (driver.getSpeed() == 1.0f && !toggleSpeed) {
+                driver.setSpeed(0.25f);
                 toggleSpeed = true;
             }
         } else {
             toggleSpeed = false;
         }
+    }
+}
         //and this particular part is incremental increase and decrease in speed.
         /*
         if(gamepad1.left_bumper){
-            driver.setSpeed(driver.getSpeed() -= speedIncrement);
+            driver.setSpeed(driver.getSpeed() - speedIncrement);
         }
-        if(gamepad1.right_bumper
+        if(gamepad1.right_bumper){
+            driver.setSpeed(driver.getSpeed() + speedIncrement);
+        }
         */
-    }
-}

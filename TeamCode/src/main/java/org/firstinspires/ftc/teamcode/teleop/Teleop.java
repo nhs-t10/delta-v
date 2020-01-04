@@ -19,6 +19,8 @@ public class Teleop extends OpMode {
     ManipulationManager hands;
 //    Servo sev;
 
+    private static boolean toggleSpeed = false;
+
     public void init() {
         input = new InputManager(gamepad1);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -64,7 +66,18 @@ public class Teleop extends OpMode {
 
         telemetry.addData("BR Power: ", driver.backRight.getPower());
         telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
+    }
 
-
+    if (gamepad1.left_bumper) {
+        if (driver.getSpeed() == 0.25f && !toggleSpeed) {
+            driver.setSpeed(1.0f);
+            toggleSpeed = true;
+        }
+        if (driver.getSpeed() == 1.0f && !toggleSpeed) {
+            driver.setSpeed(0.25f);
+            toggleSpeed = true;
+        }
+    } else {
+        toggleSpeed = false;
     }
 }

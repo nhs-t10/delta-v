@@ -34,7 +34,7 @@ public class MovementManager extends FeatureManager {
      * @param bl Back Left motor
      */
 
-    private static float speed = 0.6f;
+    private static float speed = 1.0f;
 
     public MovementManager(DcMotor fl, DcMotor fr, DcMotor br, DcMotor bl) {
         this.frontLeft = fl;

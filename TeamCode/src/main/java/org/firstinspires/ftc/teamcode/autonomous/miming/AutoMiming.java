@@ -19,6 +19,7 @@ public class AutoMiming extends OpMode {
     MovementManager driver;
     ElapsedTime timer;
     ManipulationManager hands;
+    RobotState state;
 
     int currentMimeIndex = 0;
 
@@ -38,7 +39,7 @@ public class AutoMiming extends OpMode {
             currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
             if(currentMimeIndex < instructions.size()) {
-                RobotState state = RobotState.fromString(instructions.get(currentMimeIndex));
+                state = RobotState.fromString(instructions.get(currentMimeIndex));
 
                 driver.driveOmni(state.movement);
 
@@ -48,6 +49,11 @@ public class AutoMiming extends OpMode {
                 telemetry.addData("latestThing", instructions.get(currentMimeIndex));
             }
 
-            telemetry.addData("Instructions Completed", currentMimeIndex + "/" + instructions.size());
+            if(state != null){
+                telemetry.addData("LastState", state.toString());
+                telemetry.addData("Instructions Completed", currentMimeIndex + "/" + instructions.size());
+                telemetry.addData("State: ", state);
+
+            }
     }
 }

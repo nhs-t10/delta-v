@@ -54,7 +54,7 @@
             if(Float.parseFloat(strSplit[0]) != RobotState.version) throw new IllegalArgumentException("Wrong version");
 
             //the first non-version three numbers are the movementorder power
-            String[] strMove = Arrays.copyOfRange(strSplit, 1, 3);
+            String[] strMove = Arrays.copyOfRange(strSplit, 1, 4);
             MovementOrder order = MovementOrder.fromString(strMove[0] + "," + strMove[1] + "," + strMove[2]);
 
             float liftMotorPower = Float.parseFloat(strSplit[4]);

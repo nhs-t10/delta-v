@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 public class FR extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
-    ColorSensor sensor;
+//    ColorSensor sensor;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -24,7 +24,7 @@ public class FR extends StepAuto {
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift")
         );
-        sensor = new ColorSensor(hardwareMap);
+//        sensor = new ColorSensor(hardwareMap);
     }
 
 
@@ -39,19 +39,19 @@ public class FR extends StepAuto {
             driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
-            if (sensor.isSkyStone()) {
-                currentStep = step.MOVE5;
-            } else {
+//            if (sensor.isSkyStone()) {
+//                currentStep = step.MOVE5;
+//            } else {
                 driver.driveOmni(0.2f, 0f, 0f);
-            }
+//            }
             nextStep(2000);
         break;
         case MOVE3:
-            if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f);
-            } else {
+//            if (sensor.isBled()) {
+//                driver.driveOmni(0f, 0f, 0f);
+//            } else {
                 driver.driveOmni(0.5f, 0f, 0f);
-            } 
+//            }
             nextStep(1000);
         break;
         case MOVE4:
@@ -107,11 +107,11 @@ public class FR extends StepAuto {
             nextStep(1000);
         break;
         case MOVE17:
-            if (sensor.isBled()) {
-                 driver.driveOmni(0f, 0f, 0f);
-            } else {
+//            if (sensor.isBled()) {
+//                 driver.driveOmni(0f, 0f, 0f);
+//            } else {
                 driver.driveOmni(0.5f, 0f, 0f);
-            }
+//            }
             nextStep(500);
         break;
         case MOVE18:

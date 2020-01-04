@@ -26,7 +26,7 @@ public class BR extends StepAuto {
        switch(currentStep){
         case START:
             driver.driveOmni(-0.5f, 0f, 0f);
-            nextStep(2000);
+            nextStep(1000);
         break;
 //        case MOVE1:
 //            //Drop bar thing left

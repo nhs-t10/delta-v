@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.autonomous.step.StepAuto;
 public class FL extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
-//    ColorSensor sensor;
+    ColorSensor sensor;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -24,7 +24,7 @@ public class FL extends StepAuto {
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift")
         );
-//        sensor = new ColorSensor(hardwareMap);
+        sensor = new ColorSensor(hardwareMap);
     }  
 
     
@@ -39,22 +39,22 @@ public class FL extends StepAuto {
             driver.driveOmni(0f, 0f, 0f);
             nextStep(1000);
         case MOVE2:
-//        if (sensor.isSkyStone()) {
-//            currentStep = step.MOVE5;
-//        } else{
+        if (sensor.isSkystone()) {
+            currentStep = step.MOVE5;
+        } else{
             driver.driveOmni(-0.2f, 0f, 0f);
-//        }
+        }
 
             nextStep(2000);
         break;
         case MOVE3:
-//            if (sensor.isBled()) {
-//                driver.driveOmni(0f, 0f, 0f);
-//            } else{
+            if (sensor.isBled()) {
+                driver.driveOmni(0f, 0f, 0f);
+            } else{
                 driver.driveOmni(-0.5f, 0f, 0f);
-//            }
+            }
             
-            nextStep(1000);
+            nextStep(2000);
         break;
         case MOVE4:
             driver.driveOmni(0f, 0f, 0f);
@@ -68,12 +68,12 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveOmni(0f, 1f, 0f);
+            driver.driveOmni(0f, 0.5f, 0f);
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveOmni(-1f, 0f, 0f);
-            nextStep(1500);
+            driver.driveOmni(-0.5f, 0f, 0f);
+            nextStep(2500);
         break;
         case MOVE9:
             driver.driveOmni(0f, 0f, 0f);
@@ -81,16 +81,16 @@ public class FL extends StepAuto {
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1500);
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(2500);
         break;
         case MOVE11:
-            driver.driveOmni(0f, -1f, 0f);
+            driver.driveOmni(0f, -0.5f, 0f);
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveOmni(1f, 0f, 0f);
-            nextStep(1000);
+            driver.driveOmni(0.5f, 0f, 0f);
+            nextStep(2000);
         break;
         case MOVE13:
             driver.driveOmni(0f, -0.1f, 0f);
@@ -109,11 +109,11 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE17:
-//            if (sensor.isBled()) {
-//                driver.driveOmni(0f, 0f, 0f);
-//            }  else{
+            if (sensor.isBled()) {
+                driver.driveOmni(0f, 0f, 0f);
+            }  else{
                 driver.driveOmni(0.5f, 0f, 0f);
-//            }
+            }
             nextStep(500);
         break;
         case MOVE18:

@@ -72,8 +72,8 @@ public class TeleopTest extends OpMode {
         This is Austin's code for speed switching. It will probably delete itself for no reason.
         */
         if(gamepad1.left_bumper){
-            if(getSpeed() == 0.2 && !toggleSpeed){
-                setSpeed(0.6);
+            if(driver.getSpeed() == 0.2 && !toggleSpeed){
+                driver.setSpeed(0.6);
                 toggleSpeed = true;
             }
             if(speed == 0.6 && !toggleSpeed){

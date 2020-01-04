@@ -68,8 +68,8 @@ public class InputManager extends FeatureManager {
 
         powers[0] = motorSpeed;
 
-        float servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
-        if (gamepad.left_trigger > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
+        float servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
+        if (gamepad.right_trigger > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
 
         powers[1] = servoPos;
 

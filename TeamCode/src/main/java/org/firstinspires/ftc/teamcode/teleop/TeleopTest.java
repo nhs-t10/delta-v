@@ -23,6 +23,7 @@ public class TeleopTest extends OpMode {
     //Servo sev;
 
     private static boolean toggleSpeed = false;
+    //private static final float speedIncrement = 0.0001
     
     public void init() {
         input = new InputManager(gamepad1);
@@ -71,17 +72,25 @@ public class TeleopTest extends OpMode {
         /*
         This is Austin's code for speed switching. It will probably delete itself for no reason.
         */
-        if(gamepad1.left_bumper){
-            if(getSpeed() == 0.2 && !toggleSpeed){
-                setSpeed(0.6);
+        //this particular part is instantaneous toggling between 0.2 and 0.6
+        if(gamepad1.left_bumper) {
+            if(driver.getSpeed() == 0.2 && !toggleSpeed){
+                driver.setSpeed(0.6f);
                 toggleSpeed = true;
             }
-            if(speed == 0.6 && !toggleSpeed){
-                speed = 0.2;
+            if(driver.getSpeed() == 0.6 && !toggleSpeed){
+                driver.setSpeed(0.2f);
                 toggleSpeed = true;
             }
         } else {
             toggleSpeed = false;
         }
+        //and this particular part is incremental increase and decrease in speed.
+        /*
+        if(gamepad1.left_bumper){
+            driver.setSpeed(driver.getSpeed() -= speedIncrement);
+        }
+        if(gamepad1.right_bumper
+        */
     }
 }

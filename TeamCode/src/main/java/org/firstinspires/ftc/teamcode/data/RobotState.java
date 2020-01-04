@@ -59,7 +59,7 @@
 
             float liftMotorPower = Float.parseFloat(strSplit[4]);
 
-            float liftServoPos = Float.parseFloat(strSplit[4]);
+            float liftServoPos = Float.parseFloat(strSplit[5]);
 
             return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order);
         }

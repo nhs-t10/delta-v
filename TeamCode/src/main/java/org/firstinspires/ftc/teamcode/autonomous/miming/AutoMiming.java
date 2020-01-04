@@ -54,6 +54,8 @@ public class AutoMiming extends OpMode {
                 telemetry.addData("Instructions Completed", currentMimeIndex + "/" + instructions.size());
                 telemetry.addData("State: ", state);
 
+                telemetry.addData("Servo Pos", hands.getServoPosition());
+
             }
     }
 }

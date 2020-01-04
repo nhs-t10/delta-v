@@ -97,7 +97,7 @@ public boolean isBled() {
 //Test if we're seeing gold
 public boolean isSkystone() {
       //if the green value is between 0x53 (hexidecimal 53) and 0x64 (hexidecimal 64), it's gold. Otherwise, it's false.
-    if ( Color.red(this.colorReturned)<= 75) {
+    if ( Color.red(this.colorReturned)<= 70) {
         return true;
         //Since the condition is commented out, this will always be passed over
     } else {

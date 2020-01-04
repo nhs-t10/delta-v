@@ -33,7 +33,7 @@ public class FR extends StepAuto {
         case START:
             hands.setGrabbingState(false);
             driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(2300);
+            nextStep(2100);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);

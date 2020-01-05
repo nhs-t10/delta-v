@@ -33,7 +33,7 @@ public class FL extends StepAuto {
         case START:
             hands.setGrabbingState(false);
             driver.driveOmni(0f, -0.5f, 0f);
-            nextStep(2100);
+            nextStep(1900);
         break;
         case MOVE1:
             driver.driveOmni(0f, 0f, 0f);
@@ -48,11 +48,11 @@ public class FL extends StepAuto {
             nextStep(2000);
         break;
         case MOVE3:
-            if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f);
-            } else{
+//            if (sensor.isBled()) {
+//                driver.driveOmni(0f, 0f, 0f);
+//            } else{
                 driver.driveOmni(-0.5f, 0f, 0f);
-            }
+//            }
             
             nextStep(2000);
         break;
@@ -60,7 +60,7 @@ public class FL extends StepAuto {
             driver.driveOmni(0f, 0f, 0f);
         break;
         case MOVE5:
-            driver.driveOmni(0f, -0.1f, 0f);
+            driver.driveOmni(0f, -0.5f, 0f);
             nextStep(100);
         break;
         case MOVE6:
@@ -109,11 +109,11 @@ public class FL extends StepAuto {
             nextStep(1000);
         break;
         case MOVE17:
-            if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f);
-            }  else{
+//            if (sensor.isBled()) {
+//                driver.driveOmni(0f, 0f, 0f);
+//            }  else{
                 driver.driveOmni(0.5f, 0f, 0f);
-            }
+//            }
             nextStep(500);
         break;
         case MOVE18:
@@ -122,6 +122,8 @@ public class FL extends StepAuto {
         default:
             driver.driveOmni(0f, 0f, 0f);
        }
+        telemetry.addData("Grabbing State", hands.getServoPosition() );
+        telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("State: ", currentStep);
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());

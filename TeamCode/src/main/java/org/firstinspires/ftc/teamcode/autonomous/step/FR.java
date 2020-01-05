@@ -47,11 +47,11 @@ public class FR extends StepAuto {
             nextStep(2000);
         break;
         case MOVE3:
-            if (sensor.isBled()) {
-                driver.driveOmni(0f, 0f, 0f);
-            } else {
+//            if (sensor.isBled()) {
+//                driver.driveOmni(0f, 0f, 0f);
+//            } else {
                 driver.driveOmni(0.5f, 0f, 0f);
-            }
+//            }
             nextStep(2000);
         break;
         case MOVE4:

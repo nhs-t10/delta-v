@@ -24,35 +24,37 @@ public class Teleop extends OpMode {
     public void init() {
         input = new InputManager(gamepad1);
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
-                                     hardwareMap.get(DcMotor.class, "fr"),
-                                     hardwareMap.get(DcMotor.class, "bl"),
-                                     hardwareMap.get(DcMotor.class, "br"));
+                hardwareMap.get(DcMotor.class, "fr"),
+                hardwareMap.get(DcMotor.class, "bl"),
+                hardwareMap.get(DcMotor.class, "br"));
         sensor = new ColorSensor(hardwareMap);
 //        sev =  hardwareMap.get(Servo.class, "sev");
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "sev"),
-            hardwareMap.get(DcMotor.class, "lift")
+                hardwareMap.get(Servo.class, "sev"),
+                hardwareMap.get(DcMotor.class, "lift")
         );
     }
+
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         hands.setLiftState(input.getLiftControls());
-        
+
         sensor.runSample();
 
 
-        if(input.getGamepad().a){
+        if (input.getGamepad().a) {
 //            manip.setServoPosition(1);
 //            sev.setPosition(0);
         }
-        if(input.getGamepad().b){
+        if (input.getGamepad().b) {
 //            manip.setServoPosition(0);
 //            sev.setPosition(0.25);
         }
         telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
         telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
         telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
-
+        telemetry.addData("Skystone", sensor.isSkystone());
+        telemetry.addData("Blue/Red", sensor.isBled());
         telemetry.addData("Color Code", sensor.getHexCode());
 
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
@@ -68,16 +70,16 @@ public class Teleop extends OpMode {
         telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
     }
 
-    if (gamepad1.left_bumper) {
-        if (driver.getSpeed() == 0.25f && !toggleSpeed) {
-            driver.setSpeed(1.0f);
-            toggleSpeed = true;
-        }
-        if (driver.getSpeed() == 1.0f && !toggleSpeed) {
-            driver.setSpeed(0.25f);
-            toggleSpeed = true;
-        }
-    } else {
-        toggleSpeed = false;
-    }
+//    if(gamepad1.left_bumper){
+//        if (driver.getSpeed() == 0.25f && !toggleSpeed) {
+//            driver.setSpeed(1.0f);
+//            toggleSpeed = true;
+//        }
+//        if (driver.getSpeed() == 1.0f && !toggleSpeed) {
+//            driver.setSpeed(0.25f);
+//            toggleSpeed = true;
+//        }
+//    } else{
+//        toggleSpeed = false;
+//    }
 }

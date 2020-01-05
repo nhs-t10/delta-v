@@ -52,7 +52,7 @@ public class TeleopTest extends OpMode {
         // velocity_y[counter] = (float)imu.getVelocityY();
         // location = PaulMath.location(velocity_x, velocity_y);
 
-        if (gamepad1.a) {bbu.,
+        if (gamepad1.a) {
 //            driver.driveEncoder(2f, 2f, 2f, 2f);
         }
 

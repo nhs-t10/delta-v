@@ -236,6 +236,13 @@ public class MovementManager extends FeatureManager {
         backRight.setTargetPosition((int)rotBR*1680);
     }
 
+    public void resetAllEncoders() {
+        this.resetEncoders(frontLeft);
+        this.resetEncoders(frontRight);
+        this.resetEncoders(backLeft);
+        this.resetEncoders(backRight);
+    }
+
     public void setSpeed(float speed){
         this.speed = speed;
     }

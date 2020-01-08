@@ -234,6 +234,7 @@ public class MovementManager extends FeatureManager {
         frontRight.setTargetPosition((int)rotFR*1680);
         backLeft.setTargetPosition((int)rotBL*1680);
         backRight.setTargetPosition((int)rotBR*1680);
+        driveRaw(0.5f, 0.5f, 0.5f, 0.5f);
     }
 
     public void resetAllEncoders() {

@@ -47,25 +47,26 @@ public class FLEncoder extends StepAuto {
         if (sensor.isSkystone()) {
             currentStep = step.MOVE5;
         } else{
-            driver.driveEncoder(0.5f, 0.5f, -0.5f, -0.5f);
+            driver.driveEncoder(-1f, -1f, 1f, 1f);
+
         }
 
             nextStep(2000);
         break;
         case MOVE3:
 //            if (sensor.isBled()) {
-//                driver.driveOmni(0f, 0f, 0f);
+//                driver.resetAllEncoders();
 //            } else{
-                driver.driveOmni(-0.5f, 0f, 0f);
+            driver.driveEncoder(-1f, -1f, 1f, 1f);
 //            }
             
             nextStep(2000);
         break;
         case MOVE4:
-            driver.driveOmni(0f, 0f, 0f);
+            driver.resetAllEncoders();
         break;
         case MOVE5:
-            driver.driveOmni(0f, -0.5f, 0f);
+            driver.driveEncoder(-1f, 1f, -1f, 1f);
             nextStep(100);
         break;
         case MOVE6:
@@ -73,32 +74,32 @@ public class FLEncoder extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveOmni(0f, 0.5f, 0f);
+            driver.driveEncoder(1f, -1f, 1f, -1f);
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveOmni(-0.5f, 0f, 0f);
+            driver.driveEncoder(-1f, -1f, 1f, 1f);
             nextStep(2500);
         break;
         case MOVE9:
-            driver.driveOmni(0f, 0f, 0f);
+            driver.resetAllEncoders();
             hands.setGrabbingState(false);
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveOmni(0.5f, 0f, 0f);
+            driver.driveEncoder(1f, 1f, -1f, -1f);
             nextStep(2500);
         break;
         case MOVE11:
-            driver.driveOmni(0f, -0.5f, 0f);
+            driver.driveEncoder(-1f, 1f, -1f, 1f);
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveOmni(0.5f, 0f, 0f);
+            driver.driveEncoder(1f, 1f, -1f, -1f);
             nextStep(2000);
         break;
         case MOVE13:
-            driver.driveOmni(0f, -0.1f, 0f);
+            driver.driveEncoder(-1f, 1f, -1f, 1f);
             nextStep(100);
         break;
         case MOVE14:
@@ -106,10 +107,10 @@ public class FLEncoder extends StepAuto {
            nextStep(1000);
         break;
         case MOVE15:
-            driver.driveOmni(-0.5f, 0f, 0f);
+            driver.driveEncoder(-1f, -1f, 1f, 1f);
             nextStep(1200);
         case MOVE16:
-            driver.driveOmni(0f, 0f, 0f);
+            driver.resetAllEncoders();
             hands.setGrabbingState(false);
             nextStep(1000);
         break;
@@ -117,15 +118,15 @@ public class FLEncoder extends StepAuto {
 //            if (sensor.isBled()) {
 //                driver.driveOmni(0f, 0f, 0f);
 //            }  else{
-                driver.driveOmni(0.5f, 0f, 0f);
+            driver.driveEncoder(1f, 1f, -1f, -1f);
 //            }
             nextStep(500);
         break;
         case MOVE18:
-            driver.driveOmni(0f,0f,0f);
+            driver.resetAllEncoders();
         break;
         default:
-            driver.driveOmni(0f, 0f, 0f);
+            driver.resetAllEncoders();
        }
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());

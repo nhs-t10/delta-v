@@ -231,15 +231,6 @@ public class MovementManager extends FeatureManager {
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void driveEncoder(float rotFL, float rotFR, float rotBL, float rotBR) {
-        
-        frontLeft.setTargetPosition((int)rotFL*1680);
-        frontRight.setTargetPosition((int)rotFR*1680);
-        backLeft.setTargetPosition((int)rotBL*1680);
-        backRight.setTargetPosition((int)rotBR*1680);
-        driveRaw(0.5f, 0.5f, 0.5f, 0.5f);
-    }
-
     public void resetAllEncoders() {
         this.resetEncoders(frontLeft);
         this.resetEncoders(frontRight);
@@ -265,13 +256,13 @@ public class MovementManager extends FeatureManager {
 
         resetAllEncoderModes();
 
-        driveRaw(-power, power, -power, power);
-
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+      
+        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            driveRaw(-power, power, -power, power);
             //Waiting for motor to finish
+        } else {
+            driveRaw(0f, 0f, 0f, 0f);
         }
-
-        driveRaw(0f, 0f, 0f, 0f);
     }
 
     public void driveHorizontal(float power, float rotation) {
@@ -285,13 +276,13 @@ public class MovementManager extends FeatureManager {
 
         resetAllEncoderModes();
 
-        driveRaw(power, power, -power, -power);
 
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            driveRaw(power, power, -power, -power);
             //Waiting for motor to finish
+        } else {
+            driveRaw(0f, 0f, 0f, 0f);
         }
-
-        driveRaw(0f, 0f, 0f, 0f);
     }
 
     public void driveTurn(float power, float rotation) {
@@ -304,13 +295,13 @@ public class MovementManager extends FeatureManager {
 
         resetAllEncoderModes();
 
-        driveRaw(power, power, power, power);
 
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            driveRaw(power, power, power, power);
             //Waiting for motor to finish
+        } else {
+            driveRaw(0f, 0f, 0f, 0f);
         }
-
-        driveRaw(0f, 0f, 0f, 0f);
     }
 
 

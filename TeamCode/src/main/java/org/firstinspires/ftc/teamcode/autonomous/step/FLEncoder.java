@@ -23,12 +23,7 @@ public class FLEncoder extends StepAuto {
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift")
                 );
-        driver.driveEncoder(0f, 0f, 0f, 0f);
-
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
-        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
+        driver.resetAllEncoders();
         sensor = new ColorSensor(hardwareMap);
     }  
 
@@ -130,6 +125,14 @@ public class FLEncoder extends StepAuto {
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("State: ", currentStep);
+        telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
+        telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
+        telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());
+        telemetry.addData("Target Position BR: ", driver.backRight.getTargetPosition());
+        telemetry.addData("Current Position FL: ", driver.frontLeft.getCurrentPosition());
+        telemetry.addData("Current Position FR: ", driver.frontRight.getCurrentPosition());
+        telemetry.addData("Current Position BL: ", driver.backLeft.getCurrentPosition());
+        telemetry.addData("Current Position BR: ", driver.backRight.getCurrentPosition());
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());

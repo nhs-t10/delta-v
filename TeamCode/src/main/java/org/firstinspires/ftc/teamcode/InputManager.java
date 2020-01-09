@@ -51,6 +51,12 @@ public class InputManager extends FeatureManager {
                     gamepad.left_stick_y / INPUT_FINETUNE_SCALE,
                     gamepad.right_stick_x / INPUT_FINETUNE_SCALE
             );
+        } else if (currentMode == InputMode.DRIVE_SIDEWAYS) {
+            res = MovementOrder.VHR(
+                    gamepad.left_stick_x,
+                    gamepad.left_stick_y,
+                    gamepad.right_stick_x
+            );
         } else {
             res = MovementOrder.NOTHING;
         }
@@ -125,7 +131,7 @@ public class InputManager extends FeatureManager {
 }
 
 enum InputMode {
-    DRIVING, DRIVE_FINETUNE
+    DRIVING, DRIVE_FINETUNE, DRIVE_SIDEWAYS
 }
 
 class GamepadCb implements Gamepad.GamepadCallback {

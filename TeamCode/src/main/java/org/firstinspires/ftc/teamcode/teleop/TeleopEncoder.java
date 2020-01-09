@@ -24,7 +24,7 @@ public class TeleopEncoder extends OpMode {
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
 
-        driver.driveEncoder(0f, 0f, 0f, 0f);
+//        driver.driveEncoder(0f, 0f, 0f, 0f);
 
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
         driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
@@ -35,16 +35,15 @@ public class TeleopEncoder extends OpMode {
         driver.driveOmni(input.getMovementControls());
 
         if(gamepad1.a) {
-            driver.driveEncoder(2f, 2f, 2f, 2f);
-            // CH 2019/12/18 - changed DriveOmni to DriveRaw, as this has 4 args
-            driver.driveRaw(0.1f, -0.1f, 0.1f, -0.1f);
+            driver.driveVertical(0.5f, 1f);
+
         }
 
         if(gamepad1.b) {
-            driver.driveEncoder(2f, -2f, 2f, -2f);
-            // CH 2019/12/18 - changed DriveOmni to DriveRaw, as this has 4 args
-            driver.driveRaw(0.1f, 0.1f, 0.1f, 0.1f);
+            driver.driveHorizontal(0.5f, 1f);
         }
+
+
 
         
 
@@ -52,13 +51,6 @@ public class TeleopEncoder extends OpMode {
 
 
 
-        telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
-        telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
-        telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());
-
-        telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
-        telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
-        telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());
 
         telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
         telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());

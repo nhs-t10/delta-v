@@ -37,7 +37,7 @@ public class FLEncoder extends StepAuto {
        switch(currentStep){
         case START:
             hands.setGrabbingState(false);
-            driver.driveEncoder(-1f, 1f, -1f, 1f);
+            driver.driveVertical(0.5f, 1f);
             nextStep(1900);
         break;
         case MOVE1:
@@ -47,8 +47,7 @@ public class FLEncoder extends StepAuto {
         if (sensor.isSkystone()) {
             currentStep = step.MOVE5;
         } else{
-            driver.driveEncoder(-1f, -1f, 1f, 1f);
-
+            driver.driveHorizontal(-0.5f, -1f);
         }
 
             nextStep(2000);
@@ -57,7 +56,7 @@ public class FLEncoder extends StepAuto {
 //            if (sensor.isBled()) {
 //                driver.resetAllEncoders();
 //            } else{
-            driver.driveEncoder(-1f, -1f, 1f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
 //            }
             
             nextStep(2000);
@@ -66,7 +65,7 @@ public class FLEncoder extends StepAuto {
             driver.resetAllEncoders();
         break;
         case MOVE5:
-            driver.driveEncoder(-1f, 1f, -1f, 1f);
+            driver.driveVertical(0.5f, 1f);
             nextStep(100);
         break;
         case MOVE6:
@@ -74,11 +73,11 @@ public class FLEncoder extends StepAuto {
             nextStep(1000);
         break;
         case MOVE7:
-            driver.driveEncoder(1f, -1f, 1f, -1f);
+            driver.driveVertical(-0.5f, -1f);
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveEncoder(-1f, -1f, 1f, 1f);
+            driver.driveHorizontal(-0.5f, -1f);
             nextStep(2500);
         break;
         case MOVE9:
@@ -87,19 +86,19 @@ public class FLEncoder extends StepAuto {
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveEncoder(1f, 1f, -1f, -1f);
+            driver.driveHorizontal(0.5f, 1f);
             nextStep(2500);
         break;
         case MOVE11:
-            driver.driveEncoder(-1f, 1f, -1f, 1f);
+            driver.driveVertical(0.5f, 1f);
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveEncoder(1f, 1f, -1f, -1f);
+            driver.driveHorizontal(0.5f, 1f);
             nextStep(2000);
         break;
         case MOVE13:
-            driver.driveEncoder(-1f, 1f, -1f, 1f);
+            driver.driveVertical(0.5f, 1f);
             nextStep(100);
         break;
         case MOVE14:
@@ -107,7 +106,7 @@ public class FLEncoder extends StepAuto {
            nextStep(1000);
         break;
         case MOVE15:
-            driver.driveEncoder(-1f, -1f, 1f, 1f);
+            driver.driveHorizontal(-0.5f, -1f);
             nextStep(1200);
         case MOVE16:
             driver.resetAllEncoders();
@@ -118,7 +117,7 @@ public class FLEncoder extends StepAuto {
 //            if (sensor.isBled()) {
 //                driver.driveOmni(0f, 0f, 0f);
 //            }  else{
-            driver.driveEncoder(1f, 1f, -1f, -1f);
+            driver.driveHorizontal(0.5f, 1f);
 //            }
             nextStep(500);
         break;

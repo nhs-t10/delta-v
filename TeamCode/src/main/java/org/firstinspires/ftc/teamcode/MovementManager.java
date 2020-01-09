@@ -225,6 +225,9 @@ public class MovementManager extends FeatureManager {
 
     public void resetEncoders(DcMotor motor) {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+    public void resetEncoderMode(DcMotor motor) {
+//        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
@@ -243,6 +246,74 @@ public class MovementManager extends FeatureManager {
         this.resetEncoders(backLeft);
         this.resetEncoders(backRight);
     }
+
+    public void resetAllEncoderModes() {
+        this.resetEncoderMode(frontLeft);
+        this.resetEncoderMode(frontRight);
+        this.resetEncoderMode(backLeft);
+        this.resetEncoderMode(backRight);
+    }
+
+    public void driveVertical(float power, float rotation) {
+
+        this.resetAllEncoders();
+
+        frontLeft.setTargetPosition((int)rotation*1680);
+        frontRight.setTargetPosition((int)rotation*1680);
+        backLeft.setTargetPosition((int)rotation*1680);
+        backRight.setTargetPosition((int)rotation*1680);
+
+        resetAllEncoderModes();
+
+        driveRaw(-power, power, -power, power);
+
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            //Waiting for motor to finish
+        }
+
+        driveRaw(0f, 0f, 0f, 0f);
+    }
+
+    public void driveHorizontal(float power, float rotation) {
+
+        this.resetAllEncoders();
+
+        frontLeft.setTargetPosition((int)rotation*1680);
+        frontRight.setTargetPosition((int)rotation*1680);
+        backLeft.setTargetPosition((int)rotation*1680);
+        backRight.setTargetPosition((int)rotation*1680);
+
+        resetAllEncoderModes();
+
+        driveRaw(power, power, -power, -power);
+
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            //Waiting for motor to finish
+        }
+
+        driveRaw(0f, 0f, 0f, 0f);
+    }
+
+    public void driveTurn(float power, float rotation) {
+        this.resetAllEncoders();
+
+        frontLeft.setTargetPosition((int)rotation*1680);
+        frontRight.setTargetPosition((int)rotation*1680);
+        backLeft.setTargetPosition((int)rotation*1680);
+        backRight.setTargetPosition((int)rotation*1680);
+
+        resetAllEncoderModes();
+
+        driveRaw(power, power, power, power);
+
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+            //Waiting for motor to finish
+        }
+
+        driveRaw(0f, 0f, 0f, 0f);
+    }
+
+
 
     public void setSpeed(float speed){
         this.speed = speed;

@@ -249,10 +249,10 @@ public class MovementManager extends FeatureManager {
 
         this.resetAllEncoders();
 
-        frontLeft.setTargetPosition((int)rotation*1680);
-        frontRight.setTargetPosition((int)rotation*1680);
-        backLeft.setTargetPosition((int)rotation*1680);
-        backRight.setTargetPosition((int)rotation*1680);
+        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
 
         resetAllEncoderModes();
 
@@ -269,10 +269,10 @@ public class MovementManager extends FeatureManager {
 
         this.resetAllEncoders();
 
-        frontLeft.setTargetPosition((int)rotation*1680);
-        frontRight.setTargetPosition((int)rotation*1680);
-        backLeft.setTargetPosition((int)rotation*1680);
-        backRight.setTargetPosition((int)rotation*1680);
+        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
 
         resetAllEncoderModes();
 
@@ -288,10 +288,10 @@ public class MovementManager extends FeatureManager {
     public void driveTurn(float power, float rotation) {
         this.resetAllEncoders();
 
-        frontLeft.setTargetPosition((int)rotation*1680);
-        frontRight.setTargetPosition((int)rotation*1680);
-        backLeft.setTargetPosition((int)rotation*1680);
-        backRight.setTargetPosition((int)rotation*1680);
+        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
 
         resetAllEncoderModes();
 

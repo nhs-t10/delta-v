@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
 
 @Autonomous(group = "Step")
-public class FREncoder extends StepAuto {
+public class BLEncoder extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
     ColorSensor sensor;
@@ -32,92 +32,25 @@ public class FREncoder extends StepAuto {
        switch(currentStep){
         case START:
             hands.setGrabbingState(false);
-            driver.driveVertical(0.5f, 1f);
-            nextStep(1900);
-        break;
-        case MOVE1:
-            driver.resetAllEncoders();
-            nextStep(1000);
-        case MOVE2:
-        if (sensor.isSkystone()) {
-            currentStep = step.MOVE5;
-        } else{
             driver.driveHorizontal(0.5f, 1f);
-        }
-
             nextStep(2000);
         break;
+        case MOVE1:
+            driver.driveVertical(0.5f, 0.5f);
+            nextStep(500);
+        break;
+        case MOVE2:
+            //General foundation servo code GRAB
+        break;
         case MOVE3:
-//            if (sensor.isBled()) {
-//                driver.resetAllEncoders();
-//            } else{
             driver.driveHorizontal(0.5f, 1f);
-//            }
-            
             nextStep(2000);
         break;
         case MOVE4:
-            driver.resetAllEncoders();
+            //General foundation servo code RELEASE
         break;
         case MOVE5:
-            driver.driveHorizontal(-0.5f, -1f);
-            nextStep(100);
-        break;
-        case MOVE6:
-            hands.setGrabbingState(true);
-            nextStep(1000);
-        break;
-        case MOVE7:
-            driver.driveVertical(-0.5f, -1f);
-            nextStep(200);
-        break;
-        case MOVE8:
-            driver.driveHorizontal(0.5f, 1f);
-            nextStep(2500);
-        break;
-        case MOVE9:
-            driver.resetAllEncoders();
-            hands.setGrabbingState(false);
-            nextStep(500);
-        break;
-        case MOVE10:
-            driver.driveHorizontal(-0.5f, -1f);
-            nextStep(2500);
-        break;
-        case MOVE11:
-            driver.driveVertical(0.5f, 1f);
-            nextStep(200);
-        break;
-        case MOVE12:
-            driver.driveHorizontal(-0.5f, -1f);
-            nextStep(2000);
-        break;
-        case MOVE13:
-            driver.driveHorizontal(-0.5f, -1f);
-            nextStep(100);
-        break;
-        case MOVE14:
-           hands.setGrabbingState(true);
-           nextStep(1000);
-        break;
-        case MOVE15:
-            driver.driveHorizontal(0.5f, 1f);
-            nextStep(1200);
-        case MOVE16:
-            driver.resetAllEncoders();
-            hands.setGrabbingState(false);
-            nextStep(1000);
-        break;
-        case MOVE17:
-//            if (sensor.isBled()) {
-//                driver.driveOmni(0f, 0f, 0f);
-//            }  else{
-            driver.driveHorizontal(-0.5f, -1f);
-//            }
-            nextStep(500);
-        break;
-        case MOVE18:
-            driver.resetAllEncoders();
+           driver.driveVertical(-0.5f, -1f);
         break;
         default:
             driver.resetAllEncoders();

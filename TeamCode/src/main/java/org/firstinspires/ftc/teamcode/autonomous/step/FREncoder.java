@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
 
 @Autonomous(group = "Step")
-public class FLEncoder extends StepAuto {
+public class FREncoder extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
     ColorSensor sensor;
@@ -42,7 +42,7 @@ public class FLEncoder extends StepAuto {
         if (sensor.isSkystone()) {
             currentStep = step.MOVE5;
         } else{
-            driver.driveHorizontal(-0.5f, -1f);
+            driver.driveHorizontal(0.5f, -1f);
         }
 
             nextStep(2000);
@@ -51,7 +51,7 @@ public class FLEncoder extends StepAuto {
 //            if (sensor.isBled()) {
 //                driver.resetAllEncoders();
 //            } else{
-            driver.driveHorizontal(-0.5f, 1f);
+            driver.driveHorizontal(0.5f, 1f);
 //            }
             
             nextStep(2000);
@@ -60,7 +60,7 @@ public class FLEncoder extends StepAuto {
             driver.resetAllEncoders();
         break;
         case MOVE5:
-            driver.driveHorizontal(0.5f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
             nextStep(100);
         break;
         case MOVE6:
@@ -72,7 +72,7 @@ public class FLEncoder extends StepAuto {
             nextStep(200);
         break;
         case MOVE8:
-            driver.driveHorizontal(-0.5f, -1f);
+            driver.driveHorizontal(0.5f, -1f);
             nextStep(2500);
         break;
         case MOVE9:
@@ -81,7 +81,7 @@ public class FLEncoder extends StepAuto {
             nextStep(500);
         break;
         case MOVE10:
-            driver.driveHorizontal(0.5f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
             nextStep(2500);
         break;
         case MOVE11:
@@ -89,11 +89,11 @@ public class FLEncoder extends StepAuto {
             nextStep(200);
         break;
         case MOVE12:
-            driver.driveHorizontal(0.5f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
             nextStep(2000);
         break;
         case MOVE13:
-            driver.driveHorizontal(0.5f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
             nextStep(100);
         break;
         case MOVE14:
@@ -101,7 +101,7 @@ public class FLEncoder extends StepAuto {
            nextStep(1000);
         break;
         case MOVE15:
-            driver.driveHorizontal(-0.5f, -1f);
+            driver.driveHorizontal(0.5f, -1f);
             nextStep(1200);
         case MOVE16:
             driver.resetAllEncoders();
@@ -112,7 +112,7 @@ public class FLEncoder extends StepAuto {
 //            if (sensor.isBled()) {
 //                driver.driveOmni(0f, 0f, 0f);
 //            }  else{
-            driver.driveHorizontal(0.5f, 1f);
+            driver.driveHorizontal(-0.5f, 1f);
 //            }
             nextStep(500);
         break;

@@ -50,6 +50,19 @@ public class Teleop extends OpMode {
 //            manip.setServoPosition(0);
 //            sev.setPosition(0.25);
         }
+
+        if (gamepad1.left_bumper) {
+            if (driver.getSpeed() == 0.25f && !toggleSpeed) {
+                driver.setSpeed(1.0f);
+                toggleSpeed = true;
+            }
+            if (driver.getSpeed() == 1.0f && !toggleSpeed) {
+                driver.setSpeed(0.25f);
+                toggleSpeed = true;
+            } else {
+                toggleSpeed = false;
+            }
+        }
         telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
         telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
         telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
@@ -70,16 +83,5 @@ public class Teleop extends OpMode {
         telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
     }
 
-//    if(gamepad1.left_bumper){
-//        if (driver.getSpeed() == 0.25f && !toggleSpeed) {
-//            driver.setSpeed(1.0f);
-//            toggleSpeed = true;
-//        }
-//        if (driver.getSpeed() == 1.0f && !toggleSpeed) {
-//            driver.setSpeed(0.25f);
-//            toggleSpeed = true;
-//        }
-//    } else{
-//        toggleSpeed = false;
-//    }
+
 }

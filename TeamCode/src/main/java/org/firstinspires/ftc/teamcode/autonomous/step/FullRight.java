@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
 
 @Autonomous(group = "Step")
-public class FREncoder extends StepAuto {
+public class FullRight extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
     ColorSensor sensor;

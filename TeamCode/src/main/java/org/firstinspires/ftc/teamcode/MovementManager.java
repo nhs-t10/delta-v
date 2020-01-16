@@ -249,20 +249,21 @@ public class MovementManager extends FeatureManager {
 
         this.resetAllEncoders();
 
-        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        frontLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
         frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
         backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
 
         resetAllEncoderModes();
 
       
-        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
             driveRaw(-power, power, -power, power);
             //Waiting for motor to finish
-        } else {
-            driveRaw(0f, 0f, 0f, 0f);
         }
+
+        driveRaw(0f, 0f, 0f, 0f);
+
     }
 
     public void driveHorizontal(float power, float rotation) {
@@ -271,8 +272,8 @@ public class MovementManager extends FeatureManager {
 
         frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
         frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
+        backLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
+        backRight.setTargetPosition(-(int)rotation*TICK_PER_ROT);
 
         resetAllEncoderModes();
 
@@ -296,12 +297,13 @@ public class MovementManager extends FeatureManager {
         resetAllEncoderModes();
 
 
-        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
             driveRaw(power, power, power, power);
             //Waiting for motor to finish
-        } else {
-            driveRaw(0f, 0f, 0f, 0f);
         }
+
+        driveRaw(0f, 0f, 0f, 0f);
+
     }
 
 

@@ -19,6 +19,8 @@ public class InputManager extends FeatureManager {
 
     public static String lastKey;
 
+    public float currentSpeed = 0.6f;
+
     public InputManager(Gamepad _gamepad) {
         this.gamepad = _gamepad;
 
@@ -86,8 +88,14 @@ public class InputManager extends FeatureManager {
         MovementOrder move = this.getMovementControls();
         float[] powers = this.getLiftControls();
 
-        return new RobotState(new ElapsedTime(), powers[0], powers[1], move);
+        return new RobotState(new ElapsedTime(), powers[0], powers[1], move, currentSpeed);
 
+    }
+
+    public int getLogTabSwitchDelta() {
+        if(gamepad.dpad_left) return -1;
+        else if(gamepad.dpad_right) return 1;
+        else return 0;
     }
 
     /**

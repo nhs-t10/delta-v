@@ -20,6 +20,8 @@ public class TeleopTest extends OpMode {
     // ImuManager imu; 
     int counter;
     PointNd location;
+
+    TelemetryManager logger;
     //Servo sev;
 
     private static boolean toggleSpeed = false;
@@ -42,6 +44,8 @@ public class TeleopTest extends OpMode {
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift")
         );
+
+        logger = new TelemetryManager(this);
     }
 
     public void loop() {
@@ -56,18 +60,24 @@ public class TeleopTest extends OpMode {
 //            driver.driveEncoder(2f, 2f, 2f, 2f);
         }
 
+        RobotState state = input.getState();
+        state.setRawMotors(driver);
+        state.setSpeed(driver.getSpeed());
+
+        logger.switchTab(input.getLogTabSwitchDelta());
+        logger.update(state);
 
         // telemetry.addData("Velocity X: " , imu.getVelocityX());
         // telemetry.addData("Velocity Y: " , imu.getVelocityY());
         // telemetry.addData("Velocity Z: " , imu.getVelocityZ());
         // telemetry.addData("Location: " , location);
-        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
-        telemetry.addData("FR Power: ", driver.frontRight.getPower());
-        telemetry.addData("BL Power: ", driver.backLeft.getPower());
-        telemetry.addData("BR Power: ", driver.backRight.getPower());
-
-        telemetry.addData("Servo Pos", hands.getServoPosition());
-        telemetry.addData("Motor Power", hands.getMotorPower());
+//        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+//        telemetry.addData("FR Power: ", driver.frontRight.getPower());
+//        telemetry.addData("BL Power: ", driver.backLeft.getPower());
+//        telemetry.addData("BR Power: ", driver.backRight.getPower());
+//
+//        telemetry.addData("Servo Pos", hands.getServoPosition());
+//        telemetry.addData("Motor Power", hands.getMotorPower());
 
         /*
         This is Austin's code for speed switching. It will probably delete itself for no reason.

@@ -31,7 +31,7 @@ public class BLEncoder extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-            if(!driver.driveVertical(0.1f, 3f)){
+            if(!driver.driveHorizontal(0.1f, -3f)){
                 nextStep(0);
             }
             nextStep(10000);
@@ -73,9 +73,16 @@ public class BLEncoder extends StepAuto {
         telemetry.addData("Current Position BL: ", driver.backLeft.getCurrentPosition());
         telemetry.addData("Current Position BR: ", driver.backRight.getCurrentPosition());
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FL Port: ", driver.frontLeft.getPortNumber());
+
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("FR Port: ", driver.frontRight.getPortNumber());
+
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BL Port: ", driver.backLeft.getPortNumber());
+
         telemetry.addData("BR Power: ", driver.backRight.getPower());
+        telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
 
 
 

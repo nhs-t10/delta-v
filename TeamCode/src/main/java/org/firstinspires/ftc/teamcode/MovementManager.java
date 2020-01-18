@@ -250,8 +250,8 @@ public class MovementManager extends FeatureManager {
     }
 
 
-    private static float speedAuto = 0.05f;
-    
+    private static float speedAuto = 0.5f;
+
     public void driveAuto(float fl, float fr, float br, float bl) {
         frontLeft.setPower(fl*speedAuto);
         backRight.setPower(br*speedAuto);
@@ -259,23 +259,30 @@ public class MovementManager extends FeatureManager {
         backLeft.setPower(bl*speedAuto);
     }
 
+    public void backLeftSetTargetPosition(int position) {
+        backRight.setTargetPosition(position);
+    }
+    public void backRightSetTargetPosition(int position) {
+        backLeft.setTargetPosition(position);
+    }
+
     public boolean driveVertical(float power, float rotation) {
 
         if(!driveStarted) {
             this.resetAllEncoders();
 
-            frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            frontLeft.setTargetPosition(-(int) rotation * TICK_PER_ROT);
             frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
-            backLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
-            backRight.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
+            backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
 
             this.resetAllEncoderModes();
             driveStarted = true;
 
         } else if((Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) &&
                 Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) &&
-                Math.abs(backRight.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition()) &&
-                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backRight.getTargetPosition())) ) {
+                Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
+                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())) ) {
             driveAuto(power, power, power, power);
 
             //Waiting for motor to finish
@@ -293,9 +300,10 @@ public class MovementManager extends FeatureManager {
             this.resetAllEncoders();
 
             frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
-            frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
-            backRight.setTargetPosition((int) rotation * TICK_PER_ROT);
-            backLeft.setTargetPosition(-(int) rotation * TICK_PER_ROT);
+            frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backLeftSetTargetPosition(-(int) rotation * TICK_PER_ROT);
+            backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
+
 
 
             this.resetAllEncoderModes();

@@ -26,6 +26,7 @@ public class MovementManager extends FeatureManager {
     private TrigCache cache;
     private ElapsedTime timer;
     private double lastRecordTime;
+    public boolean driveStarted = false;
     /**
      * Create a MovementManager with four motors.
      * @param fl Front Left motor
@@ -35,6 +36,7 @@ public class MovementManager extends FeatureManager {
      */
 
     private static float speed = 1.0f;
+
 
     public MovementManager(DcMotor fl, DcMotor fr, DcMotor br, DcMotor bl) {
         this.frontLeft = fl;
@@ -62,6 +64,8 @@ public class MovementManager extends FeatureManager {
         frontRight.setPower(fr*speed);
         backLeft.setPower(bl*speed);
     }
+
+
 
     /**
      * Drives using vert, hor, rot inputs.
@@ -245,67 +249,75 @@ public class MovementManager extends FeatureManager {
         this.resetEncoderMode(backRight);
     }
 
-    public void driveVertical(float power, float rotation) {
 
-        this.resetAllEncoders();
-
-        frontLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
-        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
-        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-
-        this.resetAllEncoderModes();
-
-      
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
-            driveRaw(-power, power, -power, power);
-            //Waiting for motor to finish
-        }
-
-        driveRaw(0f, 0f, 0f, 0f);
-
+    private static float speedAuto = 0.05f;
+    
+    public void driveAuto(float fl, float fr, float br, float bl) {
+        frontLeft.setPower(fl*speedAuto);
+        backRight.setPower(br*speedAuto);
+        frontRight.setPower(fr*speedAuto);
+        backLeft.setPower(bl*speedAuto);
     }
 
-    public void driveHorizontal(float power, float rotation) {
+    public boolean driveVertical(float power, float rotation) {
 
-        this.resetAllEncoders();
+        if(!driveStarted) {
+            this.resetAllEncoders();
 
-        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
-        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
-        backRight.setTargetPosition(-(int)rotation*TICK_PER_ROT);
+            frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backRight.setTargetPosition((int) rotation * TICK_PER_ROT);
 
-        resetAllEncoderModes();
+            this.resetAllEncoderModes();
+            driveStarted = true;
 
+        } else if((Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) &&
+                Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) &&
+                Math.abs(backRight.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition()) &&
+                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backRight.getTargetPosition())) ) {
+            driveAuto(power, power, power, power);
 
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
-            driveRaw(power, power, -power, -power);
             //Waiting for motor to finish
+        } else {
+            driveAuto(0f, 0f, 0f, 0f);
+//            driveStarted = false;
+            return false;
         }
-
-        driveRaw(0f, 0f, 0f, 0f);
-
+        return true;
     }
 
-    public void driveTurn(float power, float rotation) {
-        this.resetAllEncoders();
+    public boolean driveHorizontal(float power, float rotation) {
 
-        frontLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
-        frontRight.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backLeft.setTargetPosition((int)rotation*TICK_PER_ROT);
-        backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
+        if(!driveStarted) {
+            this.resetAllEncoders();
 
-        resetAllEncoderModes();
+            frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
+            backRight.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backLeft.setTargetPosition(-(int) rotation * TICK_PER_ROT);
 
 
-        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
-            driveRaw(power, power, power, power);
+            this.resetAllEncoderModes();
+            driveStarted = true;
+
+        }
+        else if((Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) &&
+                Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) &&
+                Math.abs(backRight.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition()) &&
+                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backRight.getTargetPosition())) ){
+            this.driveAuto(power, power, power, power);
             //Waiting for motor to finish
+        } else {
+            driveAuto(0f, 0f, 0f, 0f);
+//            driveStarted = false;
+            return false;
         }
 
-        driveRaw(0f, 0f, 0f, 0f);
-
+        return true;
     }
+
+
 
 
 

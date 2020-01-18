@@ -51,7 +51,7 @@ public class TeleopEncoder extends OpMode {
 
 
 
-
+        telemetry.addData("Drive Started: ", driver.driveStarted);
         telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
         telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
         telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());

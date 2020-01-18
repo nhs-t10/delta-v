@@ -176,8 +176,10 @@ public class FullLeft extends StepAuto {
             break;
             case MOVE29:
                 //Move forward, away from the foundation
-            driver.driveVertical(0.5f, 1f);
-                nextStep(1000);
+                if(!driver.driveVertical(0.5f, 1f)){
+                    nextStep(0);
+                };
+                nextStep(3000);
             break;
             case MOVE30:
                 //Move to line up with parking
@@ -204,6 +206,7 @@ public class FullLeft extends StepAuto {
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("State: ", currentStep);
+        telemetry.addData("DriveStarted: ", driver.driveStarted);
         telemetry.addData("Target Position FL: ", driver.frontLeft.getTargetPosition());
         telemetry.addData("Target Position FR: ", driver.frontRight.getTargetPosition());
         telemetry.addData("Target Position BL: ", driver.backLeft.getTargetPosition());

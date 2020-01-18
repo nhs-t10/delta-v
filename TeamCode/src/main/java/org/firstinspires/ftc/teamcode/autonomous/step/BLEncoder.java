@@ -31,27 +31,33 @@ public class BLEncoder extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
-            hands.setGrabbingState(false);
-            driver.driveHorizontal(0.5f, 1f);
-            nextStep(2000);
+            if(!driver.driveVertical(0.1f, 3f)){
+                nextStep(0);
+            }
+            nextStep(10000);
         break;
-        case MOVE1:
-            driver.driveVertical(0.5f, 0.5f);
-            nextStep(500);
-        break;
-        case MOVE2:
-            //General foundation servo code GRAB
-        break;
-        case MOVE3:
-            driver.driveHorizontal(0.5f, 1f);
-            nextStep(2000);
-        break;
-        case MOVE4:
-            //General foundation servo code RELEASE
-        break;
-        case MOVE5:
-           driver.driveVertical(-0.5f, -1f);
-        break;
+//        case MOVE1:
+//            if(!driver.driveHorizontal(0.1f, 4f)){
+//                nextStep(0);
+//            }
+//            nextStep(10000);
+//        break;
+//        case MOVE2:
+//            if(!driver.driveVertical(0.1f, -3f)){
+//                nextStep(0);
+//            }
+//            nextStep(10000);
+//        break;
+//        case MOVE3:
+//            if(!driver.driveHorizontal(0.1f, -4f)){
+//                nextStep(0);
+//            }
+//            nextStep(10000);
+//        break;
+//        case MOVE4:
+//           driver.driveAuto(1f, 1f, 1f, 1f);
+//           nextStep(10000);
+//        break;
         default:
             driver.resetAllEncoders();
        }
@@ -70,6 +76,7 @@ public class BLEncoder extends StepAuto {
         telemetry.addData("FR Power: ", driver.frontRight.getPower());
         telemetry.addData("BL Power: ", driver.backLeft.getPower());
         telemetry.addData("BR Power: ", driver.backRight.getPower());
+
 
 
     }

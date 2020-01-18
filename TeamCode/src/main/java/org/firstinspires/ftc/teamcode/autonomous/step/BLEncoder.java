@@ -32,31 +32,33 @@ public class BLEncoder extends StepAuto {
        switch(currentStep){
         case START:
             if(!driver.driveVertical(0.1f, 3f)){
-                nextStep(0);
+                currentStep = getNext();
             }
             nextStep(10000);
         break;
         case MOVE1:
             if(!driver.driveHorizontal(0.1f, 3f)){
-                nextStep(0);
+                currentStep = getNext();
             }
             nextStep(10000);
         break;
         case MOVE2:
            if(!driver.driveVertical(0.1f, -3f)){
-               nextStep(0);
+               currentStep = getNext();
            }
            nextStep(10000);
         break;
         case MOVE3:
             if(!driver.driveHorizontal(0.1f, -3f)){
-                nextStep(0);
+                currentStep = getNext();
             }
             nextStep(10000);
         break;
         default:
             driver.resetAllEncoders();
        }
+
+        telemetry.addData("DriveStarted: ", driver.driveStarted);
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("State: ", currentStep);

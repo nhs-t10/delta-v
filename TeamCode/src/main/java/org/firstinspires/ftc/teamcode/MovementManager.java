@@ -288,7 +288,7 @@ public class MovementManager extends FeatureManager {
             //Waiting for motor to finish
         } else {
             driveAuto(0f, 0f, 0f, 0f);
-//            driveStarted = false;
+            driveStarted = false;
             return false;
         }
         return true;
@@ -318,7 +318,7 @@ public class MovementManager extends FeatureManager {
             //Waiting for motor to finish
         } else {
             driveAuto(0f, 0f, 0f, 0f);
-//            driveStarted = false;
+            driveStarted = false;
             return false;
         }
 

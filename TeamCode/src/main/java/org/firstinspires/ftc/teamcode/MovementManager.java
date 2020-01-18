@@ -254,7 +254,7 @@ public class MovementManager extends FeatureManager {
         backLeft.setTargetPosition(-(int)rotation*TICK_PER_ROT);
         backRight.setTargetPosition((int)rotation*TICK_PER_ROT);
 
-        resetAllEncoderModes();
+        this.resetAllEncoderModes();
 
       
         while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
@@ -278,12 +278,13 @@ public class MovementManager extends FeatureManager {
         resetAllEncoderModes();
 
 
-        if(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
+        while(frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy() ) {
             driveRaw(power, power, -power, -power);
             //Waiting for motor to finish
-        } else {
-            driveRaw(0f, 0f, 0f, 0f);
         }
+
+        driveRaw(0f, 0f, 0f, 0f);
+
     }
 
     public void driveTurn(float power, float rotation) {

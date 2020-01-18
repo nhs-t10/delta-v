@@ -62,7 +62,7 @@ public class PositionSensorIntegrator implements BNO055IMU.AccelerationIntegrato
     // Construction
     //------------------------------------------------------------------------------------------
 
-    PositionSensorIntegrator()
+    public PositionSensorIntegrator()
         {
         this.parameters = null;
         this.position = new Position();

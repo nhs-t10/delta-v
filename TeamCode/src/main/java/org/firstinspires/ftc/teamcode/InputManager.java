@@ -21,6 +21,9 @@ public class InputManager extends FeatureManager {
 
     public float currentSpeed = 0.6f;
 
+    public boolean dpad_leftPress = false;
+    public boolean dpad_rightPress = false;
+
     public InputManager(Gamepad _gamepad) {
         this.gamepad = _gamepad;
 
@@ -88,14 +91,20 @@ public class InputManager extends FeatureManager {
         MovementOrder move = this.getMovementControls();
         float[] powers = this.getLiftControls();
 
-        return new RobotState(new ElapsedTime(), powers[0], powers[1], move, currentSpeed);
+        return new RobotState(new ElapsedTime(), powers[0], powers[1], move, currentSpeed, new PointNd(), new PointNd());
 
     }
 
     public int getLogTabSwitchDelta() {
-        if(gamepad.dpad_left) return -1;
-        else if(gamepad.dpad_right) return 1;
-        else return 0;
+
+        int delta = 0;
+        if(!gamepad.dpad_left && dpad_leftPress) delta = -1;
+        else if(!gamepad.dpad_right && dpad_rightPress) delta = 1;
+
+        dpad_leftPress = gamepad.dpad_left;
+        dpad_rightPress = gamepad.dpad_right;
+
+        return delta;
     }
 
     /**

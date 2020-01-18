@@ -75,6 +75,7 @@ public class TelemetryManager extends FeatureManager {
             opMode.telemetry.addData("Speed", lastState.speed * 100 + "%");
             opMode.telemetry.addData("Last Updated", TelemetryManager.durationFormat((float)(System.currentTimeMillis() - this.lastUpdateTime)));
             opMode.telemetry.addData("Horizontal Movement",TelemetryManager.meter(lastState.movement.getHor(), 1f, 8));
+            opMode.telemetry.addData("Have we moved the foundation?", "No (50% accurate)");
         } if(currentTab == 1) {
             //OpMode-inserted values
             for (Map.Entry<String, String> entry : opModeDatas.entrySet()) {
@@ -93,6 +94,9 @@ public class TelemetryManager extends FeatureManager {
 
             opMode.telemetry.addData("Lift Motor", lastState.liftMotorPower);
             opMode.telemetry.addData("Lift Servo Grabber", lastState.liftServoPos);
+
+            opMode.telemetry.addData("IMU Orientation", lastState.orientation.toString());
+            opMode.telemetry.addData("IMU Orientation", lastState.position.toString());
         }
         opMode.telemetry.update();
     }
@@ -112,20 +116,20 @@ public class TelemetryManager extends FeatureManager {
         else return "an eternity ago in computer terms";
     }
     public static String repeatStr(String str, int count) {
-        String res = "";
-        for(int i = 0; i <= count; i++) res += str;
-        return res;
+        StringBuilder res = new StringBuilder();
+        for(int i = 0; i < count; i++) res.append(str);
+        return res.toString();
     }
 
     public static String tabDisplay(String[] options, int current) {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for(int i = 0; i < options.length; i++) {
-            if(current == i) res += "<" + options[i] + ">";
-            else res += options[i];
+            if(current == i) res.append("<").append(options[i]).append(">");
+            else res.append("[").append(options[i]).append("]");
 
-            if(i + 1 < options.length) res += "|";
+            if(i + 1 < options.length) res.append("|");
         }
-        return res;
+        return res.toString();
     }
     public TelemetryManager(){ }
 

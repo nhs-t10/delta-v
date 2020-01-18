@@ -1,6 +1,8 @@
     package org.firstinspires.ftc.teamcode.data;
 
+    import android.graphics.Point;
     import android.os.Build;
+    import android.text.Layout;
 
     import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -8,14 +10,17 @@
     import com.qualcomm.robotcore.hardware.HardwareMap;
     import com.qualcomm.robotcore.util.ElapsedTime;
 
+    import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+    import org.firstinspires.ftc.robotcore.external.navigation.Position;
     import org.firstinspires.ftc.teamcode.MovementManager;
+    import org.firstinspires.ftc.teamcode.auxillary.PaulMath;
 
     import java.util.ArrayList;
     import java.util.Arrays;
 
     public class RobotState {
 
-        public final static float version = 2f;
+        public final static float version = 3f;
         public static RobotState current;
 
         public float speed;
@@ -33,7 +38,10 @@
         public double flDrivePower;
         public double brDrivePower;
 
-        public RobotState (ElapsedTime tmr, float _liftMotorPower, float _liftServoPos, MovementOrder _movement, float _speed) {
+        public PointNd orientation;
+        public PointNd position;
+
+        public RobotState (ElapsedTime tmr, float _liftMotorPower, float _liftServoPos, MovementOrder _movement, float _speed, PointNd _ori, PointNd _pos) {
             this.liftServoPos = _liftServoPos;
             this.liftMotorPower = _liftMotorPower;
             this.timer = tmr;
@@ -42,6 +50,9 @@
             this.time = (float)timer.milliseconds();
 
             this.movement = _movement;
+
+            this.orientation = _ori;
+            this.position = _pos;
         }
 
         public float getTime() {return this.time; }
@@ -103,6 +114,22 @@
             return liftMotorPower;
         }
 
+        public PointNd getOrientation() {
+            return orientation;
+        }
+
+        public void setOrientation(PointNd orientation) {
+            this.orientation = orientation;
+        }
+
+        public PointNd getPosition() {
+            return position;
+        }
+
+        public void setPosition(PointNd position) {
+            this.position = position;
+        }
+
         public void setLiftMotorPower(float liftMotorPower) {
             this.liftMotorPower = liftMotorPower;
         }
@@ -116,16 +143,16 @@
         }
 
         public String toString() {
-            return RobotState.version + "," + movement.toString() + "," + liftMotorPower + "," + liftServoPos + ",";
+            return RobotState.version + "," + movement.toString() + "," + liftMotorPower + "," + liftServoPos + "," + speed + "," + orientation.toString() + "," + position.toString();
         }
 
         public static RobotState fromString(String str) {
             String[] strSplit = str.split(",");
 
-            //validate version-- if the version is old, return an erorr
+            //validate version-- if the version is old, return an error
             if(Float.parseFloat(strSplit[0]) != RobotState.version) throw new IllegalArgumentException("Wrong version");
 
-            //the first non-version three numbers are the movementorder power
+            //the first non-version three numbers are the MovementOrder power
             String[] strMove = Arrays.copyOfRange(strSplit, 1, 4);
             MovementOrder order = MovementOrder.fromString(strMove[0] + "," + strMove[1] + "," + strMove[2]);
 
@@ -135,6 +162,9 @@
 
             float speed = Float.parseFloat(strSplit[6]);
 
-            return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order, speed);
+            PointNd ori = PointNd.fromString(PaulMath.join(",", Arrays.copyOfRange(strSplit, 7, 10)));
+            PointNd pos = PointNd.fromString(PaulMath.join(",", Arrays.copyOfRange(strSplit, 11, 14)));
+
+            return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order, speed, ori, pos);
         }
     }

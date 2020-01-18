@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.data;
 
+import android.graphics.Point;
+
+import org.firstinspires.ftc.teamcode.auxillary.PaulMath;
+
 import java.util.ArrayList;
 
 public class PointNd {
@@ -16,6 +20,17 @@ public class PointNd {
         this.dimensions.add(x);
         this.dimensions.add(y);
         this.dimensions.add(z);
+    }
+
+    public static PointNd fromString(String str) {
+        String[] strSplit = str.split(",");
+        float[] vals = new float[strSplit.length];
+
+        for(int i = 0; i < strSplit.length; i++) {
+            vals[i] = Float.parseFloat(strSplit[i]);
+        }
+
+        return new PointNd(vals);
     }
     /**
      * Make a 2-dimensional point.
@@ -72,5 +87,9 @@ public class PointNd {
     }
     public float getZ() {
         return dimensions.get(2);
+    }
+
+    public String toString() {
+        return PaulMath.join(",", dimensions.toArray());
     }
 }

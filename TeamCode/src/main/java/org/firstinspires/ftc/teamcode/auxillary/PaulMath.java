@@ -37,6 +37,22 @@ public class PaulMath {
         return location;
 
     }
+
+    /**
+     * Joins a string array with a delim
+     * @param delim the deliminator.
+     * @param arr the array to join. Objects will be converted to string
+     * @return the joined string
+    */
+    public static String join(String delim, Object[] arr) {
+        StringBuilder res = new StringBuilder();
+        for(int i = 0; i < arr.length; i++) {
+            res.append(arr[i].toString());
+            if(i + 1 <= arr.length) res.append(delim);
+        }
+
+        return res.toString();
+    }
     /**
      * Round a given number to a decimal place.
      * @param input Number to round.

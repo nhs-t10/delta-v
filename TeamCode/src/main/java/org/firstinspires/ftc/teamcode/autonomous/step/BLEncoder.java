@@ -31,33 +31,29 @@ public class BLEncoder extends StepAuto {
     public void loop() {
        switch(currentStep){
         case START:
+            if(!driver.driveVertical(0.1f, 3f)){
+                nextStep(0);
+            }
+            nextStep(10000);
+        break;
+        case MOVE1:
+            if(!driver.driveHorizontal(0.1f, 3f)){
+                nextStep(0);
+            }
+            nextStep(10000);
+        break;
+        case MOVE2:
+           if(!driver.driveVertical(0.1f, -3f)){
+               nextStep(0);
+           }
+           nextStep(10000);
+        break;
+        case MOVE3:
             if(!driver.driveHorizontal(0.1f, -3f)){
                 nextStep(0);
             }
             nextStep(10000);
         break;
-//        case MOVE1:
-//            if(!driver.driveHorizontal(0.1f, 4f)){
-//                nextStep(0);
-//            }
-//            nextStep(10000);
-//        break;
-//        case MOVE2:
-//            if(!driver.driveVertical(0.1f, -3f)){
-//                nextStep(0);
-//            }
-//            nextStep(10000);
-//        break;
-//        case MOVE3:
-//            if(!driver.driveHorizontal(0.1f, -4f)){
-//                nextStep(0);
-//            }
-//            nextStep(10000);
-//        break;
-//        case MOVE4:
-//           driver.driveAuto(1f, 1f, 1f, 1f);
-//           nextStep(10000);
-//        break;
         default:
             driver.resetAllEncoders();
        }

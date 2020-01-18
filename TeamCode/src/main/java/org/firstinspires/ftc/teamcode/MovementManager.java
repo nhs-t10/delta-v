@@ -271,8 +271,8 @@ public class MovementManager extends FeatureManager {
         if(!driveStarted) {
             this.resetAllEncoders();
 
-            frontLeft.setTargetPosition(-(int) rotation * TICK_PER_ROT);
-            frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
+            frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
             backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
             backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
 

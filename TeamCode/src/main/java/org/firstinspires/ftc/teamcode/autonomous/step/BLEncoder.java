@@ -49,7 +49,7 @@ public class BLEncoder extends StepAuto {
         case MOVE2:
             driveStarted = false;
             if(!driver.driveVertical(0.1f, -3f, driveStarted)){
-               currentStep = getNext();
+                currentStep = getNext();
             }
             nextStep(10000);
         break;

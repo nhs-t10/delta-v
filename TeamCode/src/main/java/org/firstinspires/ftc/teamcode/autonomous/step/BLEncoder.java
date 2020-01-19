@@ -58,6 +58,8 @@ public class BLEncoder extends StepAuto {
             driver.resetAllEncoders();
        }
 
+
+
         telemetry.addData("DriveStarted: ", driver.driveStarted);
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());

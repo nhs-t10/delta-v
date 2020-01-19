@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 
 import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.autonomous.step.BLEncoder;
 import org.firstinspires.ftc.teamcode.data.*;
 import org.firstinspires.ftc.teamcode.auxillary.*;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class MovementManager extends FeatureManager {
     private TrigCache cache;
     private ElapsedTime timer;
     private double lastRecordTime;
+    boolean driveStarted;
 
     /**
      * Create a MovementManager with four motors.
@@ -273,8 +275,8 @@ public class MovementManager extends FeatureManager {
 
             frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
             frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
-            backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
-            backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
+            backLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+            backRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
 
             this.resetAllEncoderModes();
             driveStarted = true;
@@ -294,30 +296,39 @@ public class MovementManager extends FeatureManager {
         return true;
     }
 
-    public boolean driveHorizontal(float power, float rotation, boolean driveStarted) {
 
+    public boolean driveHorizontal(float power, float rotation) {return false;}
+
+    public boolean driveHorizontal(float power, float rotation, BLEncoder logger) {
+
+        logger.telemetry.addData("mvm encoder drive state init", "0");
+        logger.telemetry.addData("mvm encoder drive state drive", "0");
+        logger.telemetry.addData("mvm encoder drive state stop", "0");
         if(!driveStarted) {
             this.resetAllEncoders();
 
             frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
             frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
-            backLeftSetTargetPosition(-(int) rotation * TICK_PER_ROT);
-            backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
+            backLeft.setTargetPosition(-(int) rotation * TICK_PER_ROT);
+            backRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
 
 
 
             this.resetAllEncoderModes();
             driveStarted = true;
 
+            logger.telemetry.addData("mvm encoder drive state init", "init" + (System.currentTimeMillis() / 100000));
         }
         else if((Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) &&
                 Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) &&
-                Math.abs(backRight.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition()) &&
-                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backRight.getTargetPosition())) ){
+                Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
+                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())) ) {
             this.driveAuto(power, power, power, power);
+            logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
             //Waiting for motor to finish
         } else {
             driveAuto(0f, 0f, 0f, 0f);
+            logger.telemetry.addData("mvm encoder drive state stop", "stop" + (System.currentTimeMillis() / 100000));
             driveStarted = false;
             return false;
         }

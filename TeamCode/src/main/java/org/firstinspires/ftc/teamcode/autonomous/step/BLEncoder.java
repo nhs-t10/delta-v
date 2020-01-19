@@ -13,6 +13,7 @@ public class BLEncoder extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
     ColorSensor sensor;
+    boolean driveStarted;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -25,31 +26,36 @@ public class BLEncoder extends StepAuto {
                 );
         driver.resetAllEncoders();
         sensor = new ColorSensor(hardwareMap);
+
     }  
 
     
     public void loop() {
        switch(currentStep){
         case START:
-            if(!driver.driveVertical(0.1f, 3f)){
+            driveStarted = false;
+            if(!driver.driveVertical(0.1f, 3f, driveStarted)){
                 currentStep = getNext();
             }
             nextStep(10000);
         break;
         case MOVE1:
-            if(!driver.driveHorizontal(0.1f, 3f)){
+            driveStarted = false;
+            if(!driver.driveHorizontal(0.1f, 3f, driveStarted)){
                 currentStep = getNext();
             }
             nextStep(10000);
         break;
         case MOVE2:
-           if(!driver.driveVertical(0.1f, -3f)){
-               currentStep = getNext();
-           }
-           nextStep(10000);
+            driveStarted = false;
+            if(!driver.driveVertical(0.1f, -3f, driveStarted)){
+                currentStep = getNext();
+            }
+            nextStep(10000);
         break;
         case MOVE3:
-            if(!driver.driveHorizontal(0.1f, -3f)){
+            driveStarted = false;
+            if(!driver.driveHorizontal(0.1f, -3f, driveStarted)){
                 currentStep = getNext();
             }
             nextStep(10000);
@@ -58,9 +64,7 @@ public class BLEncoder extends StepAuto {
             driver.resetAllEncoders();
        }
 
-
-
-        telemetry.addData("DriveStarted: ", driver.driveStarted);
+        telemetry.addData("DriveStarted: ", driveStarted);
         telemetry.addData("Grabbing State", hands.getServoPosition() );
         telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("State: ", currentStep);

@@ -26,7 +26,7 @@ public class MovementManager extends FeatureManager {
     private TrigCache cache;
     private ElapsedTime timer;
     private double lastRecordTime;
-    public boolean driveStarted = false;
+
     /**
      * Create a MovementManager with four motors.
      * @param fl Front Left motor
@@ -266,7 +266,7 @@ public class MovementManager extends FeatureManager {
         backLeft.setTargetPosition(position);
     }
 
-    public boolean driveVertical(float power, float rotation) {
+    public boolean driveVertical(float power, float rotation, boolean driveStarted) {
 
         if(!driveStarted) {
             this.resetAllEncoders();
@@ -294,7 +294,7 @@ public class MovementManager extends FeatureManager {
         return true;
     }
 
-    public boolean driveHorizontal(float power, float rotation) {
+    public boolean driveHorizontal(float power, float rotation, boolean driveStarted) {
 
         if(!driveStarted) {
             this.resetAllEncoders();

@@ -3,16 +3,21 @@ package org.firstinspires.ftc.teamcode.autonomous.step;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.ColorSensor;
 import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
+import org.firstinspires.ftc.teamcode.TelemetryManager;
+import org.firstinspires.ftc.teamcode.data.RobotState;
 
 @Autonomous(group = "Step")
 public class BLEncoder extends StepAuto {
     MovementManager driver;
     ManipulationManager hands;
     ColorSensor sensor;
+
+    TelemetryManager logger;
 
     public void init() {
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
@@ -25,6 +30,8 @@ public class BLEncoder extends StepAuto {
                 );
         driver.resetAllEncoders();
         sensor = new ColorSensor(hardwareMap);
+
+        logger = new TelemetryManager(this);
     }  
 
     
@@ -37,7 +44,7 @@ public class BLEncoder extends StepAuto {
             nextStep(10000);
         break;
         case MOVE1:
-            if(!driver.driveHorizontal(0.1f, 3f)){
+            if(!driver.driveHorizontal(0.1f, 3f, this)){
                 currentStep = getNext();
             }
             nextStep(10000);
@@ -49,7 +56,7 @@ public class BLEncoder extends StepAuto {
            nextStep(10000);
         break;
         case MOVE3:
-            if(!driver.driveHorizontal(0.1f, -3f)){
+            if(!driver.driveHorizontal(0.1f, -3f, this)){
                 currentStep = getNext();
             }
             nextStep(10000);

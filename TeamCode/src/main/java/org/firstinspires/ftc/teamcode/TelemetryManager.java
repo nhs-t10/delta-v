@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -133,4 +134,20 @@ public class TelemetryManager extends FeatureManager {
     }
     public TelemetryManager(){ }
 
+    class UpdateForSyncOpmode implements Runnable {
+        public void run() {
+            RobotState state = new RobotState(
+                    (int)System.currentTimeMillis(),
+                    (float)opMode.hardwareMap.dcMotor.get("lift").getPower(),
+                    (float)opMode.hardwareMap.servo.get("liftservo").getPosition()
+            );
+            state.setRawMotors(
+                    opMode.hardwareMap.dcMotor.get("fr"),
+                    opMode.hardwareMap.dcMotor.get("fl"),
+                    opMode.hardwareMap.dcMotor.get("bl"),
+                    opMode.hardwareMap.dcMotor.get("br")
+            );
+            update(state);                    ;
+        }
+    }
 }

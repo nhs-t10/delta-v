@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -70,37 +71,7 @@ public class MovementManager extends FeatureManager {
 
 
 
-    /**
-     * Drives using vert, hor, rot inputs.
-     * @param horizontalPower Horizontal input
-     * @param verticalPower Verticl input
-     * @param rotationalPower Rotational input
-     */
-    //confusing names we are trubleshooting
-    public float[] omniCalc(float verticalPower, float horizontalPower, float rotationalPower) {
-        float lx = Range.clip(horizontalPower, -1, 1);
-        float lY = Range.clip(verticalPower, -1, 1);
-        float rx = Range.clip(rotationalPower, -1, 1);
-        
-        // Motor powers of fl, fr, br, bl
-        // Motor powers used to be 0.4f for all motors other than fl
-        float[] vertical = {-lY, lY, -lY, lY};
-        float[] horizontal = {lx, 0.7f*lx, -0.7f*lx, -0.7f*lx};
-        float[] rotational = {rx, rx, rx, rx};
 
-        float[] sum = new float[4];
-        for (int i = 0; i < 4; i++) {
-            sum[i] = vertical[i] + horizontal[i] + rotational[i];
-        }
-        //This makes sure that no value is greater than 1 by dividing all of them by the maximum
-        float highest = Math.max(Math.max(sum[0], sum[1]), Math.max(sum[2], sum[3]));
-        if (Math.abs(highest) > 1) {
-            for (int i = 0; i < 4; i++) {
-                sum[i] = sum[i] / highest;
-            }
-        }
-        return sum;
-    }
 
     /**
      * Drives based on inputs
@@ -109,7 +80,7 @@ public class MovementManager extends FeatureManager {
      * @param rotationalPower Rotational input
      */
     public void driveOmni(float horizontalPower, float verticalPower, float rotationalPower) {
-        float [] sum = omniCalc(verticalPower, horizontalPower, rotationalPower);
+        float [] sum = PaulMath.omniCalc(verticalPower, horizontalPower, rotationalPower);
 
         //record current position
         double timeSinceLastRecordTime = timer.milliseconds() - lastRecordTime;
@@ -207,7 +178,7 @@ public class MovementManager extends FeatureManager {
      * @param rotationalPower Rotational input
      */
     public HashMap<String,float[]> powersHashMap(float horizontalPower, float verticalPower, float rotationalPower) {
-        float[] sum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        float[] sum = PaulMath.omniCalc(horizontalPower, verticalPower, rotationalPower);
         HashMap<String, float[]> powersHashMap = new HashMap<String, float[]>();
         powersHashMap.put(timer.milliseconds() + "", sum);
         return powersHashMap;
@@ -222,7 +193,7 @@ public class MovementManager extends FeatureManager {
      */
     public void moveDriftingAverage(float horizontalPower, float verticalPower, float rotationalPower) {
         HashMap<String, float[]> powersHashMap = powersHashMap(horizontalPower, verticalPower, rotationalPower);
-        float[] currentSum = omniCalc(horizontalPower, verticalPower, rotationalPower);
+        float[] currentSum = PaulMath.omniCalc(horizontalPower, verticalPower, rotationalPower);
         float[] pastSum = powersHashMap.get(timer.milliseconds()-100 + "");
         for (int i = 0; i < 4; i++) {
             currentSum[i] = (currentSum[i] + pastSum[i])/2;
@@ -356,7 +327,7 @@ public class MovementManager extends FeatureManager {
         return true;
     }
 
-    public void driveWhileHorizontal(float power, float rotation, BLEncoder logger) {
+    public void driveWhileHorizontal(float power, float rotation, OpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -392,7 +363,7 @@ public class MovementManager extends FeatureManager {
         driveStarted = false;
     }
 
-    public void driveWhileVertical(float power, float rotation, BLEncoder logger) {
+    public void driveWhileVertical(float power, float rotation, OpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -418,7 +389,7 @@ public class MovementManager extends FeatureManager {
                 Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
                 Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())
         ) {
-            this.driveAuto(power, power, power, power);
+            this.driveAuto(power, 0.7f*power, 0.7f*power, 0.7f*power);
             logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
             //Waiting for motor to finish
         }

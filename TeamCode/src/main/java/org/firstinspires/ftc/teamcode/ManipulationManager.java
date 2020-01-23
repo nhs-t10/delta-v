@@ -24,6 +24,11 @@ public class ManipulationManager extends FeatureManager {
 
     public DcMotor liftMotor;
 
+    public Servo sideGrab;
+    public Servo sideLift;
+
+    public Servo foundationGrabber;
+
     private PointNd points;
     private TrigCache cache;
     private ElapsedTime timer;
@@ -39,6 +44,21 @@ public class ManipulationManager extends FeatureManager {
         this.lastRecordTime = timer.milliseconds();
     }
 
+    public ManipulationManager(Servo _grabServo, DcMotor lift, Servo _sideGrab, Servo _sideLift, Servo _foundationGrabber) {
+        this.grabServo = new ManagedServo(_grabServo);
+        this.liftMotor = lift;
+
+        this.sideGrab = _sideGrab;
+        this.sideLift = _sideLift;
+
+        this.foundationGrabber = _foundationGrabber;
+
+        this.cache = new TrigCache();
+        this.points = new PointNd(0f,0f,0f);
+        this.timer = new ElapsedTime();
+        this.lastRecordTime = timer.milliseconds();
+    }
+
     public void setLiftState(float[] powers) {
 
         this.setServoPosition(powers[1]);
@@ -46,13 +66,6 @@ public class ManipulationManager extends FeatureManager {
 
     }
 
-    /**
-     * Sets power of servo
-     * @param power power of choice
-     */
-    public void setServoPower(double power) {
-        grabServo.setServoPosition(grabServo.getServoPosition() + 0.1f * power);
-    }
 
     /**
      * Sets position of servo
@@ -62,6 +75,13 @@ public class ManipulationManager extends FeatureManager {
         grabServo.setServoPosition(position);
     }
 
+    public void setSideLiftPosition(double position) {sideLift.setPosition(position);}
+    public void setSideGrabberPosition(double position) {sideGrab.setPosition(position);}
+
+    public void setFoundationGrabberPosition(double position) {sideGrab.setPosition(position);}
+
+    public void setMotorPower(double power) { liftMotor.setPower(power); }
+
     public double getServoPosition() {return grabServo.getServoPosition();}
     public double getMotorPower() {return liftMotor.getPower();}
 
@@ -69,25 +89,4 @@ public class ManipulationManager extends FeatureManager {
         if(state) grabServo.setServoPosition(1);
         else grabServo.setServoPosition(0);
     }
-    /**
-     * Raises lift
-     */
-    public void raiseLift() {
-        liftMotor.setPower(0.16);
-    }
-
-    /**
-     * Lowers lift
-     */
-    public void lowerLift() {
-        liftMotor.setPower(-0.16);
-    }
-
-    /**
-     * Stops lift
-     */
-    public void stopLift() {
-        liftMotor.setPower(0);
-    }
-
 }

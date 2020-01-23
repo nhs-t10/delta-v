@@ -49,8 +49,8 @@ public class ColorSensor {
   int colorReturned;
   Thread updateLoopThread;
 
-  public ColorSensor(HardwareMap _hardwareMap) {
-      this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
+  public ColorSensor(NormalizedColorSensor sensor) {
+   //   this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
 
       this.weveInitiated = true; //We have initiated the code
 
@@ -58,10 +58,24 @@ public class ColorSensor {
 
       this.weShouldRead = false;
 
-      this.colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color"); // set the colorSensor to the actual hardware color sensor
+      this.colorSensor = sensor;
+              //hardwareMap.get(NormalizedColorSensor.class, "sensor"); // set the colorSensor to the actual hardware color sensor
 
      // this.runSample(); // actually execute the sampling code; start up the loop
   }
+    public ColorSensor(HardwareMap _hardwareMap) {
+          this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
+
+        this.weveInitiated = true; //We have initiated the code
+
+        this.colorReturned = 0;
+
+        this.weShouldRead = false;
+
+        this.colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor"); // set the colorSensor to the actual hardware color sensor
+
+        // this.runSample(); // actually execute the sampling code; start up the loop
+    }
 
   public void startAsyncLoop() {
       updateLoopThread = new Thread(new UpdateLoopThread());

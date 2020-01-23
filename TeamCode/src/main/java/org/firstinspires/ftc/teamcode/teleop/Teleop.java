@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.teleop.*;
 import org.firstinspires.ftc.teamcode.data.*;
@@ -18,6 +19,7 @@ public class Teleop extends OpMode {
     ColorSensor sensor;
     ManipulationManager hands;
 //    Servo sev;
+    ColorSensor sensorDown;
 
     private static boolean toggleSpeed = false;
 
@@ -27,7 +29,9 @@ public class Teleop extends OpMode {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-        sensor = new ColorSensor(hardwareMap);
+        sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
+        sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
+
 //        sev =  hardwareMap.get(Servo.class, "sev");
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),

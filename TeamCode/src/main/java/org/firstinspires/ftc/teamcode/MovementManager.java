@@ -216,6 +216,13 @@ public class MovementManager extends FeatureManager {
         this.resetEncoders(backRight);
     }
 
+    public void setAllEncoderModes(DcMotor.RunMode mode) {
+        frontLeft.setMode(mode);
+        frontRight.setMode(mode);
+        backLeft.setMode(mode);
+        backRight.setMode(mode);
+    }
+
     public void resetAllEncoderModes() {
         this.resetEncoderMode(frontLeft);
         this.resetEncoderMode(frontRight);
@@ -310,10 +317,10 @@ public class MovementManager extends FeatureManager {
 
             logger.telemetry.addData("mvm encoder drive state init", "init" + (System.currentTimeMillis() / 100000));
         }
-        else if((Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) ||
+        else if(Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) ||
                 Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) ||
                 Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) ||
-                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())) ) {
+                Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition()) ) {
             this.driveAuto(power, power, power, power);
             logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
             //Waiting for motor to finish

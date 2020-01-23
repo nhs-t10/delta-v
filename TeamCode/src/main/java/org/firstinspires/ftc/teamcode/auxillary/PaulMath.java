@@ -5,6 +5,19 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.data.*;
 
 public class PaulMath {
+
+    public static final float PID_P_COEF = 0.03f;
+
+    /**
+     * A PID controller
+     * @param current the current value of the sensor
+     * @param target the value that you want it to be
+     * @return the new value of the sensor
+     */
+    public static float pid(float current, float target) {
+        return  current + ((target - current)*PaulMath.PID_P_COEF);
+    }
+
     /**
      * Get the distance between two points
      * @param origin Point to calculate from

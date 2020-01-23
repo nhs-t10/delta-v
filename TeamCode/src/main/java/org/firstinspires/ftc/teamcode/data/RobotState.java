@@ -54,6 +54,24 @@
             this.orientation = _ori;
             this.position = _pos;
         }
+        public RobotState(int msTime, float _liftMotorPower, float _liftServoPos, MovementOrder _movement, float _speed, PointNd _ori, PointNd _pos) {
+            this.liftServoPos = _liftServoPos;
+            this.liftMotorPower = _liftMotorPower;
+
+            this.time = (float)msTime;
+
+            this.movement = _movement;
+
+            this.orientation = _ori;
+            this.position = _pos;
+        }
+
+        public RobotState(int msTime, float _liftMotorPower, float _liftServoPos) {
+            this.liftServoPos = _liftServoPos;
+            this.liftMotorPower = _liftMotorPower;
+
+            this.time = (float)msTime;   
+        }
 
         public float getTime() {return this.time; }
 
@@ -68,6 +86,13 @@
             this.brDrivePower = driver.backRight.getPower();
             this.flDrivePower = driver.frontLeft.getPower();
             this.frDrivePower = driver.frontRight.getPower();
+        }
+
+        public void setRawMotors(DcMotor frontRight, DcMotor frontLeft, DcMotor backLeft, DcMotor backRight) {
+            this.blDrivePower = backLeft.getPower();
+            this.brDrivePower = backRight.getPower();
+            this.flDrivePower = frontLeft.getPower();
+            this.frDrivePower = frontRight.getPower();
         }
 
         public static float getVersion() {

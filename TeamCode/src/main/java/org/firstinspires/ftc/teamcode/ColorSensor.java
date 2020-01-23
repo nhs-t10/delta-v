@@ -47,6 +47,7 @@ public class ColorSensor {
   HardwareMap hardwareMap;
   boolean weShouldRead, weveInitiated;
   int colorReturned;
+  Thread updateLoopThread;
 
   public ColorSensor(HardwareMap _hardwareMap) {
       this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
@@ -60,6 +61,12 @@ public class ColorSensor {
       this.colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color"); // set the colorSensor to the actual hardware color sensor
 
      // this.runSample(); // actually execute the sampling code; start up the loop
+  }
+
+  public void startAsyncLoop() {
+      updateLoopThread = new Thread(new UpdateLoopThread());
+      updateLoopThread.start();
+
   }
 
   //Switch the sample loop on/off
@@ -140,6 +147,12 @@ public boolean isSkystone() {
         //set the colorReturned variable so it can be used by the other methods
         this.colorReturned = colors.toColor();
   }
-
-  
+  public class UpdateLoopThread implements Runnable {
+      @Override
+      public void run() {
+          while(weShouldRead) {
+            runSample();
+          }
+      }
+  }
 }

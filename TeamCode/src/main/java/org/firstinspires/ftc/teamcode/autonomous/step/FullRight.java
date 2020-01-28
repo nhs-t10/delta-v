@@ -26,8 +26,12 @@ public class FullRight extends LinearOpMode {
     DcMotor bl;
     DcMotor br;
     TelemetryManager logger;
-
-
+    private ElapsedTime theRunTime = new ElapsedTime();
+    public void wait(int delay){
+        while(theRunTime.milliseconds() == 10 && opModeIsActive()){
+            // :D
+        }
+    }
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -37,11 +41,11 @@ public class FullRight extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-                
+
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift"));
-                
+
         driver.resetAllEncoders();
         driver.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -56,8 +60,7 @@ public class FullRight extends LinearOpMode {
         runtime.reset();
 
         /*1*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
-
+        wait(10);
         /*2*/
         double msStart = System.currentTimeMillis();
         driver.driveWhileVertical(0.5f, -1f, this);
@@ -72,98 +75,97 @@ public class FullRight extends LinearOpMode {
 
             //4-- stop
             driver.driveAuto(0f, 0f, 0f,0f);
-            try{Thread.sleep(10); } catch(InterruptedException e){}
+            wait(10);
             stop();
         }
 
-        
+
         //5
         //hands.
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*6*/ //TODO: Grabber code GRAB
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*7*/ //TODO: Grabber code UP INCOMPLETE
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*8*/driver.driveWhileHorizontal(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*9*/driver.driveWhileVertical(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*10*/ //TODO: Grabber code DOWN
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*11*/ //TODO: Grabber code RELEASE
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*12*/ //TODO: Grabber code UP
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*13*/driver.driveWhileVertical(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*14*/driver.driveWhileVertical(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*15*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*16*/ //TODO: Grabber code DOWN
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*17*/ //TODO: Grabber code GRAB
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*18*/ //TODO: Grabber code UP INCOMPLETE
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*19*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*20*/driver.driveWhileVertical(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*21*/driver.driveWhileVertical(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*22*/ //TODO: Grabber code DOWN
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*23*/ //TODO: Grabber code RELEASE
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*24*/ //TODO: Grabber code UP
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*25*/driver.driveWhileVertical(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*26*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*27*/ //TODO: Foundation DOWN
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*28*/driver.driveWhileHorizontal(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*29*/ //TODO: Foundation UP
-        try{Thread.sleep(10); } catch(InterruptedException e){}
-
+        wait(10);
         /*30*/driver.driveWhileVertical(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*31*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*32*/driver.driveWhileVertical(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
         /*33*/ driver.driveAuto(0f, 0f, 0f,0f);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
+        wait(10);
 
 
 

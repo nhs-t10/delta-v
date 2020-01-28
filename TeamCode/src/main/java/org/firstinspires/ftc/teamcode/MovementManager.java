@@ -404,7 +404,51 @@ public class MovementManager extends FeatureManager {
         logger.telemetry.addData("mvm encoder drive state stop", "stop" + (System.currentTimeMillis() / 100000));
         driveStarted = false;
     }
-    public void driveWhileVerticalPid(float power, float rotation, BLEncoder logger) {
+    public void driveWhileVerticalPid(float power, float rotation, OpMode logger) {
+
+        logger.telemetry.addData("mvm encoder drive state init", "0");
+        logger.telemetry.addData("mvm encoder drive state drive", "0");
+        logger.telemetry.addData("mvm encoder drive state stop", "0");
+
+        this.resetAllEncoders();
+
+        frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
+        frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
+        backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
+        backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
+
+
+
+        this.resetAllEncoderModes();
+        driveStarted = true;
+
+        logger.telemetry.addData("mvm encoder drive state init", "init" + (System.currentTimeMillis() / 100000));
+
+        while(
+                Math.abs(frontLeft.getCurrentPosition()) < Math.abs(frontLeft.getTargetPosition()) &&
+                        Math.abs(frontRight.getCurrentPosition()) < Math.abs(frontRight.getTargetPosition()) &&
+                        Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
+                        Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())
+        ) {
+            avg = (frontLeft.getCurrentPosition() +
+                    frontRight.getCurrentPosition() +
+                    backRight.getCurrentPosition() +
+                    backLeft.getCurrentPosition())/4;
+
+            frontLeft.setPower(SPEED + (avg - frontLeft.getCurrentPosition()) * P);
+            frontRight.setPower(SPEED + (avg - frontRight.getCurrentPosition()) * P);
+            backRight.setPower(SPEED + (avg - backRight.getCurrentPosition()) * P);
+            backLeft.setPower(SPEED + (avg - backLeft.getCurrentPosition()) * P);
+
+            this.driveAuto(power, power, power, power);
+            logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
+            //Waiting for motor to finish
+        }
+        driveAuto(0f, 0f, 0f, 0f);
+        logger.telemetry.addData("mvm encoder drive state stop", "stop" + (System.currentTimeMillis() / 100000));
+        driveStarted = false;
+    }
+    public void driveWhileHorozantalalPid(float power, float rotation, OpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");

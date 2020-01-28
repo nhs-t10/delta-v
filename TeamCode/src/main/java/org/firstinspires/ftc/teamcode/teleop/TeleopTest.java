@@ -1,31 +1,27 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import android.graphics.Point;
-
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.teleop.*;
 import org.firstinspires.ftc.teamcode.data.*;
-import org.firstinspires.ftc.teamcode.auxillary.*;
 import org.firstinspires.ftc.teamcode.*;
+import org.firstinspires.ftc.teamcode.auxillary.*;
+
+import org.firstinspires.ftc.teamcode.ManipulationManager;
+
 @TeleOp
 public class TeleopTest extends OpMode {
-    float[] velocity_x;
-    float[] velocity_y;
     InputManager input;
     MovementManager driver;
+    ColorSensor sensor;
     ManipulationManager hands;
-    ImuManager imu;
-    int counter;
-    PointNd location;
-
-    TelemetryManager logger;
-    //Servo sev;
+    //    Servo sev;
+    ColorSensor sensorDown;
 
     private static boolean toggleSpeed = false;
-    //private static final float speedIncrement = 0.0001
 
     public void init() {
         input = new InputManager(gamepad1);
@@ -33,50 +29,44 @@ public class TeleopTest extends OpMode {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
-        //sev = new Servo(hardwareMap.get(Servo.class, "sev"))
-        imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
-        imu.calibrate();
-//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fl"));
-//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "fr"));
-//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
-//        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
+        sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
+        sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
+
+//        sev =  hardwareMap.get(Servo.class, "sev");
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
-                hardwareMap.get(DcMotor.class, "lift")
+                hardwareMap.get(DcMotor.class, "lift"),
+                hardwareMap.get(Servo.class, "sideGrab"),
+                hardwareMap.get(Servo.class, "sideLift"),
+                hardwareMap.get(Servo.class, "foundationGrabber")
         );
-
-        logger = new TelemetryManager(this);
+        hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void loop() {
         driver.driveOmni(input.getMovementControls());
         hands.setLiftState(input.getLiftControls());
-        //Creates an array of all previous velocities and calculates the location of the robot
-        // velocity_x[counter] = (float)imu.getVelocityX();
-        // velocity_y[counter] = (float)imu.getVelocityY();
-        // location = PaulMath.location(velocity_x, velocity_y);
 
-        if (gamepad1.a) {
-//            driver.driveEncoder(2f, 2f, 2f, 2f);
+        sensor.runSample();
+
+
+        if (input.getGamepad().a) {
+            hands.setServoPosition(1);
+//            sev.setPosition(0);
+        }
+        if (input.getGamepad().b) {
+            hands.setServoPosition(0);
+//            sev.setPosition(0.25);
+        }
+        if (input.getGamepad().x) {
+            hands.setSideLiftPosition(1);
+        }
+        if (input.getGamepad().y) {
+            hands.setSideLiftPosition(0);
         }
 
-        RobotState state = input.getState();
-        state.setRawMotors(driver);
-        state.setSpeed(driver.getSpeed());
-        state.setOrientation(imu.getOrientation());
-        state.setPosition(imu.getPosition());
 
-        logger.switchTab(input.getLogTabSwitchDelta());
-        logger.update(state);
 
-        // telemetry.addData("Velocity X: " , imu.getVelocityX());
-        // telemetry.addData("Velocity Y: " , imu.getVelocityY());
-        // telemetry.addData("Velocity Z: " , imu.getVelocityZ());
-
-        /*
-        This is Austin's code for speed switching. It will probably delete itself for no reason.
-        */
-        //this particular part is instantaneous toggling between 0.2 and 0.6
         if (gamepad1.left_bumper) {
             if (driver.getSpeed() == 0.25f && !toggleSpeed) {
                 driver.setSpeed(1.0f);
@@ -85,18 +75,40 @@ public class TeleopTest extends OpMode {
             if (driver.getSpeed() == 1.0f && !toggleSpeed) {
                 driver.setSpeed(0.25f);
                 toggleSpeed = true;
+            } else {
+                toggleSpeed = false;
             }
-        } else {
-            toggleSpeed = false;
         }
+
+        telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
+        telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
+        telemetry.addData("BL Ticks:", driver.backRight.getCurrentPosition());
+        telemetry.addData("BR Ticks:", driver.backLeft.getCurrentPosition());
+        telemetry.addData("Average Ticks:", (driver.frontLeft.getCurrentPosition()+
+                driver.frontRight.getCurrentPosition()+
+                driver.backLeft.getCurrentPosition()+
+                driver.backRight.getCurrentPosition())/4);
+
+
+        telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
+        telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
+        telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
+        telemetry.addData("Skystone", sensor.isSkystone());
+        telemetry.addData("Blue/Red", sensor.isBled());
+        telemetry.addData("Color Code", sensor.getHexCode());
+
+        telemetry.addData("FL Power: ", driver.frontLeft.getPower());
+        telemetry.addData("FL Port: ", driver.frontLeft.getPortNumber());
+
+        telemetry.addData("FR Power: ", driver.frontRight.getPower());
+        telemetry.addData("FR Port: ", driver.frontRight.getPortNumber());
+
+        telemetry.addData("BL Power: ", driver.backLeft.getPower());
+        telemetry.addData("BL Port: ", driver.backLeft.getPortNumber());
+
+        telemetry.addData("BR Power: ", driver.backRight.getPower());
+        telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
     }
+
+
 }
-        //and this particular part is incremental increase and decrease in speed.
-        /*
-        if(gamepad1.left_bumper){
-            driver.setSpeed(driver.getSpeed() - speedIncrement);
-        }
-        if(gamepad1.right_bumper){
-            driver.setSpeed(driver.getSpeed() + speedIncrement);
-        }
-        */

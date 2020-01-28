@@ -35,8 +35,12 @@ public class Teleop extends OpMode {
 //        sev =  hardwareMap.get(Servo.class, "sev");
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
-                hardwareMap.get(DcMotor.class, "lift")
+                hardwareMap.get(DcMotor.class, "lift"),
+                hardwareMap.get(Servo.class, "sideGrab"),
+                hardwareMap.get(Servo.class, "sideLift"),
+                hardwareMap.get(Servo.class, "foundationGrabber")
         );
+        hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void loop() {
@@ -67,6 +71,17 @@ public class Teleop extends OpMode {
                 toggleSpeed = false;
             }
         }
+
+        telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
+        telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
+        telemetry.addData("BL Ticks:", driver.backRight.getCurrentPosition());
+        telemetry.addData("BR Ticks:", driver.backLeft.getCurrentPosition());
+        telemetry.addData("Average Ticks:", (driver.frontLeft.getCurrentPosition()+
+                                                            driver.frontRight.getCurrentPosition()+
+                                                                driver.backLeft.getCurrentPosition()+
+                                                                    driver.backRight.getCurrentPosition())/4);
+
+
         telemetry.addData("Input LX: ", input.getGamepad().left_stick_x);
         telemetry.addData("Input LY: ", input.getGamepad().left_stick_y);
         telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);

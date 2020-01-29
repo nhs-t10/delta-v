@@ -63,9 +63,13 @@ public class ManipulationManager extends FeatureManager {
 
         this.setServoPosition(powers[1]);
         liftMotor.setPower(powers[0]);
-
     }
 
+    public void setSideLiftState(float[] powers) {
+
+        this.setSideLiftPosition(powers[0]);
+        this.setSideGrabberPosition(powers[1]);
+    }
 
     /**
      * Sets position of servo
@@ -78,7 +82,11 @@ public class ManipulationManager extends FeatureManager {
     public void setSideLiftPosition(double position) {sideLift.setPosition(position);}
     public void setSideGrabberPosition(double position) {sideGrab.setPosition(position);}
 
+
     public void setFoundationGrabberPosition(double position) {foundationGrabber.setPosition(position);}
+
+    public double getSideLiftPosition() {return sideLift.getPosition();}
+    public double getSideGrabberPosition() {return sideGrab.getPosition();}
 
     public void setMotorPower(double power) { liftMotor.setPower(power); }
 

@@ -48,6 +48,9 @@ public class ColorSensor {
   boolean weShouldRead, weveInitiated;
   int colorReturned;
   Thread updateLoopThread;
+  float[] hsvValues = new float[3];
+
+  public int runCount = 0;
 
   public ColorSensor(NormalizedColorSensor sensor) {
    //   this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
@@ -56,7 +59,7 @@ public class ColorSensor {
 
       this.colorReturned = 0;
 
-      this.weShouldRead = false;
+      this.weShouldRead = true;
 
       this.colorSensor = sensor;
               //hardwareMap.get(NormalizedColorSensor.class, "sensor"); // set the colorSensor to the actual hardware color sensor
@@ -64,7 +67,7 @@ public class ColorSensor {
      // this.runSample(); // actually execute the sampling code; start up the loop
   }
     public ColorSensor(HardwareMap _hardwareMap) {
-          this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
+        this.hardwareMap = _hardwareMap; //since we don't get the hardwaremap by default-- this isn't an OpMode-- we have to set it manually
 
         this.weveInitiated = true; //We have initiated the code
 
@@ -100,42 +103,28 @@ public class ColorSensor {
 
       return Color.red(this.colorReturned) + " | "+ Color.green(this.colorReturned) + " | " + Color.blue(this.colorReturned) + " | " +Color.alpha(this.colorReturned);
   }
+
+    public float[] getHsv() {
+      return this.hsvValues;
+    }
   public boolean getReadState() {
 
       return this.weShouldRead;
   }
 public boolean isBled() {
-        if ( Color.blue(this.colorReturned) >= 90 || Color.red(this.colorReturned) >=90 )  {
-        return true;
-        //Since the condition is commented out, this will always be passed over
-    } else {
-        return false;
-
-    }
+    return this.hsvValues[1] > 0.5;
 
 }
 
 //Test if we're seeing gold
 public boolean isSkystone() {
-      //if the green value is between 0x53 (hexidecimal 53) and 0x64 (hexidecimal 64), it's gold. Otherwise, it's false.
-    if ( Color.red(this.colorReturned)<= 70) {
-        return true;
-        //Since the condition is commented out, this will always be passed over
-    } else {
-        return false;
-    }
-    
+    return this.hsvValues[0] > 0.885;
   }
 
-  //This won't be ran by any code outside of this class, so we can make it private.
-
-  //Why won't it be ran? Simple! See, by making this method private, we keep the
-  //public methods (and the wiki) nice and concise. Also, it doesn't return anything,
-  //which isn't the best for an informational class.
   public void runSample() {
 
-    // values is a reference to the hsvValues array.
-    float[] hsvValues = new float[3];
+      this.runCount++;
+
 
     // If possible, turn the light on in the beginning (it might already be on anyway,
     // we just make sure it is if we can).
@@ -148,8 +137,7 @@ public boolean isSkystone() {
         NormalizedRGBA colors = this.colorSensor.getNormalizedColors();
 
         //Convert the color to HSV
-        Color.colorToHSV(colors.toColor(), hsvValues);
-        
+        Color.colorToHSV(colors.toColor(), this.hsvValues);
 
         //normalize the colors-- make it so brightness won't affect our readout (much)
         float max = Math.max(Math.max(colors.red, colors.green), Math.max(colors.blue, colors.alpha));

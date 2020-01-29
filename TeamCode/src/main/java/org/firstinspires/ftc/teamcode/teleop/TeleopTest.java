@@ -32,6 +32,9 @@ public class TeleopTest extends OpMode {
         sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
         sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
 
+        sensor.startAsyncLoop();
+        sensorDown.startAsyncLoop();
+
 //        sev =  hardwareMap.get(Servo.class, "sev");
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
@@ -95,6 +98,8 @@ public class TeleopTest extends OpMode {
         telemetry.addData("Input RX: ", input.getGamepad().right_stick_x);
         telemetry.addData("Skystone", sensor.isSkystone());
         telemetry.addData("Blue/Red", sensor.isBled());
+        telemetry.addData("colorhsv",sensor.getHsv()[0] + "," + sensor.getHsv()[1] + "," + sensor.getHsv()[2]);
+        telemetry.addData("runcount", sensor.runCount);
         telemetry.addData("Color Code", sensor.getHexCode());
 
         telemetry.addData("FL Power: ", driver.frontLeft.getPower());

@@ -30,8 +30,12 @@
         public MovementOrder movement;
 
         public float liftMotorPower;
-
         public float liftServoPos;
+
+        public float sideLiftPos;
+        public float sideGrabPos;
+        
+        public float foundationMoverPos;
 
         public double blDrivePower;
         public double frDrivePower;
@@ -40,6 +44,25 @@
 
         public PointNd orientation;
         public PointNd position;
+
+        public RobotState (ElapsedTime tmr, float _liftMotorPower, float _liftServoPos, MovementOrder _movement, float _speed, PointNd _ori, PointNd _pos, float _sideLiftPos, float _sideGrabPos, float _foundationMoverPos) {
+            this.liftServoPos = _liftServoPos;
+            this.liftMotorPower = _liftMotorPower;
+            this.timer = tmr;
+            this.speed = _speed;
+
+            this.time = (float)timer.milliseconds();
+
+            this.movement = _movement;
+
+            this.orientation = _ori;
+            this.position = _pos;
+
+            this.sideLiftPos = _sideLiftPos;
+            this.sideGrabPos = _sideGrabPos;
+
+            this.foundationMoverPos = _foundationMoverPos;
+        }
 
         public RobotState (ElapsedTime tmr, float _liftMotorPower, float _liftServoPos, MovementOrder _movement, float _speed, PointNd _ori, PointNd _pos) {
             this.liftServoPos = _liftServoPos;

@@ -89,72 +89,9 @@ public class InputManager extends FeatureManager {
         return powers;
     }
 
-    public RobotState getState() {
-        MovementOrder move = this.getMovementControls();
-        float[] powers = this.getLiftControls();
-
-        return new RobotState(new ElapsedTime(), powers[0], powers[1], move, currentSpeed, new PointNd(), new PointNd());
-
-    }
-
-    public int getLogTabSwitchDelta() {
-
-        int delta = 0;
-        if(!gamepad.dpad_left && dpad_leftPress) delta = -1;
-        else if(!gamepad.dpad_right && dpad_rightPress) delta = 1;
-
-        dpad_leftPress = gamepad.dpad_left;
-        dpad_rightPress = gamepad.dpad_right;
-
-        return delta;
-    }
-
-    /**
-     * Change the current driving mode.
-     *
-     * @param newMode Mode to switch to.
-     */
-    public void setCurrentMode(InputMode newMode) {
-        currentMode = newMode;
-    }
-
-    /**
-     * Switch from fine-tuning to non-fine-tuning
-     */
-    public void toggleFinetune() {
-        if (currentMode == InputMode.DRIVE_FINETUNE) currentMode = InputMode.DRIVING;
-        else if (currentMode == InputMode.DRIVING) currentMode = InputMode.DRIVE_FINETUNE;
-    }
-
-    /**
-     * Test for a given button combo (A/B/X/Y)
-     *
-     * @param buttons Button letters -- e.g. "YA" for [Y] + [A]
-     * @return Whether the combo is currently active or not.
-     */
-    public boolean combo(String buttons) {
-        char[] buttonLetters = buttons.toCharArray();
-        boolean result = true;
-        for (int i = 0; i < buttonLetters.length; i++) {
-            char letter = buttonLetters[i];
-            if (letter == 'A' && !gamepad.a) result = false;
-            if (letter == 'B' && !gamepad.b) result = false;
-            if (letter == 'X' && !gamepad.x) result = false;
-            if (letter == 'Y' && !gamepad.y) result = false;
-        }
-        if (gamepad.timestamp > INPUT_DOUBLECLICK_TIME) result = false;
-
-        return result;
-    }
-
-}
-
-enum InputMode {
-    DRIVING, DRIVE_FINETUNE, DRIVE_SIDEWAYS
-}
-
-class GamepadCb implements Gamepad.GamepadCallback {
-    public void gamepadChanged(Gamepad gamepad) {
-        InputManager.lastKey = gamepad.left_stick_y + "";
-    }
-}
+    public float[] getSideLiftControls() {
+        float[] powers = new float[2];
+        
+        float liftServo = 0f;
+        boolean toggleLiftTemp = false;
+        if(gamepad.x && toggleLiftTemp == false && getSideLiftPosition() == 0) liftServo = 

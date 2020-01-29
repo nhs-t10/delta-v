@@ -26,11 +26,17 @@ public class FullRight extends LinearOpMode {
     DcMotor bl;
     DcMotor br;
     TelemetryManager logger;
-    private ElapsedTime theRunTime = new ElapsedTime();
-    public void wait(int delay){
-        while(theRunTime.milliseconds() == 10 && opModeIsActive()){
-            // :D
+    private long delayRunTime;
+
+    private boolean delaying = false;
+    public void wait(int delay) {
+        if(!delaying) {
+            delaying = true;
+            delayRunTime = System.currentTimeMillis();
         }
+        while(System.currentTimeMillis() - delayRunTime <= delay && opModeIsActive()) {}
+
+        delaying = false;
     }
     @Override
     public void runOpMode() {

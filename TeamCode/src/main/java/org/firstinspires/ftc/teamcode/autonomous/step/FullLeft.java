@@ -27,6 +27,19 @@ public class FullLeft extends LinearOpMode {
     TelemetryManager logger;
 
 
+    private long delayRunTime;
+
+    private boolean delaying = false;
+    public void wait(int delay) {
+        if(!delaying) {
+            delaying = true;
+            delayRunTime = System.currentTimeMillis();
+        }
+        while(System.currentTimeMillis() - delayRunTime <= delay && opModeIsActive()) {}
+
+        delaying = false;
+    }
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");

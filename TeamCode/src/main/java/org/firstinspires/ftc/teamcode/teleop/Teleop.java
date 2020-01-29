@@ -49,6 +49,7 @@ public class Teleop extends OpMode {
 
         sensor.runSample();
 
+        
 
         if (input.getGamepad().a) {
 //            manip.setServoPosition(1);

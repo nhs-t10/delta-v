@@ -41,6 +41,14 @@ public class Teleop extends OpMode {
                 hardwareMap.get(Servo.class, "foundationGrabber")
         );
         hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        driver.resetAllEncoders();
+        driver.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+
     }
 
     public void loop() {

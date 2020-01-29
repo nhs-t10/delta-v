@@ -78,7 +78,7 @@ public class ManipulationManager extends FeatureManager {
     public void setSideLiftPosition(double position) {sideLift.setPosition(position);}
     public void setSideGrabberPosition(double position) {sideGrab.setPosition(position);}
 
-    public void setFoundationGrabberPosition(double position) {sideGrab.setPosition(position);}
+    public void setFoundationGrabberPosition(double position) {foundationGrabber.setPosition(position);}
 
     public void setMotorPower(double power) { liftMotor.setPower(power); }
 

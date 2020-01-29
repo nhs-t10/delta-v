@@ -203,7 +203,7 @@ public class MovementManager extends FeatureManager {
 
     public void resetEncoders(DcMotor motor) {
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
+}
     public void resetEncoderMode(DcMotor motor) {
 //        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -448,7 +448,7 @@ public class MovementManager extends FeatureManager {
         logger.telemetry.addData("mvm encoder drive state stop", "stop" + (System.currentTimeMillis() / 100000));
         driveStarted = false;
     }
-    public void driveWhileHorozantalalPid(float power, float rotation, OpMode logger) {
+    public void driveWhileHorizontalPid(float power, float rotation, OpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -457,9 +457,9 @@ public class MovementManager extends FeatureManager {
         this.resetAllEncoders();
 
         frontLeft.setTargetPosition((int) rotation * TICK_PER_ROT);
-        frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
+        frontRight.setTargetPosition((int) rotation * TICK_PER_ROT);
         backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
-        backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
+        backLeftSetTargetPosition(-(int) rotation * TICK_PER_ROT);
 
 
 

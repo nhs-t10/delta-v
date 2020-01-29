@@ -52,13 +52,13 @@ public class BLEncoder extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-            driver.driveWhileVertical(0.5f, 1f, this);
+//            driver.driveWhileVertical(0.5f, 1f, this);
+//        try{Thread.sleep(10); } catch(InterruptedException e){}
+            driver.driveWhileHorizontalPid(0.5f, -2.44f, this);
         try{Thread.sleep(10); } catch(InterruptedException e){}
-            driver.driveWhileHorizontal(0.5f, 1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
-            driver.driveWhileVertical(0.5f, -1f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
-            driver.driveWhileHorizontal(0.5f, -1f, this);
+//            driver.driveWhileVertical(0.5f, -1f, this);
+//        try{Thread.sleep(10); } catch(InterruptedException e){}
+//            driver.driveWhileHorizontal(0.5f, -1f, this);
 
 //            telemetry.addData("FL Direction: ", driver.frontLeft.getDirection());
 //            telemetry.addData("FR Direction: ", driver.frontRight.getDirection());

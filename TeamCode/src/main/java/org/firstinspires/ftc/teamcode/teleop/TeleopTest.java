@@ -20,6 +20,10 @@ public class TeleopTest extends OpMode {
     ManipulationManager hands;
     //    Servo sev;
     ColorSensor sensorDown;
+    boolean sideGrab = false;
+    boolean foundationGrabber = false;
+    boolean incompleteLift = false;
+    boolean completeLift = false;
 
     private static boolean toggleSpeed = false;
 
@@ -41,28 +45,60 @@ public class TeleopTest extends OpMode {
                 hardwareMap.get(Servo.class, "foundationGrabber")
         );
         hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        driver.resetAllEncoders();
+        driver.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driver.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
+
     }
 
     public void loop() {
         driver.driveOmni(input.getMovementControls());
-        hands.setLiftState(input.getLiftControls());
+//        hands.setLiftState(input.getLiftControls());
 
         sensor.runSample();
 
 
         if (input.getGamepad().a) {
-            hands.setServoPosition(1);
-//            sev.setPosition(0);
+            if(!sideGrab) {
+                hands.setSideGrabberPosition(1);
+                sideGrab = true;
+            } else {
+                hands.setSideGrabberPosition(0);
+                sideGrab = false;
+            }
         }
         if (input.getGamepad().b) {
-            hands.setServoPosition(0);
-//            sev.setPosition(0.25);
+            if(!foundationGrabber) {
+                hands.setFoundationGrabberPosition(1);
+                sideGrab = true;
+            } else {
+                hands.setFoundationGrabberPosition(0);
+                sideGrab = false;
+            }
         }
+
         if (input.getGamepad().x) {
-            hands.setSideLiftPosition(1);
+            if(!incompleteLift){
+                hands.setSideLiftPosition(0.8);
+                incompleteLift = true;
+            } else {
+                hands.setSideLiftPosition(0);
+                incompleteLift = false;
+            }
         }
+
         if (input.getGamepad().y) {
-            hands.setSideLiftPosition(0);
+            if(!completeLift) {
+                hands.setSideLiftPosition(1);
+                completeLift = true;
+            } else {
+                hands.setSideLiftPosition(0);
+                completeLift = false;
+            }
         }
 
 
@@ -78,6 +114,16 @@ public class TeleopTest extends OpMode {
             } else {
                 toggleSpeed = false;
             }
+        }
+
+        if (input.getGamepad().dpad_up) {
+            driver.driveOmni(0f,-0.5f, 0f);
+        } else if (input.getGamepad().dpad_down){
+            driver.driveOmni(0f,0.5f, 0f);
+        } else if (input.getGamepad().dpad_right) {
+            driver.driveOmni(0.5f, 0f, 0f);
+        } else if (input.getGamepad().dpad_left) {
+            driver.driveOmni(-0.5f, 0f, 0f);
         }
 
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());

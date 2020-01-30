@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ColorSensor;
 import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
@@ -26,7 +27,17 @@ public class BLEncoder extends LinearOpMode {
     DcMotor br;
     TelemetryManager logger;
 
+    long delayRunTime;
+    private boolean delaying = false;
+    public void wait(int delay, LinearOpMode trash) {
+        if(!delaying) {
+            delaying = true;
+            delayRunTime = System.currentTimeMillis();
+        }
+        while(System.currentTimeMillis() - delayRunTime >= delay && opModeIsActive()) {}
 
+        delaying = false;
+    }
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -52,13 +63,17 @@ public class BLEncoder extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-//            driver.driveWhileVertical(0.5f, 1f, this);
-//        try{Thread.sleep(10); } catch(InterruptedException e){}
-            driver.driveWhileHorizontalPid(0.5f, -2.44f, this);
-        try{Thread.sleep(10); } catch(InterruptedException e){}
-//            driver.driveWhileVertical(0.5f, -1f, this);
-//        try{Thread.sleep(10); } catch(InterruptedException e){}
-//            driver.driveWhileHorizontal(0.5f, -1f, this);
+                /*1*/ //Forward
+                driver.encoderDrive(0.1f, 1f, -1f, 1f, -1f, 1000, this);
+                wait(30, this);
+                /*2*/ //Right
+                driver.encoderDrive(0.1f, 1f, 1f, -1f, -1f, 1000, this);
+                wait(30, this);
+                /*3*/ //Backward
+                driver.encoderDrive(0.1f, -1f, 1f, -1f, 1f, 1000, this);
+                wait(30, this);
+                /*4*/ //Left
+                driver.encoderDrive(0.1f, -1f, -1f, 1f, 1f, 1000, this);
 
 //            telemetry.addData("FL Direction: ", driver.frontLeft.getDirection());
 //            telemetry.addData("FR Direction: ", driver.frontRight.getDirection());

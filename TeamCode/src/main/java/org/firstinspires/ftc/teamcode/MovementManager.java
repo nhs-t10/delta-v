@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 
@@ -247,9 +249,7 @@ public class MovementManager extends FeatureManager {
         backLeft.setTargetPosition(position);
     }
 
-    public boolean driveVertical(float power, float rotation) {return false;}
-
-    public boolean driveVertical(float power, float rotation, BLEncoder logger) {
+    public boolean driveVertical(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -261,10 +261,6 @@ public class MovementManager extends FeatureManager {
             frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
             backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
             backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
-            frontLeft.setDirection(DcMotor.Direction.FORWARD);
-            frontRight.setDirection(DcMotor.Direction.REVERSE);
-            backLeft.setDirection(DcMotor.Direction.REVERSE);
-            backRight.setDirection(DcMotor.Direction.FORWARD);
 
 
             this.resetAllEncoderModes();
@@ -334,7 +330,7 @@ public class MovementManager extends FeatureManager {
         return true;
     }
 
-    public void driveWhileHorizontal(float power, float rotation, OpMode logger) {
+    public void driveWhileHorizontal(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -360,6 +356,7 @@ public class MovementManager extends FeatureManager {
                 Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
                 Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())
         ) {
+            logger.idle();
             this.driveAuto(power, power, power, power);
             iters++;
            // logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
@@ -370,7 +367,7 @@ public class MovementManager extends FeatureManager {
         driveStarted = false;
     }
 
-    public void driveWhileVertical(float power, float rotation, OpMode logger) {
+    public void driveWhileVertical(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -396,6 +393,7 @@ public class MovementManager extends FeatureManager {
                 Math.abs(backRight.getCurrentPosition()) < Math.abs(backRight.getTargetPosition()) &&
                 Math.abs(backLeft.getCurrentPosition()) < Math.abs(backLeft.getTargetPosition())
         ) {
+            logger.idle();
             this.driveAuto(power, 0.7f*power, 0.7f*power, 0.7f*power);
             logger.telemetry.addData("mvm encoder drive state drive", "drive" + (System.currentTimeMillis() / 100000));
             //Waiting for motor to finish
@@ -495,6 +493,81 @@ public class MovementManager extends FeatureManager {
 
     public void resetBool(){
         driveStarted = false;
+    }
+
+    ElapsedTime moveTimer;
+
+    public void encoderDrive(double speed,
+                             double fl, double fr, double bl, double br,
+                             double timeoutS, LinearOpMode opMode) {
+        int newFrontLeftTarget;
+        int newFrontRightTarget;
+        int newBackRightTarget;
+        int newBackLeftTarget;
+
+        // Ensure that the opmode is still active
+        if (opMode.opModeIsActive()) {
+
+
+
+            // Determine new target position, and pass to motor controller
+            newFrontLeftTarget = frontLeft.getCurrentPosition() + (int)(fl * TICK_PER_ROT);
+            newFrontRightTarget = frontRight.getCurrentPosition() + (int)(fr * TICK_PER_ROT);
+            newBackLeftTarget = backRight.getCurrentPosition() + (int)(bl * TICK_PER_ROT);
+            newBackRightTarget = backLeft.getCurrentPosition() + (int)(br * TICK_PER_ROT);
+            frontLeft.setTargetPosition(newFrontLeftTarget);
+            frontRight.setTargetPosition(newFrontRightTarget);
+            backLeft.setTargetPosition(newBackRightTarget);
+            backRight.setTargetPosition(newBackLeftTarget);
+
+            // Turn On RUN_TO_POSITION
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            // reset the timeout time and start motion.
+            moveTimer = new ElapsedTime();
+
+            frontLeft.setPower(Math.abs(speed));
+            frontRight.setPower(Math.abs(speed));
+            backLeft.setPower(Math.abs(speed));
+            backRight.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opMode.opModeIsActive() &&
+                    (moveTimer.milliseconds() < timeoutS) &&
+                    (frontLeft.isBusy() && frontRight.isBusy() && backRight.isBusy() && backLeft.isBusy())) {
+
+                // Display it for the driver.
+                opMode.telemetry.addData("Path1",  "Running to %7d :%7d", newFrontLeftTarget,  newFrontRightTarget, newBackLeftTarget, newBackRightTarget);
+                opMode.telemetry.addData("Path2",  "Running at %7d :%7d",
+                        frontLeft.getCurrentPosition(),
+                        frontRight.getCurrentPosition(),
+                        backLeft.getCurrentPosition(),
+                        backRight.getCurrentPosition());
+                opMode.telemetry.update();
+            }
+
+            // Stop all motion;
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+            // Turn off RUN_TO_POSITION
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+            //  sleep(250);   // optional pause after each move
+        }
     }
 
     public void setSpeed(float speed){

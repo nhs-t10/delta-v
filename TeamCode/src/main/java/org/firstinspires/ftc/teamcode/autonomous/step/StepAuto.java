@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomous.step;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -51,6 +52,19 @@ public class StepAuto extends OpMode {
             numberCalled = 0;
             currentStep = getNext();
         }
+    }
+
+    long delayRunTime;
+    boolean delaying;
+    public void wait(int delay, LinearOpMode opmode) {
+
+        if(!delaying) {
+            delaying = true;
+            delayRunTime = System.currentTimeMillis();
+        }
+        while(System.currentTimeMillis() - delayRunTime <= delay && opmode.opModeIsActive()) {}
+
+        delaying = false;
     }
 }
 

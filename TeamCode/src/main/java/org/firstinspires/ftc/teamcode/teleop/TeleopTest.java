@@ -66,10 +66,10 @@ public class TeleopTest extends OpMode {
 
 
         if (input.getGamepad().a) {
-            if(!sideGrab) {
-                hands.setSideGrabberPosition(1);
-                sideGrab = true;
-            } else {
+            sideGrab = true;
+        }
+
+        /*            } else {
                 hands.setSideGrabberPosition(0);
                 sideGrab = false;
             }
@@ -78,10 +78,15 @@ public class TeleopTest extends OpMode {
             if(!foundationGrabber) {
                 hands.setFoundationGrabberPosition(1);
                 sideGrab = true;
-            } else {
-                hands.setFoundationGrabberPosition(0);
-                sideGrab = false;
-            }
+            }   sideGrab = false;
+          else {
+                toggleSpeed = false;
+        }
+        */
+
+        if (gamepad1.left_bumper && driver.getSpeed() < 1) driver.setSpeed(driver.getSpeed() + 0.001f);
+        else if (gamepad1.left_bumper && driver.getSpeed() > 0.25f) {
+            driver.setSpeed(driver.getSpeed() - 0.001f);
         }
 
         if (input.getGamepad().x) {
@@ -113,9 +118,7 @@ public class TeleopTest extends OpMode {
             }
             if (driver.getSpeed() == 1.0f && !toggleSpeed) {
                 driver.setSpeed(0.25f);
-                toggleSpeed = true;
-            } else {
-                toggleSpeed = false;
+                     toggleSpeed = false;
             }
         }
 

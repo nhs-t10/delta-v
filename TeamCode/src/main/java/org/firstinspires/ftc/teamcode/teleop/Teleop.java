@@ -47,8 +47,6 @@ public class Teleop extends OpMode {
         driver.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         driver.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
-
     }
 
     public void loop() {
@@ -68,6 +66,8 @@ public class Teleop extends OpMode {
 //            sev.setPosition(0.25);
         }
 
+        //this is the speed toggle code
+        /*
         if (gamepad1.left_bumper) {
             if (driver.getSpeed() == 0.25f && !toggleSpeed) {
                 driver.setSpeed(1.0f);
@@ -80,6 +80,15 @@ public class Teleop extends OpMode {
                 toggleSpeed = false;
             }
         }
+        */
+
+        //this is the speed single pushbutton code
+        if (gamepad1.left_bumper) {
+            driver.setSpeed(1.0f);
+        } else {
+            driver.setSpeed(0.25f);
+        }
+
 
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
         telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
@@ -110,6 +119,4 @@ public class Teleop extends OpMode {
         telemetry.addData("BR Power: ", driver.backRight.getPower());
         telemetry.addData("BR Port: ", driver.backRight.getPortNumber());
     }
-
-
 }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -63,8 +64,8 @@ public class FullRight extends LinearOpMode {
 
         hands.sideLift.setPosition(0);
 
-        sensor = new ColorSensor(hardwareMap);
-        sensorDown = new ColorSensor(hardwareMap);
+        sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
+        sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -74,7 +75,7 @@ public class FullRight extends LinearOpMode {
         wait(10);
         /*2*/
         double msStart = System.currentTimeMillis();
-        driver.driveWhileVertical(0.5f, -1f, this);
+        driver.driveVertical(0.5f, -1f);
         while(!(sensor.isSkystone() || (System.currentTimeMillis() - msStart) > 1000)) {}
         driver.resetAllEncoders();
         //branching fallback path-- go forward until we see the line
@@ -100,7 +101,7 @@ public class FullRight extends LinearOpMode {
         wait(10);
 
         /*7*/ //TODO: Grabber code UP INCOMPLETE
-        hands.setSideLiftPosition(0.8);
+        hands.setSideLiftPosition(0.7);
         wait(10);
 
         /*8*/driver.driveWhileHorizontal(0.5f, -1f, this);
@@ -139,7 +140,7 @@ public class FullRight extends LinearOpMode {
         wait(10);
 
         /*18*/ //TODO: Grabber code UP INCOMPLETE
-        hands.setSideLiftPosition(0.8);
+        hands.setSideLiftPosition(0.7);
         wait(10);
 
         /*19*/driver.driveWhileHorizontal(0.5f, 1f, this);

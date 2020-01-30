@@ -62,7 +62,9 @@ public class FullRight extends LinearOpMode {
         driver.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        hands.sideLift.setPosition(0);
+        hands.setSideLiftPosition(0);
+        hands.setSideGrabberPosition(0);
+        hands.setFoundationGrabberPosition(0);
 
         sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
         sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
@@ -71,7 +73,7 @@ public class FullRight extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        /*1*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*1*/driver.driveWhileHorizontalPid(0.5f, 1f, this);
         wait(10);
         /*2*/
         double msStart = System.currentTimeMillis();
@@ -104,10 +106,10 @@ public class FullRight extends LinearOpMode {
         hands.setSideLiftPosition(0.7);
         wait(10);
 
-        /*8*/driver.driveWhileHorizontal(0.5f, -1f, this);
+        /*8*/driver.driveWhileHorizontalPid(0.5f, -1f, this);
         wait(10);
 
-        /*9*/driver.driveWhileVertical(0.5f, 1f, this);
+        /*9*/driver.driveWhileVerticalPid(0.5f, 1f, this);
         wait(10);
 
         /*10*/ //TODO: Grabber code DOWN
@@ -122,13 +124,13 @@ public class FullRight extends LinearOpMode {
         hands.setSideLiftPosition(0);
         wait(10);
 
-        /*13*/driver.driveWhileVertical(0.5f, -1f, this);
+        /*13*/driver.driveWhileVerticalPid(0.5f, -1f, this);
         wait(10);
 
-        /*14*/driver.driveWhileVertical(0.5f, -1f, this);
+        /*14*/driver.driveWhileVerticalPid(0.5f, -1f, this);
         wait(10);
 
-        /*15*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*15*/driver.driveWhileHorizontalPid(0.5f, 1f, this);
         wait(10);
 
         /*16*/ //TODO: Grabber code DOWN
@@ -143,13 +145,13 @@ public class FullRight extends LinearOpMode {
         hands.setSideLiftPosition(0.7);
         wait(10);
 
-        /*19*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*19*/driver.driveWhileHorizontalPid(0.5f, 1f, this);
         wait(10);
 
-        /*20*/driver.driveWhileVertical(0.5f, 1f, this);
+        /*20*/driver.driveWhileVerticalPid(0.5f, 1f, this);
         wait(10);
 
-        /*21*/driver.driveWhileVertical(0.5f, 1f, this);
+        /*21*/driver.driveWhileVerticalPid(0.5f, 1f, this);
         wait(10);
 
         /*22*/ //TODO: Grabber code DOWN
@@ -164,30 +166,34 @@ public class FullRight extends LinearOpMode {
         hands.setSideLiftPosition(0);
         wait(10);
 
-        /*25*/driver.driveWhileVertical(0.5f, 1f, this);
+        /*25*/driver.driveWhileVerticalPid(0.5f, 1f, this);
         wait(10);
 
-        /*26*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*26*/driver.driveWhileHorizontalPid(0.5f, 1f, this);
         wait(10);
 
-        /*27*/ //TODO: Foundation DOWN
+        /*26.5*/ //TODO: Foundation UP
         hands.setFoundationGrabberPosition(1);
         wait(10);
 
-        /*28*/driver.driveWhileHorizontal(0.5f, -1f, this);
-        wait(10);
-
-        /*29*/ //TODO: Foundation UP
+        /*27*/ //TODO: Foundation DOWN
         hands.setFoundationGrabberPosition(0);
         wait(10);
 
-        /*30*/driver.driveWhileVertical(0.5f, -1f, this);
+        /*28*/driver.driveWhileHorizontalPid(0.5f, -1f, this);
         wait(10);
 
-        /*31*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*29*/ //TODO: Foundation UP
+        hands.setFoundationGrabberPosition(1);
         wait(10);
 
-        /*32*/driver.driveWhileVertical(0.5f, -1f, this);
+        /*30*/driver.driveWhileVerticalPid(0.5f, -1f, this);
+        wait(10);
+
+        /*31*/driver.driveWhileHorizontalPid(0.5f, 1f, this);
+        wait(10);
+
+        /*32*/driver.driveWhileVerticalPid(0.5f, -1f, this);
         wait(10);
 
         /*33*/ driver.driveAuto(0f, 0f, 0f,0f);

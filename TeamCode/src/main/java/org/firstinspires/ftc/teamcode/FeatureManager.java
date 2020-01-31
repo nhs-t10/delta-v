@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import java.util.HashMap;
+
 public class FeatureManager {
     public final static float SPEED = 0.6f;
     public final static int TICK_PER_ROT = 1680;
@@ -23,5 +25,21 @@ public class FeatureManager {
     public boolean isInputType;
     public FeatureManager() {
     
+    }
+    public static class ControlMap {
+        public final static String MOVE_HORIZONTAL = "left_stick_x";
+        public static final String MOVE_VERTICAL = "left_stick_y";
+        public static final String MOVE_ROTATIONAL = "right_stick_x";
+
+        public static final String CLAMP_MAIN = "a";
+        public static final String CLAMP_SIDE = "x";
+
+        public static final String LIFT_MAIN = "b";
+        public static final String LIFT_SIDE = "y";
+
+        public static final String FOUNDATION_MOVER = "left_bumper";
+
+        public static final String TAB_POSITIVE = "right_bumper";
+        public static final String TAB_NEGATIVE = "";
     }
 }

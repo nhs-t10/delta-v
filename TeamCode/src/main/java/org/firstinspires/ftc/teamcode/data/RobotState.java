@@ -191,7 +191,16 @@
         }
 
         public String toString() {
-            return RobotState.version + "," + movement.toString() + "," + liftMotorPower + "," + liftServoPos + "," + speed + "," + orientation.toString() + "," + position.toString();
+            return RobotState.version + "," +
+                    movement.toString() + "," +
+                    liftMotorPower + "," +
+                    liftServoPos + "," +
+                    speed + "," +
+                    orientation.toString() + "," +
+                    position.toString() + "," +
+                    sideLiftPos + "," +
+                    sideGrabPos + "," +
+                    foundationMoverPos;
         }
 
         public static RobotState fromString(String str) {

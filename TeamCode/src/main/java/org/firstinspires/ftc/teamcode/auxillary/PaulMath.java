@@ -63,7 +63,7 @@ public class PaulMath {
         StringBuilder res = new StringBuilder();
         for(int i = 0; i < arr.length; i++) {
             res.append(arr[i].toString());
-            if(i + 1 <= arr.length) res.append(delim);
+            if(i + 1 < arr.length) res.append(delim);
         }
 
         return res.toString();

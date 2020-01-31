@@ -47,6 +47,9 @@ public class TeleopTest extends OpMode {
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "bl"));
 //        driver.resetEncoders(hardwareMap.get(DcMotor.class, "br"));
 
+        sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
+        sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
+
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
                 hardwareMap.get(DcMotor.class, "lift"),
@@ -61,7 +64,7 @@ public class TeleopTest extends OpMode {
         driver.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         driver.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-
+        logger = new TelemetryManager(this);
 
     }
 
@@ -70,6 +73,7 @@ public class TeleopTest extends OpMode {
 //        hands.setLiftState(input.getLiftControls());
 
         sensor.runSample();
+        sensorDown.runSample();
 
         if (input.getGamepad().a) {
             sideGrab = true;
@@ -166,6 +170,9 @@ public class TeleopTest extends OpMode {
         RobotState state = input.getState();
 
         logger.addData("tickFl", driver.frontLeft.getCurrentPosition()+ "");
+        logger.addData("tickFr", driver.frontRight.getCurrentPosition()+ "");
+        logger.addData("tickBl", driver.backLeft.getCurrentPosition()+ "");
+        logger.addData("tickBr", driver.backRight.getCurrentPosition()+ "");
 
         logger.switchTab(input.getLogTabSwitchDelta());
 
@@ -173,10 +180,10 @@ public class TeleopTest extends OpMode {
         logger.addData("FR Ticks:", driver.frontRight.getCurrentPosition() + "");
         logger.addData("BL Ticks:", driver.backRight.getCurrentPosition() + "");
         logger.addData("BR Ticks:", driver.backLeft.getCurrentPosition() + "");
-        logger.addData("Average Ticks:", ((driver.frontLeft.getCurrentPosition()+
-                driver.frontRight.getCurrentPosition()+
-                driver.backLeft.getCurrentPosition()+
-                driver.backRight.getCurrentPosition())/4) + "");
+        logger.addData("Average Ticks:", ((Math.abs(driver.frontLeft.getCurrentPosition())+
+                Math.abs(driver.frontRight.getCurrentPosition())+
+                Math.abs(driver.backLeft.getCurrentPosition())+
+                Math.abs(driver.backRight.getCurrentPosition()))/4) + "");
 
 
         logger.addData("Input LX: ", input.getGamepad().left_stick_x + "");
@@ -185,6 +192,7 @@ public class TeleopTest extends OpMode {
         logger.addData("Skystone", sensor.isSkystone() + "");
         logger.addData("Blue/Red", sensor.isBled() + "");
         logger.addData("colorhsv",sensor.getHsv()[0] + "," + sensor.getHsv()[1] + "," + sensor.getHsv()[2]);
+        logger.addData("colorhsv_down",sensorDown.getHsv()[0] + "," + sensorDown.getHsv()[1] + "," + sensorDown.getHsv()[2]);
         logger.addData("runcount", sensor.runCount + "");
         logger.addData("Color Code", sensor.getHexCode());
 

@@ -25,19 +25,27 @@ public class ProfessionalMime {
     int currentMimeIndex = 0;
     boolean firstLoopRun = true;
 
+    boolean doAbort;
+
     public ProfessionalMime(String fileName, MovementManager _driver, ManipulationManager _hands, Runnable _iterationCallback, Runnable _endCallback) {
         instructions = (new FileSaver(fileName)).readLines();
         this.driver = _driver;
         this.hands = _hands;
 
+        this.doAbort = false;
+
         iterationCallback = _iterationCallback;
         endCallback = _endCallback;
+    }
+
+    public void setAbort(boolean abort) {
+        this.doAbort = abort;
     }
 
     public void start() {
         timer = new ElapsedTime();
 
-        while(currentMimeIndex < instructions.size()) {
+        while(currentMimeIndex < instructions.size() && !doAbort) {
             currentMimeIndex = (int) Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
             state = RobotState.fromString(instructions.get(currentMimeIndex));

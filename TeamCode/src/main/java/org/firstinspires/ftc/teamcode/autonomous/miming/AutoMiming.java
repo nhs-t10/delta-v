@@ -33,7 +33,11 @@ public class AutoMiming extends OpMode {
 
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
-                hardwareMap.get(DcMotor.class, "lift"));
+                hardwareMap.get(DcMotor.class, "lift"),
+                hardwareMap.get(Servo.class, "sideGrab"),
+                hardwareMap.get(Servo.class, "sideLift"),
+                hardwareMap.get(Servo.class, "foundationGrabber")
+        );
     }
     public void loop() {
 
@@ -43,6 +47,8 @@ public class AutoMiming extends OpMode {
             currentMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
             if(currentMimeIndex < instructions.size()) {
+                for(int i = 0; i < 5; i++) if(instructions.get(currentMimeIndex).isEmpty()) currentMimeIndex++;
+
                 state = RobotState.fromString(instructions.get(currentMimeIndex));
 
                 driver.driveOmni(state.movement);

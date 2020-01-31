@@ -27,6 +27,7 @@ public class InputManager extends FeatureManager {
     public boolean dpad_leftBumper = false;
 
     public HashMap<String,Float> lastPresses = new HashMap<>();
+    public HashMap<String,Boolean> togglePresses = new HashMap<>();
 
     public InputManager(Gamepad _gamepad) {
         this.gamepad = _gamepad;
@@ -150,11 +151,25 @@ public class InputManager extends FeatureManager {
 
     public boolean press(String button) {
         boolean result = false;
-        if(lastPresses.get(button) > 0 && resolveControl(button) == 0) result = true;
+        if((lastPresses.containsKey(button) ? lastPresses.get(button) : 0f) > 0 && resolveControl(button) == 0) result = true;
 
         lastPresses.put(button, resolveControl(button));
 
         return result;
+    }
+
+    public float toggleButton(String button, float res1, float res2) {
+        if(!togglePresses.containsKey(button)) togglePresses.put(button, false);
+
+        if((lastPresses.containsKey(button) ? lastPresses.get(button) : 0f) > 0 && resolveControl(button) == 0) {
+            boolean lastVal = togglePresses.get(button);
+
+            togglePresses.put(button, !lastVal);
+        }
+
+        lastPresses.put(button, resolveControl(button));
+
+        return togglePresses.get(button)?res1:res2;
     }
 
     /**

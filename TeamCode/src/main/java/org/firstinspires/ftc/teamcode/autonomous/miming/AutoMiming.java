@@ -49,6 +49,11 @@ public class AutoMiming extends OpMode {
 
                 float[] liftPowers = new float[] {state.liftMotorPower, state.liftServoPos};
                 hands.setLiftState(liftPowers);
+
+                hands.setSideGrabberPosition(state.sideGrabPos);
+                hands.setSideLiftPosition(state.sideLiftPos);
+
+                hands.setFoundationGrabberPosition(state.foundationMoverPos);
                 
                 telemetry.addData("latestThing", instructions.get(currentMimeIndex));
             }

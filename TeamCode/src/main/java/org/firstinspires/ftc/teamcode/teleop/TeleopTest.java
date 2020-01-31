@@ -33,6 +33,9 @@ public class TeleopTest extends OpMode {
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),
                 hardwareMap.get(DcMotor.class, "br"));
+
+        //driver.setAllEncoderModes(DcMotor.RunMode.RUN_USING_ENCODER);
+
         //sev = new Servo(hardwareMap.get(Servo.class, "sev"))
         imu = new ImuManager(hardwareMap.get(BNO055IMU.class, "imu"));
         imu.calibrate();
@@ -66,6 +69,8 @@ public class TeleopTest extends OpMode {
         state.setOrientation(imu.getOrientation());
         state.setPosition(imu.getPosition());
 
+        logger.addData("tickFl", driver.frontLeft.getCurrentPosition()+ "");
+
         logger.switchTab(input.getLogTabSwitchDelta());
         logger.update(state);
 
@@ -88,6 +93,23 @@ public class TeleopTest extends OpMode {
             }
         } else {
             toggleSpeed = false;
+        }
+
+        if(gamepad1.dpad_right) {
+            MovementOrder left = MovementOrder.HVR(1f, 0f, 0f);
+            driver.driveOmni(left);
+        }
+        if(gamepad1.dpad_left) {
+            MovementOrder right = MovementOrder.HVR(-1f, 0f, 0f);
+            driver.driveOmni(right);
+        }
+        if(gamepad1.dpad_up) {
+            MovementOrder left = MovementOrder.HVR(0f, 1f, 0f);
+            driver.driveOmni(left);
+        }
+        if(gamepad1.dpad_down) {
+            MovementOrder right = MovementOrder.HVR(0f, -1f, 0f);
+            driver.driveOmni(right);
         }
     }
 }

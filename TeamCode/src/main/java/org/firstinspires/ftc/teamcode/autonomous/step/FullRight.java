@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -26,12 +27,21 @@ public class FullRight extends LinearOpMode {
     DcMotor bl;
     DcMotor br;
     TelemetryManager logger;
-    private ElapsedTime theRunTime = new ElapsedTime();
-    public void wait(int delay){
-        while(theRunTime.milliseconds() == 10 && opModeIsActive()){
-            // :D
+    private long delayRunTime;
+
+    private ElapsedTime timer;
+
+    private boolean delaying = false;
+
+    public void wait(int delay) {
+        if(!delaying) {
+            timer = new ElapsedTime();
         }
+        while(timer.milliseconds() <= delay && opModeIsActive()) {}
+
+        delaying = false;
     }
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -44,134 +54,130 @@ public class FullRight extends LinearOpMode {
 
         hands = new ManipulationManager(
                 hardwareMap.get(Servo.class, "sev"),
-                hardwareMap.get(DcMotor.class, "lift"));
-
+                hardwareMap.get(DcMotor.class, "lift"),
+                hardwareMap.get(Servo.class, "sideGrab"),
+                hardwareMap.get(Servo.class, "sideLift"),
+                hardwareMap.get(Servo.class, "foundationGrabber")
+        );
         driver.resetAllEncoders();
         driver.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        sensor = new ColorSensor(hardwareMap);
-        sensorDown = new ColorSensor(hardwareMap);
+        hands.sideLift.setPosition(0);
+
+        sensor = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensor"));
+        sensorDown = new ColorSensor(hardwareMap.get(NormalizedColorSensor.class, "sensorDown"));
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        runtime.reset();
 
-        /*1*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        //Step 1: Drive sideways to the row of blocks
+        driver.driveWhileHorizontal(0.5f, 1f, this);
         wait(10);
-        /*2*/
-        double msStart = System.currentTimeMillis();
-        driver.driveWhileVertical(0.5f, -1f, this);
-        while(!(sensor.isSkystone() || (System.currentTimeMillis() - msStart) > 1000)) {}
 
+        //Step 2: scan along the line for a SkyStone(tm)
+        double msStart = System.currentTimeMillis();
+        driver.driveVertical(0.5f, -1f);
+        while(!(sensor.isSkystone() || (System.currentTimeMillis() - msStart) > 1000) && opModeIsActive()) {}
+        driver.resetAllEncoders();
         //branching fallback path-- go forward until we see the line
         if(!sensor.isSkystone()) {
-            //3-- go forward until we detect the line
+            //Step 3 (fallback) go forward until we detect the line
             msStart = System.currentTimeMillis();
             driver.driveRaw(-1, 1, 1, -1);
-            while(!(sensor.isBled() || (System.currentTimeMillis() - msStart) > 1000)) {}
+            while(!(sensorDown.isBled() || (System.currentTimeMillis() - msStart) > 1000) && opModeIsActive()) {}
 
-            //4-- stop
+            //Step 4 (fallback stop)
             driver.driveAuto(0f, 0f, 0f,0f);
             wait(10);
             stop();
         }
 
 
-        //5
-        //hands.
+        /*5*/ //TODO: Grabber code DOWN
+        hands.setSideLiftPosition(1);
         wait(10);
 
         /*6*/ //TODO: Grabber code GRAB
+        hands.setSideGrabberPosition(1);
         wait(10);
 
         /*7*/ //TODO: Grabber code UP INCOMPLETE
+        hands.setSideLiftPosition(0.7);
         wait(10);
 
-        /*8*/driver.driveWhileHorizontal(0.5f, -1f, this);
+        //8 Drive back a bit so we don't disturb the other SkyStone(tm)s
+        driver.driveWhileHorizontal(0.5f, -1f, this);
         wait(10);
 
-        /*9*/driver.driveWhileVertical(0.5f, 1f, this);
+        //9 Go to the other side of the blue/red line
+        driver.driveVertical(-0.5f, 10f);
+        while(!(sensor.isBled() || (System.currentTimeMillis() - msStart) > 3000) && opModeIsActive()) {}
+        driver.resetAllEncoders();
+        //branching fallback path-- go forward until we see the line
+        if(!sensor.isBled()) {
+            //fallback stop
+            driver.driveAuto(0f, 0f, 0f,0f);
+            wait(10);
+            stop();
+        }
+
         wait(10);
 
         /*10*/ //TODO: Grabber code DOWN
+        hands.setSideLiftPosition(1);
         wait(10);
 
         /*11*/ //TODO: Grabber code RELEASE
+        hands.setSideGrabberPosition(0);
         wait(10);
 
         /*12*/ //TODO: Grabber code UP
+        hands.setSideLiftPosition(0);
         wait(10);
 
-        /*13*/driver.driveWhileVertical(0.5f, -1f, this);
+        //13: move backwards to other SkyStone(tm)
+        msStart = System.currentTimeMillis();
+        driver.driveVertical(0.5f, 1f);
+        while(!(sensor.isSkystone() || (System.currentTimeMillis() - msStart) > 2000) && opModeIsActive()) {}
+        driver.resetAllEncoders();
+        //branching fallback path-- go forward until we see the line
+        if(!sensor.isSkystone()) {
+            //Step 14 (fallback) go forward until we detect the line
+            msStart = System.currentTimeMillis();
+            driver.driveRaw(-1, 1, 1, -1);
+            while(!(sensorDown.isBled() || (System.currentTimeMillis() - msStart) > 2000) && opModeIsActive()) {}
+
+            //Step 15 (fallback stop)
+            driver.driveAuto(0f, 0f, 0f,0f);
+            wait(10);
+            stop();
+        }
+
+        //13 Go to the other side of the blue/red line
+        driver.driveVertical(-0.5f, 10f);
+        while(!(sensor.isBled() || (System.currentTimeMillis() - msStart) > 3000) && opModeIsActive()) {}
+        driver.resetAllEncoders();
+        //branching fallback path-- go forward until we see the line
+        if(!sensor.isBled()) {
+            //fallback stop
+            driver.driveAuto(0f, 0f, 0f,0f);
+            wait(10);
+            stop();
+        }
+        /*14*/ //TODO: Grabber code DOWN
+        hands.setSideLiftPosition(1);
         wait(10);
 
-        /*14*/driver.driveWhileVertical(0.5f, -1f, this);
+        /*15*/ //TODO: Grabber code RELEASE
+        hands.setSideGrabberPosition(0);
         wait(10);
 
-        /*15*/driver.driveWhileHorizontal(0.5f, 1f, this);
+        /*16*/ //TODO: Grabber code UP
+        hands.setSideLiftPosition(0);
         wait(10);
-
-        /*16*/ //TODO: Grabber code DOWN
-        wait(10);
-
-        /*17*/ //TODO: Grabber code GRAB
-        wait(10);
-
-        /*18*/ //TODO: Grabber code UP INCOMPLETE
-        wait(10);
-
-        /*19*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        wait(10);
-
-        /*20*/driver.driveWhileVertical(0.5f, 1f, this);
-        wait(10);
-
-        /*21*/driver.driveWhileVertical(0.5f, 1f, this);
-        wait(10);
-
-        /*22*/ //TODO: Grabber code DOWN
-        wait(10);
-
-        /*23*/ //TODO: Grabber code RELEASE
-        wait(10);
-
-        /*24*/ //TODO: Grabber code UP
-        wait(10);
-
-        /*25*/driver.driveWhileVertical(0.5f, 1f, this);
-        wait(10);
-
-        /*26*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        wait(10);
-
-        /*27*/ //TODO: Foundation DOWN
-        wait(10);
-
-        /*28*/driver.driveWhileHorizontal(0.5f, -1f, this);
-        wait(10);
-
-        /*29*/ //TODO: Foundation UP
-        wait(10);
-        /*30*/driver.driveWhileVertical(0.5f, -1f, this);
-        wait(10);
-
-        /*31*/driver.driveWhileHorizontal(0.5f, 1f, this);
-        wait(10);
-
-        /*32*/driver.driveWhileVertical(0.5f, -1f, this);
-        wait(10);
-
-        /*33*/ driver.driveAuto(0f, 0f, 0f,0f);
-        wait(10);
-
-
-
-
-
-
     }
 
 

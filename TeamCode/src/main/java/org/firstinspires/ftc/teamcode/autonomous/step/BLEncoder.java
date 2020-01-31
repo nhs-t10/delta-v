@@ -26,16 +26,15 @@ public class BLEncoder extends LinearOpMode {
     DcMotor bl;
     DcMotor br;
     TelemetryManager logger;
+    private long delayRunTime;
 
-    long delayRunTime;
     private boolean delaying = false;
-    public void wait(int delay, LinearOpMode trash) {
+    public void wait(int delay) {
         if(!delaying) {
             delaying = true;
             delayRunTime = System.currentTimeMillis();
         }
-        while(System.currentTimeMillis() - delayRunTime >= delay && opModeIsActive()) {}
-
+        while(System.currentTimeMillis() - delayRunTime <= delay && opModeIsActive()) {}
         delaying = false;
     }
     @Override
@@ -63,17 +62,14 @@ public class BLEncoder extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-                /*1*/ //Forward
-                driver.encoderDrive(0.1f, 1f, -1f, 1f, -1f, 1000, this);
-                wait(30, this);
-                /*2*/ //Right
-                driver.encoderDrive(0.1f, 1f, 1f, -1f, -1f, 1000, this);
-                wait(30, this);
-                /*3*/ //Backward
-                driver.encoderDrive(0.1f, -1f, 1f, -1f, 1f, 1000, this);
-                wait(30, this);
-                /*4*/ //Left
-                driver.encoderDrive(0.1f, -1f, -1f, 1f, 1f, 1000, this);
+
+            driver.driveWhileVerticalPid(0.1f, 1f, this);
+            wait(30);
+            driver.driveWhileHorizontalPid(0.1f, 1f, this);
+            wait(30);
+            driver.driveWhileVerticalPid(-0.1f, 1f, this);
+            wait(30);
+            driver.driveWhileHorizontalPid(-0.1f, 1f, this);
 
 //            telemetry.addData("FL Direction: ", driver.frontLeft.getDirection());
 //            telemetry.addData("FR Direction: ", driver.frontRight.getDirection());

@@ -104,6 +104,7 @@ public class ImuManager extends FeatureManager {
 
     class IMULoader implements Runnable {
         public void run() {
+            boolean re = imu.initialize(parameters);
             initialized = imu.initialize(parameters);
         }
     }

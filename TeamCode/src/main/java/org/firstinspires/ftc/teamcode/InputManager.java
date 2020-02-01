@@ -132,6 +132,10 @@ public class InputManager extends FeatureManager {
         return delta;
     }
 
+    public double getDropperPosition() {
+        return this.toggleButton(ControlMap.DROPPER, 1f, 0f);
+    }
+
     /**
      * Change the current driving mode.
      *
@@ -161,7 +165,7 @@ public class InputManager extends FeatureManager {
     public float toggleButton(String button, float res1, float res2) {
         if(!togglePresses.containsKey(button)) togglePresses.put(button, false);
 
-        if((lastPresses.containsKey(button) ? lastPresses.get(button) : 0f) > 0 && resolveControl(button) == 0) {
+        if(press(button)) {
             boolean lastVal = togglePresses.get(button);
 
             togglePresses.put(button, !lastVal);

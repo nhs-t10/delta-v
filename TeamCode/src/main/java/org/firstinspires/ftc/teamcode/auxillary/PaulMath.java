@@ -73,6 +73,16 @@ public class PaulMath {
 
         return res.toString();
     }
+
+    /**
+     * Determines the absolute distance between two numbers
+     * @param one the first number
+     * @param two the second number
+     * @return the difference
+     */
+    public static float delta(float one, float two) {
+        return Math.abs(one - two);
+    }
     /**
      * Round a given number to a decimal place.
      * @param input Number to round.

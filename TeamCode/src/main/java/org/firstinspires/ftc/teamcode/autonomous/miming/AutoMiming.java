@@ -36,7 +36,8 @@ public class AutoMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "lift"),
                 hardwareMap.get(Servo.class, "sideGrab"),
                 hardwareMap.get(Servo.class, "sideLift"),
-                hardwareMap.get(Servo.class, "foundationGrabber")
+                hardwareMap.get(Servo.class, "foundationGrabber"),
+                hardwareMap.get(Servo.class, "dropper")
         );
         driver.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         driver.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

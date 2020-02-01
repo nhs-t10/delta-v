@@ -55,7 +55,8 @@ public class TeleopTest extends OpMode {
                 hardwareMap.get(DcMotor.class, "lift"),
                 hardwareMap.get(Servo.class, "sideGrab"),
                 hardwareMap.get(Servo.class, "sideLift"),
-                hardwareMap.get(Servo.class, "foundationGrabber")
+                hardwareMap.get(Servo.class, "foundationGrabber"),
+                hardwareMap.get(Servo.class, "dropper")
         );
         hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.resetAllEncoders();

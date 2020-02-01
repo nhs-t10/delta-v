@@ -77,32 +77,17 @@ public class InputManager extends FeatureManager {
     public float[] getLiftControls() {
         float[] powers = new float[2];
 
-        float motorSpeed = 0f;
-        if (resolveControl(ControlMap.LIFT_MAIN) > 0f) motorSpeed = 1f;
-        motorSpeed *= FeatureManager.LIFT_RAISE_LOWER_SPEED;
+        powers[0] = resolveControl(ControlMap.LIFT_MAIN) * FeatureManager.LIFT_RAISE_LOWER_SPEED;
 
-
-        powers[0] = motorSpeed;
-
-        float servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
-        if (resolveControl(ControlMap.CLAMP_MAIN) > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
-
-        powers[1] = servoPos;
+        powers[1] = resolveControl(ControlMap.CLAMP_MAIN);
 
         return powers;
     }
     public float[] getSideLiftControls() {
         float[] powers = new float[2];
 
-        float liftPos = 0f;
-        if (resolveControl(ControlMap.LIFT_SIDE) > 0) liftPos = 1f;
-
-        powers[0] = liftPos;
-
-        float servoPos = 0f;
-        if (resolveControl(ControlMap.CLAMP_SIDE) > 0.8f) servoPos = 1f;
-
-        powers[1] = servoPos;
+        powers[0] = resolveControl(ControlMap.LIFT_SIDE);
+        powers[1] = resolveControl(ControlMap.CLAMP_SIDE);
 
         return powers;
     }
@@ -124,16 +109,16 @@ public class InputManager extends FeatureManager {
         return new RobotState(new ElapsedTime(), liftPowers[0], liftPowers[1], move, currentSpeed, new PointNd(0,0,0), new PointNd(0,0,0), sideLiftPowers[0], sideLiftPowers[1], foundationMoverPos);
     }
 
+    public float getCurrentSpeed() {
+        return resolveControl(ControlMap.SPEED_TOGGLE);
+    }
+
     public int getLogTabSwitchDelta() {
-
-        int delta = 0;
-        if(press(ControlMap.TAB_POSITIVE)) delta = -1;
-
-        return delta;
+        return (int)Math.round(resolveControl(ControlMap.TELE_TAB));
     }
 
     public double getDropperPosition() {
-        return this.toggleButton(ControlMap.DROPPER, 1f, 0f);
+        return (double)resolveControl(ControlMap.DROPPER);
     }
 
     /**
@@ -200,6 +185,25 @@ public class InputManager extends FeatureManager {
     public float resolveControl(String control) {
         if(control.toLowerCase().equals(control)) return getButtonState(control);
         else return combo(control)?1f:0f;
+    }
+
+    public float resolveControl(Control control) {
+        //if it's a scalar
+        if (control.isScalar) {
+            return resolveControl(control.on);
+        }
+        //if is 1-button toggle
+        else if (control.off.isEmpty()) {
+            return resolveControl(control.on) > 0.1?control.value1:control.value2;
+        }
+        //if it's a scalar
+
+        //if it's a 2-button toggle
+        else {
+            if(resolveControl(control.on) > 0f) return control.value1;
+            else if(resolveControl(control.off) > 0f) return control.value2;
+            else return control.value3;
+        }
     }
 
     /**

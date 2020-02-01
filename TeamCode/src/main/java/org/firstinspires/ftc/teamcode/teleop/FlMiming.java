@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.data.*;
 import org.firstinspires.ftc.teamcode.*;
 import org.firstinspires.ftc.teamcode.auxillary.*;
 
+import java.util.ArrayList;
+
 @TeleOp
 public class FlMiming extends OpMode {
     MovementManager driver;
@@ -17,8 +19,11 @@ public class FlMiming extends OpMode {
     FileSaver file;
     InputManager controller;
     ManipulationManager hands;
-    int currentMimeIndex = 0;
+    boolean sideGrab = false;
+    boolean sideLift = false;
 
+    int currentMimeIndex = 0;
+    boolean firstLoopRun = true;
     public void init() {
         controller = new InputManager(gamepad1);
         file = new FileSaver(FeatureManager.MIMING_FL);
@@ -28,14 +33,30 @@ public class FlMiming extends OpMode {
                 hardwareMap.get(DcMotor.class, "br"));
         timer = new ElapsedTime();
         hands = new ManipulationManager(
-            hardwareMap.get(Servo.class, "sev"),
-            hardwareMap.get(DcMotor.class, "lift"));
+                hardwareMap.get(Servo.class, "sev"),
+                hardwareMap.get(DcMotor.class, "lift"),
+                hardwareMap.get(Servo.class, "sideGrab"),
+                hardwareMap.get(Servo.class, "sideLift"),
+                hardwareMap.get(Servo.class, "foundationGrabber"),
+                hardwareMap.get(Servo.class, "dropper")
+        );
 
         file.deleteFile();
     }
     public void loop() {
+        if(firstLoopRun) timer = new ElapsedTime();
+        firstLoopRun = false;
+
         driver.driveOmni(controller.getMovementControls());
+
         hands.setLiftState(controller.getLiftControls());
+
+        hands.setFoundationGrabberPosition(controller.getFoundationMoverPos());
+
+        hands.setDropperPosition(controller.getDropperPosition());
+
+        driver.setSpeed(controller.getCurrentSpeed());
+
         int realMimeIndex = (int)Math.floor(timer.milliseconds() / FeatureManager.MIMING_MS_PER_SAMPLE);
 
         if(realMimeIndex > currentMimeIndex) {

@@ -27,21 +27,74 @@ public class FeatureManager {
     
     }
     public static class ControlMap {
-        public final static String MOVE_HORIZONTAL = "left_stick_x";
-        public static final String MOVE_VERTICAL = "left_stick_y";
-        public static final String MOVE_ROTATIONAL = "right_stick_x";
+        public final static Control MOVE_HORIZONTAL = new Control("left_stick_x");
+        public static final Control MOVE_VERTICAL = new Control("left_stick_y");
+        public static final Control MOVE_ROTATIONAL = new Control("right_stick_x");
 
-        public static final String CLAMP_MAIN = "a";
-        public static final String CLAMP_SIDE = "x";
+        public static final Control CLAMP_MAIN = new Control("right_trigger", 1f, 0f);
+        public static final Control CLAMP_SIDE = new Control(0f);
 
-        public static final String LIFT_MAIN = "b";
-        public static final String LIFT_SIDE = "y";
+        public static final Control LIFT_MAIN = new Control("b", "a", -1f, 1f, 0f);
+        public static final Control LIFT_SIDE = new Control(0f);
 
-        public static final String FOUNDATION_MOVER = "left_bumper";
+        public static final Control FOUNDATION_MOVER = new Control(1f);
 
-        public static final String TAB_POSITIVE = "right_bumper";
-        public static final String TAB_NEGATIVE = "";
+        public static final Control TELE_TAB = new Control("dpad_left", "dpad_right", -1f, 1f, 0f);
 
-        public static final String DROPPER = "dpad_left";
+        public static final Control DROPPER = new Control("x","y",1f,0f, 0f);
+
+        public static final Control SPEED_TOGGLE = new Control("left_bumper",0.25f,1f);
     }
+}
+enum ControlType {
+    TOGGLE,
+    SCALAR,
+    PUSHBETWEEN
+}
+class Control {
+    public String on;
+    public String off;
+
+    public boolean isScalar;
+    public float value1;
+    public float value2;
+    public float value3;
+
+    ControlType type;
+
+    boolean isNothing;
+
+    public Control(String _on, String _off, float v1, float v2, float v3) {
+        this.on = _on;
+        this.off = _off;
+
+        this.value1 = v1;
+        this.value2 = v2;
+        this.value3 = v3;
+        this.isScalar = false;
+    }
+    public Control(String _on, float v1, float v2) {
+        this.on = _on;
+        this.off = "";
+
+        this.value1 = v1;
+        this.value2 = v2;
+        this.isScalar = false;
+    }
+
+    public Control(String _on) {
+        this.on = _on;
+        this.off = "";
+        this.isScalar = true;
+    }
+
+    public Control(float val) {
+        this.on = "";
+        this.off = "";
+
+        this.isNothing = true;
+        this.value1 = val;
+    }
+
+
 }

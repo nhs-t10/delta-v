@@ -112,9 +112,13 @@ public class PaulMath {
 
         // Motor powers of fl, fr, br, bl
         // Motor powers used to be 0.4f for all motors other than fl
-        float[] vertical = {-lY, lY, -lY, lY};
-        float[] horizontal = {lx, 0.7f*lx, -0.7f*lx, -0.7f*lx};
-        float[] rotational = {rx, rx, rx, rx};
+        float[] vertical = {lY, -lY, lY, -lY};
+        float[] horizontal = {-lx, -lx, lx, lx};
+        float[] rotational = {-rx, -rx, -rx, -rx};
+//
+//        float[] vertical = {-lY, lY, -lY, lY};
+//        float[] horizontal = {lx, 0.7f*lx, -0.7f*lx, -0.7f*lx};
+//        float[] rotational = {rx, rx, rx, rx};
 
         float[] sum = new float[4];
         for (int i = 0; i < 4; i++) {

@@ -51,19 +51,20 @@ public class Teleop extends OpMode {
 
     public void loop() {
         driver.driveOmni(input.getMovementControls());
-        hands.setLiftState(input.getLiftControls());
+        //hands.setLiftState(input.getLiftControls());
 
         sensor.runSample();
 
         
 
-        if (input.getGamepad().a) {
-//            manip.setServoPosition(1);
-//            sev.setPosition(0);
+        if (input.gamepad.right_trigger > 0.01f) {
+            hands.grabServo.setServoPosition(0);
+        }
+        if (input.gamepad.left_trigger > 0.01f) {
+            hands.grabServo.setServoPosition(1);
         }
         if (input.getGamepad().b) {
-//            manip.setServoPosition(0);
-//            sev.setPosition(0.25);
+           // manip.setServoPosition(0);
         }
 
         //this is the speed toggle code
@@ -84,11 +85,19 @@ public class Teleop extends OpMode {
 
         //this is the speed single pushbutton code
         if (gamepad1.left_bumper) {
-            driver.setSpeed(1.0f);
-        } else {
             driver.setSpeed(0.25f);
+        } else {
+            driver.setSpeed(1.00f);
         }
 
+
+        if (gamepad1.dpad_up) {
+            hands.liftMotor.setPower(-1);
+        } else if (gamepad1.dpad_down) {
+            hands.liftMotor.setPower(1);
+        }else {
+            hands.liftMotor.setPower(0);
+        }
 
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
         telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());

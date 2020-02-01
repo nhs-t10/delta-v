@@ -121,17 +121,22 @@ public class TeleopTest extends OpMode {
 
 
 
+//        if (gamepad1.left_bumper) {
+//            if (driver.getSpeed() == 0.25f && !toggleSpeed) {
+//                driver.setSpeed(1.0f);
+//                toggleSpeed = true;
+//            }
+//            if (driver.getSpeed() == 1.0f && !toggleSpeed) {
+//                driver.setSpeed(0.25f);
+//                     toggleSpeed = false;
+//            }
+//        } else {
+//            toggleSpeed = false;
+//        }
         if (gamepad1.left_bumper) {
-            if (driver.getSpeed() == 0.25f && !toggleSpeed) {
-                driver.setSpeed(1.0f);
-                toggleSpeed = true;
-            }
-            if (driver.getSpeed() == 1.0f && !toggleSpeed) {
-                driver.setSpeed(0.25f);
-                     toggleSpeed = false;
-            }
+            driver.setSpeed(0.25f);
         } else {
-            toggleSpeed = false;
+            driver.setSpeed(1.00f);
         }
 
         if(gamepad1.dpad_right) {

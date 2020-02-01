@@ -20,6 +20,8 @@ public class Teleop extends OpMode {
     ManipulationManager hands;
 //    Servo sev;
     ColorSensor sensorDown;
+    boolean sideLift = false;
+    boolean sideGrab = false;
 
     private static boolean toggleSpeed = false;
 
@@ -63,10 +65,10 @@ public class Teleop extends OpMode {
         } else {
             hands.grabServo.setServoPosition(1);
         }
-        if (input.getGamepad().b) {
+        if (input.getGamepad().dpad_down) {
             hands.setFoundationGrabberPosition(0);
         }
-        if (input.getGamepad().a) {
+        if (input.getGamepad().dpad_up) {
             hands.setFoundationGrabberPosition(1);
         }
 
@@ -102,13 +104,33 @@ public class Teleop extends OpMode {
             hands.liftMotor.setPower(0);
         }
 
-        if (gamepad1.dpad_down) {
-            hands.setFoundationGrabberPosition(0);
+        if (gamepad1.x) {
+            hands.setDropperPosition(1);
         }
-        if (gamepad1.dpad_up) {
-            hands.setFoundationGrabberPosition(1);
+        if (gamepad1.y) {
+            hands.setDropperPosition(0);
         }
 
+        if (gamepad1.left_trigger >= 0.01) {
+            if (!sideLift) {
+                hands.setSideLiftPosition(1);
+                sideLift = true;
+            } else if (sideLift) {
+                hands.setSideLiftPosition(0);
+                sideLift = false;
+            }
+
+        }
+        if (gamepad1.right_trigger >= 0.01) {
+            if (!sideGrab) {
+                hands.setSideGrabberPosition(1);
+                sideGrab = true;
+            } else if (sideGrab) {
+                hands.setSideGrabberPosition(0);
+                sideGrab = false;
+            }
+
+        }
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
         telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
         telemetry.addData("BL Ticks:", driver.backRight.getCurrentPosition());

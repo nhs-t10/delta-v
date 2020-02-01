@@ -64,7 +64,10 @@ public class Teleop extends OpMode {
             hands.grabServo.setServoPosition(1);
         }
         if (input.getGamepad().b) {
-           // manip.setServoPosition(0);
+            hands.setFoundationGrabberPosition(0);
+        }
+        if (input.getGamepad().a) {
+            hands.setFoundationGrabberPosition(1);
         }
 
         //this is the speed toggle code

@@ -76,7 +76,7 @@ public class FullRight extends LinearOpMode {
 
 
         //Step 1: Drive sideways to the row of blocks
-        driver.driveWhileHorizontal(0.5f, PaulMath.encoderDistance(18), this);
+        driver.driveWhileHorizontal(0.5f, PaulMath.encoderDistance(21), this);
         wait(10);
 
         //Step 2: scan along the line for a SkyStone(tm)

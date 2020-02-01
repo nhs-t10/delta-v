@@ -59,8 +59,7 @@ public class Teleop extends OpMode {
 
         if (input.gamepad.right_trigger > 0.01f) {
             hands.grabServo.setServoPosition(0);
-        }
-        if (input.gamepad.left_trigger > 0.01f) {
+        } else {
             hands.grabServo.setServoPosition(1);
         }
         if (input.getGamepad().b) {
@@ -94,9 +93,9 @@ public class Teleop extends OpMode {
         }
 
 
-        if (gamepad1.dpad_up) {
+        if (gamepad1.b) {
             hands.liftMotor.setPower(-1);
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad1.a) {
             hands.liftMotor.setPower(1);
         }else {
             hands.liftMotor.setPower(0);

@@ -102,6 +102,13 @@ public class Teleop extends OpMode {
             hands.liftMotor.setPower(0);
         }
 
+        if (gamepad1.dpad_down) {
+            hands.setFoundationGrabberPosition(0);
+        }
+        if (gamepad1.dpad_up) {
+            hands.setFoundationGrabberPosition(1);
+        }
+
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
         telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
         telemetry.addData("BL Ticks:", driver.backRight.getCurrentPosition());

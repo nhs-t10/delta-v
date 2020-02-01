@@ -45,7 +45,8 @@ public class IncompleteFarRight extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "lift"),
                 hardwareMap.get(Servo.class, "sideGrab"),
                 hardwareMap.get(Servo.class, "sideLift"),
-                hardwareMap.get(Servo.class, "foundationGrabber")
+                hardwareMap.get(Servo.class, "foundationGrabber"),
+                hardwareMap.get(Servo.class, "dropper")
         );
         driver.resetAllEncoders();
         driver.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

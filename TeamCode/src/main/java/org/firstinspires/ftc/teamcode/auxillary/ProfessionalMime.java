@@ -37,6 +37,27 @@ public class ProfessionalMime {
         iterationCallback = _iterationCallback;
         endCallback = _endCallback;
     }
+    public ProfessionalMime(String fileName, MovementManager _driver, ManipulationManager _hands) {
+        instructions = (new FileSaver(fileName)).readLines();
+        this.driver = _driver;
+        this.hands = _hands;
+
+        this.doAbort = false;
+
+        iterationCallback = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        endCallback = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+    }
+
 
     public void setAbort(boolean abort) {
         this.doAbort = abort;

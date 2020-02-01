@@ -38,7 +38,8 @@ public class Teleop extends OpMode {
                 hardwareMap.get(DcMotor.class, "lift"),
                 hardwareMap.get(Servo.class, "sideGrab"),
                 hardwareMap.get(Servo.class, "sideLift"),
-                hardwareMap.get(Servo.class, "foundationGrabber")
+                hardwareMap.get(Servo.class, "foundationGrabber"),
+                hardwareMap.get(Servo.class, "dropper")
         );
         hands.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driver.resetAllEncoders();
@@ -53,6 +54,7 @@ public class Teleop extends OpMode {
         driver.driveOmni(input.getMovementControls());
         //hands.setLiftState(input.getLiftControls());
 
+        hands.setDropperPosition(input.getDropperPosition());
         sensor.runSample();
 
         

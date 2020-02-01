@@ -29,6 +29,8 @@ public class ManipulationManager extends FeatureManager {
 
     public Servo foundationGrabber;
 
+    Servo dropper;
+
     private PointNd points;
     private TrigCache cache;
     private ElapsedTime timer;
@@ -44,7 +46,7 @@ public class ManipulationManager extends FeatureManager {
         this.lastRecordTime = timer.milliseconds();
     }
 
-    public ManipulationManager(Servo _grabServo, DcMotor lift, Servo _sideGrab, Servo _sideLift, Servo _foundationGrabber) {
+    public ManipulationManager(Servo _grabServo, DcMotor lift, Servo _sideGrab, Servo _sideLift, Servo _foundationGrabber, Servo _dropper) {
         this.grabServo = new ManagedServo(_grabServo);
         this.liftMotor = lift;
 
@@ -52,6 +54,8 @@ public class ManipulationManager extends FeatureManager {
         this.sideLift = _sideLift;
 
         this.foundationGrabber = _foundationGrabber;
+
+        this.dropper = _dropper;
 
         this.cache = new TrigCache();
         this.points = new PointNd(0f,0f,0f);
@@ -92,6 +96,10 @@ public class ManipulationManager extends FeatureManager {
 
     public double getServoPosition() {return grabServo.getServoPosition();}
     public double getMotorPower() {return liftMotor.getPower();}
+
+    public void setDropperPosition(double pos) {
+        dropper.setPosition(pos);
+    }
 
     public void setGrabbingState(boolean state) {
         if(state) grabServo.setServoPosition(1);

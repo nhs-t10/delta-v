@@ -41,5 +41,7 @@ public class FeatureManager {
 
         public static final String TAB_POSITIVE = "right_bumper";
         public static final String TAB_NEGATIVE = "";
+
+        public static final String DROPPER = "dpad_left";
     }
 }

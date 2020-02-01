@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.ColorSensor;
 import org.firstinspires.ftc.teamcode.ManipulationManager;
 import org.firstinspires.ftc.teamcode.MovementManager;
@@ -25,7 +26,6 @@ public class BLEncoder extends LinearOpMode {
     DcMotor bl;
     DcMotor br;
     TelemetryManager logger;
-
     private long delayRunTime;
 
     private boolean delaying = false;
@@ -35,7 +35,6 @@ public class BLEncoder extends LinearOpMode {
             delayRunTime = System.currentTimeMillis();
         }
         while(System.currentTimeMillis() - delayRunTime <= delay && opModeIsActive()) {}
-
         delaying = false;
     }
     @Override
@@ -63,7 +62,8 @@ public class BLEncoder extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-            driver.encoderDrive(0.1f, 1f, -1f, 1f, -1f, 1000, this);
+
+            driver.driveWhileVerticalPid(0.1f, 1f, this);
             wait(30);
             driver.encoderDrive(0.1f, 1f, 1f, -1f, -1f, 1000, this);
             wait(30);

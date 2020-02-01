@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 import org.firstinspires.ftc.robotcore.internal.opengl.models.Geometry;
 
@@ -264,9 +265,7 @@ public class MovementManager extends FeatureManager {
         backLeft.setTargetPosition(position);
     }
 
-    public boolean driveVertical(float power, float rotation) {return false;}
-
-    public boolean driveVertical(float power, float rotation, BLEncoder logger) {
+    public boolean driveVertical(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -278,10 +277,6 @@ public class MovementManager extends FeatureManager {
             frontRight.setTargetPosition(-(int) rotation * TICK_PER_ROT);
             backRightSetTargetPosition(-(int) rotation * TICK_PER_ROT);
             backLeftSetTargetPosition((int) rotation * TICK_PER_ROT);
-            frontLeft.setDirection(DcMotor.Direction.FORWARD);
-            frontRight.setDirection(DcMotor.Direction.REVERSE);
-            backLeft.setDirection(DcMotor.Direction.REVERSE);
-            backRight.setDirection(DcMotor.Direction.FORWARD);
 
 
             this.resetAllEncoderModes();
@@ -351,7 +346,7 @@ public class MovementManager extends FeatureManager {
         return true;
     }
 
-    public void driveWhileHorizontal(float power, float rotation, OpMode logger) {
+    public void driveWhileHorizontal(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -387,7 +382,7 @@ public class MovementManager extends FeatureManager {
         driveStarted = false;
     }
 
-    public void driveWhileVertical(float power, float rotation, OpMode logger) {
+    public void driveWhileVertical(float power, float rotation, LinearOpMode logger) {
 
         logger.telemetry.addData("mvm encoder drive state init", "0");
         logger.telemetry.addData("mvm encoder drive state drive", "0");
@@ -512,17 +507,6 @@ public class MovementManager extends FeatureManager {
         driveStarted = false;
     }
 
-    public void setSpeed(float speed){
-        this.speed = speed;
-    }
-
-    public float getSpeed(){
-        return speed;
-    }
-    public float getIterations(){
-        return iters;
-    }
-
     ElapsedTime moveTimer;
 
     public void encoderDrive(double speed,
@@ -549,10 +533,10 @@ public class MovementManager extends FeatureManager {
             backRight.setTargetPosition(newBackLeftTarget);
 
             // Turn On RUN_TO_POSITION
-            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // reset the timeout time and start motion.
             moveTimer = new ElapsedTime();
@@ -597,4 +581,17 @@ public class MovementManager extends FeatureManager {
             //  sleep(250);   // optional pause after each move
         }
     }
+
+    public void setSpeed(float speed){
+        this.speed = speed;
+    }
+
+    public float getSpeed(){
+        return speed;
+    }
+    public float getIterations(){
+        return iters;
+    }
+
+
 }

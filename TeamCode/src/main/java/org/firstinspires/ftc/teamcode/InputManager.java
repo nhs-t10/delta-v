@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.*;
 import org.firstinspires.ftc.teamcode.auxillary.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Handle input (button combos, keybinds, etc.) for gamepads.
@@ -23,6 +24,10 @@ public class InputManager extends FeatureManager {
 
     public boolean dpad_leftPress = false;
     public boolean dpad_rightPress = false;
+    public boolean dpad_leftBumper = false;
+
+    public HashMap<String,Float> lastPresses = new HashMap<>();
+    public HashMap<String,Boolean> togglePresses = new HashMap<>();
 
     public InputManager(Gamepad _gamepad) {
         this.gamepad = _gamepad;
@@ -46,21 +51,21 @@ public class InputManager extends FeatureManager {
 
         if (currentMode == InputMode.DRIVING) {
             res = MovementOrder.HVR(
-                    gamepad.left_stick_x,
-                    gamepad.left_stick_y,
-                    gamepad.right_stick_x
+                    resolveControl(ControlMap.MOVE_HORIZONTAL),
+                    resolveControl(ControlMap.MOVE_VERTICAL),
+                    resolveControl(ControlMap.MOVE_ROTATIONAL)
             );
         } else if (currentMode == InputMode.DRIVE_FINETUNE) {
             res = MovementOrder.HVR(
-                    gamepad.left_stick_x / INPUT_FINETUNE_SCALE,
-                    gamepad.left_stick_y / INPUT_FINETUNE_SCALE,
-                    gamepad.right_stick_x / INPUT_FINETUNE_SCALE
+                    resolveControl(ControlMap.MOVE_HORIZONTAL) / FeatureManager.INPUT_FINETUNE_SCALE,
+                    resolveControl(ControlMap.MOVE_VERTICAL) / FeatureManager.INPUT_FINETUNE_SCALE,
+                    resolveControl(ControlMap.MOVE_ROTATIONAL) / FeatureManager.INPUT_FINETUNE_SCALE
             );
         } else if (currentMode == InputMode.DRIVE_SIDEWAYS) {
             res = MovementOrder.VHR(
-                    gamepad.left_stick_x,
-                    gamepad.left_stick_y,
-                    gamepad.right_stick_x
+                    resolveControl(ControlMap.MOVE_HORIZONTAL),
+                    resolveControl(ControlMap.MOVE_VERTICAL),
+                    resolveControl(ControlMap.MOVE_ROTATIONAL)
             );
         } else {
             res = MovementOrder.NOTHING;
@@ -73,38 +78,56 @@ public class InputManager extends FeatureManager {
         float[] powers = new float[2];
 
         float motorSpeed = 0f;
-        if (gamepad.a) motorSpeed = -1f;
-        else if (gamepad.b) motorSpeed = 1f;
+        if (resolveControl(ControlMap.LIFT_MAIN) > 0f) motorSpeed = 1f;
         motorSpeed *= FeatureManager.LIFT_RAISE_LOWER_SPEED;
+
 
         powers[0] = motorSpeed;
 
-        float servoPos = 0;
-                //= FeatureManager.LIFT_CLAMP_CLOSE_POS;
-        if (gamepad.right_trigger > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
-        if (gamepad.left_trigger > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
+        float servoPos = FeatureManager.LIFT_CLAMP_CLOSE_POS;
+        if (resolveControl(ControlMap.CLAMP_MAIN) > 0.8f) servoPos = FeatureManager.LIFT_CLAMP_OPEN_POS;
+
+        powers[1] = servoPos;
+
+        return powers;
+    }
+    public float[] getSideLiftControls() {
+        float[] powers = new float[2];
+
+        float liftPos = 0f;
+        if (resolveControl(ControlMap.LIFT_SIDE) > 0) liftPos = 1f;
+
+        powers[0] = liftPos;
+
+        float servoPos = 0f;
+        if (resolveControl(ControlMap.CLAMP_SIDE) > 0.8f) servoPos = 1f;
 
         powers[1] = servoPos;
 
         return powers;
     }
 
+    public float getFoundationMoverPos() {
+
+        float pos = 0f;
+        if (resolveControl(ControlMap.FOUNDATION_MOVER) != 0) pos = 1f;
+
+        return pos;
+    }
+
     public RobotState getState() {
         MovementOrder move = this.getMovementControls();
-        float[] powers = this.getLiftControls();
+        float[] liftPowers = this.getLiftControls();
+        float[] sideLiftPowers = this.getSideLiftControls();
+        float foundationMoverPos = this.getFoundationMoverPos();
 
-        return new RobotState(new ElapsedTime(), powers[0], powers[1], move, currentSpeed, new PointNd(), new PointNd());
-
+        return new RobotState(new ElapsedTime(), liftPowers[0], liftPowers[1], move, currentSpeed, new PointNd(0,0,0), new PointNd(0,0,0), sideLiftPowers[0], sideLiftPowers[1], foundationMoverPos);
     }
 
     public int getLogTabSwitchDelta() {
 
         int delta = 0;
-        if(!gamepad.dpad_left && dpad_leftPress) delta = -1;
-        else if(!gamepad.dpad_right && dpad_rightPress) delta = 1;
-
-        dpad_leftPress = gamepad.dpad_left;
-        dpad_rightPress = gamepad.dpad_right;
+        if(press(ControlMap.TAB_POSITIVE)) delta = -1;
 
         return delta;
     }
@@ -124,6 +147,29 @@ public class InputManager extends FeatureManager {
     public void toggleFinetune() {
         if (currentMode == InputMode.DRIVE_FINETUNE) currentMode = InputMode.DRIVING;
         else if (currentMode == InputMode.DRIVING) currentMode = InputMode.DRIVE_FINETUNE;
+    }
+
+    public boolean press(String button) {
+        boolean result = false;
+        if((lastPresses.containsKey(button) ? lastPresses.get(button) : 0f) > 0 && resolveControl(button) == 0) result = true;
+
+        lastPresses.put(button, resolveControl(button));
+
+        return result;
+    }
+
+    public float toggleButton(String button, float res1, float res2) {
+        if(!togglePresses.containsKey(button)) togglePresses.put(button, false);
+
+        if((lastPresses.containsKey(button) ? lastPresses.get(button) : 0f) > 0 && resolveControl(button) == 0) {
+            boolean lastVal = togglePresses.get(button);
+
+            togglePresses.put(button, !lastVal);
+        }
+
+        lastPresses.put(button, resolveControl(button));
+
+        return togglePresses.get(button)?res1:res2;
     }
 
     /**
@@ -147,6 +193,60 @@ public class InputManager extends FeatureManager {
         return result;
     }
 
+    public float resolveControl(String control) {
+        if(control.toLowerCase().equals(control)) return getButtonState(control);
+        else return combo(control)?1f:0f;
+    }
+
+    /**
+     * Get the current state of a button on the gamepad
+     * @param button The name of the button to get the state of
+     * @return The current state of the button
+     */
+    public float getButtonState(String button) {
+        switch(button) {
+            case "left_stick_x":
+                return gamepad.left_stick_x;
+            case "left_stick_y":
+                return gamepad.left_stick_y;
+
+            case "right_stick_x":
+                return gamepad.right_stick_x;
+            case "right_stick_y":
+                return gamepad.right_stick_y;
+
+            case "left_trigger":
+                return gamepad.left_trigger;
+            case "right_trigger":
+                return gamepad.right_trigger;
+
+            case "left_bumper":
+                return gamepad.left_bumper?1f:0f;
+            case "right_bumper":
+                return gamepad.right_bumper?1f:0f;
+
+            case "a":
+                return gamepad.a?1f:0f;
+            case "b":
+                return gamepad.b?1f:0f;
+            case "x":
+                return gamepad.x?1f:0f;
+            case "y":
+                return gamepad.y?1f:0f;
+
+            case "dpad_left":
+                return gamepad.dpad_left?1f:0f;
+            case "dpad_right":
+                return gamepad.dpad_right?1f:0f;
+            case "dpad_up":
+                return gamepad.dpad_up?1f:0f;
+            case "dpad_down":
+                return gamepad.dpad_down?1f:0f;
+
+            default:
+                return 0f;
+        }
+    }
 }
 
 enum InputMode {

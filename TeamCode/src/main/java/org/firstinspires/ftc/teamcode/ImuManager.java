@@ -43,7 +43,7 @@ public class ImuManager extends FeatureManager {
 
         initLoaderThread = new Thread(new IMULoader());
         initLoaderThread.start();
-        // IDK if we really ned to calibrate it or if we have to, some examples have some don't, let's play it safe
+        // IDK if we really need to calibrate it or if we have to, some examples have some don't, let's play it safe
 
         //however, this causes it to be stuck in init, so i'm taking it out for now.
 //        while(!this.imu.isGyroCalibrated()){
@@ -109,3 +109,5 @@ public class ImuManager extends FeatureManager {
         }
     }
 }
+
+

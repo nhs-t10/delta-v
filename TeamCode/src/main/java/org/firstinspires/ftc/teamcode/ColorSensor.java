@@ -112,13 +112,13 @@ public class ColorSensor {
       return this.weShouldRead;
   }
 public boolean isBled() {
-    return this.hsvValues[1] > 0.5;
+    return this.hsvValues[1] > 0.65;
 
 }
 
 //Test if we're seeing gold
 public boolean isSkystone() {
-    return this.hsvValues[0] > 0.885;
+    return this.hsvValues[0] > 0.9;
   }
 
   public void runSample() {

@@ -8,6 +8,7 @@
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
     import com.qualcomm.robotcore.hardware.DcMotor;
     import com.qualcomm.robotcore.hardware.HardwareMap;
+    import com.qualcomm.robotcore.robot.Robot;
     import com.qualcomm.robotcore.util.ElapsedTime;
 
     import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -191,11 +192,31 @@
         }
 
         public String toString() {
-            return RobotState.version + "," + movement.toString() + "," + liftMotorPower + "," + liftServoPos + "," + speed + "," + orientation.toString() + "," + position.toString();
+            return RobotState.version + "," +
+                    movement.toString() + "," +
+                    liftMotorPower + "," +
+                    liftServoPos + "," +
+                    speed + "," +
+                    orientation.toString() + "," +
+                    position.toString() + "," +
+                    sideLiftPos + "," +
+                    sideGrabPos + "," +
+                    foundationMoverPos;
         }
 
         public static RobotState fromString(String str) {
+
+            if(str.isEmpty()) return new RobotState(new ElapsedTime(), 0, 0, MovementOrder.NOTHING, 0, new PointNd(0,0,0), new PointNd(0,0,0), 0, 0, 0);
+
             String[] strSplit = str.split(",");
+
+            for(int i = 0; i < strSplit.length; i++) {
+                try {
+                    Float.parseFloat(strSplit[i]);
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException("Incorrect format of number " + i);
+                }
+            }
 
             //validate version-- if the version is old, return an error
             if(Float.parseFloat(strSplit[0]) != RobotState.version) throw new IllegalArgumentException("Wrong version");
@@ -211,8 +232,13 @@
             float speed = Float.parseFloat(strSplit[6]);
 
             PointNd ori = PointNd.fromString(PaulMath.join(",", Arrays.copyOfRange(strSplit, 7, 10)));
-            PointNd pos = PointNd.fromString(PaulMath.join(",", Arrays.copyOfRange(strSplit, 11, 14)));
+            PointNd pos = PointNd.fromString(PaulMath.join(",", Arrays.copyOfRange(strSplit, 10, 13)));
 
-            return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order, speed, ori, pos);
+            float _sideLiftPos = Float.parseFloat(strSplit[13]);
+            float _sideGrabPos = Float.parseFloat(strSplit[14]);
+
+            float _foundationPos = Float.parseFloat(strSplit[15]);
+
+            return new RobotState(new ElapsedTime(), liftMotorPower, liftServoPos, order, speed, ori, pos, _sideLiftPos, _sideGrabPos, _foundationPos);
         }
     }

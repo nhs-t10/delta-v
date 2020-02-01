@@ -121,16 +121,16 @@ public class Teleop extends OpMode {
 //            }
 //
 //        }
-        if (gamepad1.right_trigger >= 0.01) {
-            if (!sideGrab) {
-                hands.setSideGrabberPosition(1);
-                sideGrab = true;
-            } else if (sideGrab) {
-                hands.setSideGrabberPosition(0);
-                sideGrab = false;
-            }
-
-        }
+//        if (gamepad1.right_trigger >= 0.01) {
+//            if (!sideGrab) {
+//                hands.setSideGrabberPosition(1);
+//                sideGrab = true;
+//            } else if (sideGrab) {
+//                hands.setSideGrabberPosition(0);
+//                sideGrab = false;
+//            }
+//
+//        }  
         telemetry.addData("FL Ticks:", driver.frontLeft.getCurrentPosition());
         telemetry.addData("FR Ticks:", driver.frontRight.getCurrentPosition());
         telemetry.addData("BL Ticks:", driver.backRight.getCurrentPosition());

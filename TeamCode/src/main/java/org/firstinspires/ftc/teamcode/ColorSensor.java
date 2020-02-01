@@ -40,6 +40,8 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.auxillary.PaulMath;
+
 public class ColorSensor {
 
   /** The colorSensor field will contain a reference to our color sensor hardware object */
@@ -112,13 +114,13 @@ public class ColorSensor {
       return this.weShouldRead;
   }
 public boolean isBled() {
-    return this.hsvValues[1] > 0.65;
+    return this.hsvValues[1] > 0.65 ;
 
 }
 
 //Test if we're seeing gold
 public boolean isSkystone() {
-    return this.hsvValues[0] > 0.9;
+    return PaulMath.delta(46 / 360, hsvValues[0]) < 0.075f && PaulMath.delta(0.27f, hsvValues[1]) < 0.075f && PaulMath.delta(0.23f, hsvValues[2]) < 0.075f;
   }
 
   public void runSample() {

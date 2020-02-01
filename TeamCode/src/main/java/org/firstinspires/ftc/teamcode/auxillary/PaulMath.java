@@ -7,6 +7,10 @@ import org.firstinspires.ftc.teamcode.data.*;
 public class PaulMath {
 
     public static final float PID_P_COEF = 0.03f;
+    final double ENCODER_CPR = 1120;
+    final double GEAR_RATIO = 1;
+    final double WHEEL_DIAMETER = 4;
+    final double CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
 
     /**
      * A PID controller
@@ -96,6 +100,12 @@ public class PaulMath {
             array[i] = array[i] / highest;
         }
         return array;
+    }
+
+    public int encoderDistance(double distance) {
+        double ROTATIONS = distance / CIRCUMFERENCE;
+        int counts =  (int)(ENCODER_CPR * ROTATIONS * GEAR_RATIO);
+        return counts;
     }
 
     /**

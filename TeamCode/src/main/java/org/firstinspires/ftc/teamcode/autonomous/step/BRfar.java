@@ -25,7 +25,7 @@ public class BRfar extends StepAuto {
        switch(currentStep){
        case START:
            driver.driveOmni(0f, -0.5f, 0f);
-           nextStep(500);
+           nextStep(1000);
        break;
        case MOVE1:
            driver.driveOmni(-0.5f, 0f, 0f);

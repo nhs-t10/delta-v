@@ -14,7 +14,7 @@ public class FeatureManager {
     public final static float LIFT_CLAMP_CLOSE_POS = 1f;
 
     public final static int MIMING_MS_PER_SAMPLE = 10;
-    public final static String MIMING_FILENAME = "miming.txt";
+    public final static String MIMING_FILENAME = "mimingFoundation.txt";
 
     public final static float P = 0.03f;
     public final static String MIMING_FR = "mimingfr.txt";

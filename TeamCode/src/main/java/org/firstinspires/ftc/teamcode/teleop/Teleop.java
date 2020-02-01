@@ -111,16 +111,16 @@ public class Teleop extends OpMode {
             hands.setDropperPosition(0);
         }
 
-        if (gamepad1.left_trigger >= 0.01) {
-            if (!sideLift) {
-                hands.setSideLiftPosition(1);
-                sideLift = true;
-            } else if (sideLift) {
-                hands.setSideLiftPosition(0);
-                sideLift = false;
-            }
-
-        }
+//        if (gamepad1.left_trigger >= 0.01) {
+//            if (!sideLift) {
+//                hands.setSideLiftPosition(1);
+//                sideLift = true;
+//            } else if (sideLift) {
+//                hands.setSideLiftPosition(0);
+//                sideLift = false;
+//            }
+//
+//        }
         if (gamepad1.right_trigger >= 0.01) {
             if (!sideGrab) {
                 hands.setSideGrabberPosition(1);

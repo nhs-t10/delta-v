@@ -56,8 +56,7 @@ public class Teleop extends OpMode {
         sensor.runSample();
 
         
-
-        if (input.gamepad.right_trigger > 0.01f) {
+        if (input.getGamepad().right_trigger >= 0.01) {
             hands.grabServo.setServoPosition(0);
         } else {
             hands.grabServo.setServoPosition(1);

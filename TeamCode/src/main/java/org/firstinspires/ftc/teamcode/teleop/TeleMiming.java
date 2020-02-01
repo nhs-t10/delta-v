@@ -24,7 +24,7 @@ public class TeleMiming extends OpMode {
     boolean firstLoopRun = true;
     public void init() {
         controller = new InputManager(gamepad1);
-        file = new FileSaver(FeatureManager.MIMING_FILENAME);
+        file = new FileSaver("mime-auto-competition-final-sceneone-right.txt");
         driver = new MovementManager(hardwareMap.get(DcMotor.class, "fl"),
                 hardwareMap.get(DcMotor.class, "fr"),
                 hardwareMap.get(DcMotor.class, "bl"),

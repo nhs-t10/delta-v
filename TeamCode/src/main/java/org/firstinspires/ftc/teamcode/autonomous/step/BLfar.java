@@ -31,6 +31,7 @@ public class BLfar extends StepAuto {
            driver.driveOmni(0.5f, 0f, 0f);
            nextStep(1250);
        break;
+
 //        case MOVE1:
 //            //Drop bar thing left
 //            // driver.driveOmni(0f, 0f, 0f);

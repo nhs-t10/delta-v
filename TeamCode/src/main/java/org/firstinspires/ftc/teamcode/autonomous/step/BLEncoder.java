@@ -63,9 +63,9 @@ public class BLEncoder extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-            driver.driveWhileVerticalPid(0.1f, 1f, this);
+            driver.encoderDrive(0.1f, 1f, -1f, 1f, -1f, 1000, this);
             wait(30);
-            driver.driveWhileHorizontalPid(0.1f, 1f, this);
+            driver.encoderDrive(0.1f, 1f, 1f, -1f, -1f, 1000, this);
             wait(30);
             driver.driveWhileVerticalPid(-0.1f, 1f, this);
             wait(30);
